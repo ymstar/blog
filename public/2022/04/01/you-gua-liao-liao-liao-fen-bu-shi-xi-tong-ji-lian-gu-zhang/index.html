@@ -401,7 +401,7 @@
 <h3 id="资源耗尽"><a href="#资源耗尽" class="headerlink" title="资源耗尽"></a>资源耗尽</h3><p>服务器的资源是有限的。如果负载到达某个阈值以上，服务器的性能指标（例如延迟或错误率）就会恶化。这意味着更高的崩溃风险。随后一些资源类型到达瓶颈，导致异常发生，例如，</p>
 <ul>
 <li>如果<strong>CPU</strong>不足，可能会出现各种问题，包括请求速度较慢、排队效应过多或线程不足。</li>
-<li>如果<strong>内存</strong>&#x2F; <strong>RAM</strong>被过度使用，任务可能会崩溃，或者缓存命中率会降低。</li>
+<li>如果<strong>内存</strong>/ <strong>RAM</strong>被过度使用，任务可能会崩溃，或者缓存命中率会降低。</li>
 <li>此外，<strong>线程</strong>饥饿可能直接导致错误或导致健康检查失败。</li>
 </ul>
 <p>在这种情况下进行故障排除通常很痛苦。因为所涉及的组件是<strong>相互依赖</strong>的，并且根本原因可能隐藏在复杂的事件链之后。例如，假设可用于缓存的内存较少，导致缓存命中次数减少，因此后端负载较高，以及此类组合。</p>
@@ -413,11 +413,11 @@
 <p><img src="https://yangmingblog-1259175198.cos.ap-beijing.myqcloud.com/uPic/2022/figure_3.jpg" alt="2015 年 AWS DynamoDB 中断的因果循环图"></p>
 <p>现在，为了解决级联场景，可以采取各种措施。第一个也是最直观的选择是<strong>增加资源</strong>。在上图中，可以看到最上方的一个减号，代表增加元数据服务，然而，这可能没有用，正如我们在<em>AWS</em>中看到的那样。除了增加资源外，您可能还需要采用其他策略：</p>
 <ul>
-<li>尽量<strong>避免健康检查失败&#x2F;死亡</strong>，以防止系统因过度健康检查而死亡。</li>
+<li>尽量<strong>避免健康检查失败/死亡</strong>，以防止系统因过度健康检查而死亡。</li>
 <li><strong>如果出现线程阻塞请求或死锁，请重新启动服务器</strong>。</li>
 <li><strong>显着降低流量</strong>，然后慢慢增加负载，以便服务器可以逐渐恢复。</li>
 <li>通过丢弃某些类型的流量<strong>切换到降级模式。</strong></li>
-<li><strong>消除批处理&#x2F;不良</strong> <strong>流量</strong>，以减少由于非关键或错误工作导致的系统负载。</li>
+<li><strong>消除批处理/不良</strong> <strong>流量</strong>，以减少由于非关键或错误工作导致的系统负载。</li>
 </ul>
 <p>由于这最终意味着系统的某些部分不可用并且对客户可见，因此最好首先避免级联故障。</p>
 <h2 id="避免级联故障"><a href="#避免级联故障" class="headerlink" title="避免级联故障"></a>避免级联故障</h2><p>有许多方法可以使分布式系统对级联故障具有鲁棒性。</p>
@@ -604,9 +604,7 @@
                     <div class="summary block-with-text">
                         
                             1、动态步骤——when通过stage内的when语法，可以实现pipeline的动态步骤。
-environment &#123;
-      // 根据构建id的奇偶性决定FOO是0还是1
-      FOO = "$&#123;curr
+12345678910111213141516171819202122232425262728environment {      // 根据构建
                         
                     </div>
                     <div class="publish-info">
@@ -832,7 +830,7 @@ environment &#123;
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">78.2k</span>
+                <span class="white-color">77.7k</span>
             
 
             

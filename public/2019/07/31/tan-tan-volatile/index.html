@@ -356,7 +356,7 @@ volatile的用法volatile通常被比喻">
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        3.4k
+                        3.3k
                     </div>
                     
 
@@ -378,23 +378,7 @@ volatile的用法volatile通常被比喻">
 <p>Java语言为了解决并发编程中存在的原子性、可见性和有序性问题，提供了一系列和并发处理相关的关键字，比如synchronized、volatile、final、concurrent包等。</p>
 </blockquote>
 <h3 id="volatile的用法"><a href="#volatile的用法" class="headerlink" title="volatile的用法"></a>volatile的用法</h3><p>volatile通常被比喻成“轻量级的synchronized”，也是Java并发编程中比较重要的一个关键字。和synchronized不同，volatile是一个变量修饰符，只能用来修饰变量，无法修饰方法或代码块等。<br>volatile的用法比较简单，只需要在声明一个可能被多线程同时访问的变量时，使用volatile修饰就可以了。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
- * 双重校验锁实现单例模式
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">static</span> <span class="token class-name">Singleton</span> singleton<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">Singleton</span> <span class="token function">getSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>singleton<span class="token operator">==</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token class-name">Singleton</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-                <span class="token keyword">if</span> <span class="token punctuation">(</span>singleton<span class="token operator">==</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-                    singleton<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token punctuation">&#125;</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">return</span> singleton<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 双重校验锁实现单例模式</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton</span> {</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton singleton;</span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span>{ }</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title function_">getSingleton</span><span class="params">()</span>{</span><br><span class="line">        <span class="keyword">if</span> (singleton==<span class="literal">null</span>){</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton.class){</span><br><span class="line">                <span class="keyword">if</span> (singleton==<span class="literal">null</span>){</span><br><span class="line">                    singleton=<span class="keyword">new</span> <span class="title class_">Singleton</span>();</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> singleton;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <p>以上代码是一个比较典型的使用双重锁校验的形式实现的单例，其中使用volatile关键字修饰可能被多个线程同时访问到的singleton。</p>
 <h3 id="volatile的原理"><a href="#volatile的原理" class="headerlink" title="volatile的原理"></a>volatile的原理</h3><p>Java为了提高处理器的执行速度，在处理器和内存之间增加了多级缓存来提升。但是由于引入了多级缓存，就存在缓存数据不一致的问题。<br>但是，对于volatile变量，当对volatile变量进行写操作的时候，JVM会向处理器发送一条lock前缀的指令，将这个缓存中的变量写回到系统主存中。<br>但是就算写回到主存，如果其他处理器缓存的值还是旧的，再执行计算操作就会有问题，所以在多处理器下，为了保证各个处理器的缓存是一致的，就会实现缓存一致性协议。<br><strong>缓存一致性协议</strong>：每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是不是过期了，当处理器发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存行设置为无效状态，当处理器要对这个数据进行修改操作的时候，会强制重新从系统内存里把数据读到处理器缓存里。<br>所以，如果一个变量被volatile所修饰的话，在每次数据变化后，其值都会别强制刷入主存。而其他处理器的缓存由于遵守了缓存一致性协议，也会把这个变量的值从主存加载到自己的缓存。这就保证了一个volatile在并发编程中，其值在多个缓存中是可见的。</p>
@@ -410,22 +394,10 @@ volatile的用法volatile通常被比喻">
 <blockquote>
 <p>在每个volatile写操作的前边插入一个StoreStore屏障<br>在每个volatile写操作的后面插入一个StoreLoad屏障<br>在每个volatile读操作的后面插入一个LoadLoad屏障<br>在每个volatile读操作的后面插入一个LoadStore屏障</p>
 </blockquote>
-<p><img src="/img/post-img/19-7-31-2.png" alt="volatile写"><br><img src="/img/post-img/19-7-31-3.png" alt="volatile读"><br><strong>StoreStore屏障可以保证在volatile写之前，其前面的所有普通写操作都已经刷新到主内存中。<br>StoreLoad屏障的作用是避免volatile写与后面可能有的volatile读&#x2F;写操作重排序。<br>LoadLoad屏障用来禁止处理器把上面的volatile读与下面的普通读重排序。<br>LoadStore屏障用来禁止处理器把上面的volatile读与下面的普通写重排序。</strong></p>
+<p><img src="/img/post-img/19-7-31-2.png" alt="volatile写"><br><img src="/img/post-img/19-7-31-3.png" alt="volatile读"><br><strong>StoreStore屏障可以保证在volatile写之前，其前面的所有普通写操作都已经刷新到主内存中。<br>StoreLoad屏障的作用是避免volatile写与后面可能有的volatile读/写操作重排序。<br>LoadLoad屏障用来禁止处理器把上面的volatile读与下面的普通读重排序。<br>LoadStore屏障用来禁止处理器把上面的volatile读与下面的普通写重排序。</strong></p>
 <p>所以，volatile通过在volatile变量的操作前后插入内存屏障的方式，来禁止指令重排，进而保证多线程情况下对共享变量的有序性。</p>
 <h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p>以如下一段代码来看：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">VolatileBarrierExample</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">volatile</span> <span class="token keyword">int</span> v1 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">volatile</span> <span class="token keyword">int</span> v2 <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">void</span> <span class="token function">readAndWrite</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">int</span> i <span class="token operator">=</span> v1<span class="token punctuation">;</span>     <span class="token comment">//volatile读</span>
-        <span class="token keyword">int</span> j <span class="token operator">=</span> v2<span class="token punctuation">;</span>     <span class="token comment">//volatile读</span>
-        a <span class="token operator">=</span> i <span class="token operator">+</span> j<span class="token punctuation">;</span>      <span class="token comment">//普通读</span>
-        v1 <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>     <span class="token comment">//volatile写</span>
-        v2 <span class="token operator">=</span> j <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">;</span>     <span class="token comment">//volatile写</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">VolatileBarrierExample</span> {</span><br><span class="line">    <span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">volatile</span> <span class="type">int</span> <span class="variable">v1</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">volatile</span> <span class="type">int</span> <span class="variable">v2</span> <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">readAndWrite</span><span class="params">()</span>{</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> v1;     <span class="comment">//volatile读</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> v2;     <span class="comment">//volatile读</span></span><br><span class="line">        a = i + j;      <span class="comment">//普通读</span></span><br><span class="line">        v1 = i + <span class="number">1</span>;     <span class="comment">//volatile写</span></span><br><span class="line">        v2 = j * <span class="number">2</span>;     <span class="comment">//volatile写</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <p>优化后的内存屏障图例：<br><img src="/img/post-img/19-7-31-4.png" alt="内存屏障"><br>注意，最后的StoreLoad屏障不能省略。因为第二个volatile写之后，方法立即return。此时编译器可能无法准确判定后面是否会有volatile读或者写，为了安全起见，编译器通常会在这里插入一个StoreLoad屏障。</p>
 <h3 id="volatile与原子性"><a href="#volatile与原子性" class="headerlink" title="volatile与原子性"></a>volatile与原子性</h3><p><strong>原子性是指一个操作是不可中断的，要全部执行完成，要不就都不执行。</strong><br>线程是CPU调度的基本单位。CPU有时间片的概念，会根据不同的调度算法进行线程调度。当一个线程获得时间片之后开始执行，在时间片耗尽之后，就会失去CPU使用权。所以在多线程场景下，由于时间片在线程间轮换，就会发生原子性问题。<br>为了保证原子性，需要通过字节码指令monitorenter和monitorexit，但是volatile和这两个指令之间没有任何关系。<br>所以，<strong>volatile是不能保证原子性的</strong>。<br>在以下两个场景中可以使用volatile来代替synchronized：</p>
@@ -635,12 +607,12 @@ AbstractQueuedSynchronizer简称AQS，是一个用于构建锁和同步容器的
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%B9%B6%E5%8F%91/" target="_blank">
-                        <span class="chip bg-color">并发</span>
-                    </a>
-                    
                     <a href="/tags/AQS/" target="_blank">
                         <span class="chip bg-color">AQS</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%B9%B6%E5%8F%91/" target="_blank">
+                        <span class="chip bg-color">并发</span>
                     </a>
                     
                 </div>
@@ -854,7 +826,7 @@ AbstractQueuedSynchronizer简称AQS，是一个用于构建锁和同步容器的
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">78.2k</span>
+                <span class="white-color">77.7k</span>
             
 
             

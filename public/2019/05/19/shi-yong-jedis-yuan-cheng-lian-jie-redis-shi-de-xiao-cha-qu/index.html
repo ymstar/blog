@@ -356,7 +356,7 @@ Jedis是远程连接redis的主流集成工具，在使用Jedis的过程中踩�
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        477
+                        479
                     </div>
                     
 
@@ -381,8 +381,7 @@ Jedis是远程连接redis的主流集成工具，在使用Jedis的过程中踩�
 <p>先写一个简单的测试用例：<br><img src="/img/post-img/19-5-19-13.png" alt="测试用例"></p>
 <p>其中192.168.94.129是我Linux虚拟机的ip地址，在保确保虚拟机上开启redis服务的前提下，运行测试用例，发现连接失败，怎么回事？</p>
 <p>原来又是Linux防火墙，Linux防火墙将6379端口拦截掉了，那我们就在Linux系统上将6379端口打开：</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token punctuation">[</span>root@localhost redis<span class="token punctuation">]</span># <span class="token operator">/</span>sbin<span class="token operator">/</span>iptables <span class="token operator">-</span><span class="token constant">I</span> <span class="token constant">INPUT</span> <span class="token operator">-</span>p tcp <span class="token operator">--</span>dport <span class="token number">6379</span> <span class="token operator">-</span>j <span class="token constant">ACCEPT</span>
-<span class="token punctuation">[</span>root@localhost redis<span class="token punctuation">]</span># <span class="token operator">/</span>etc<span class="token operator">/</span>rc<span class="token punctuation">.</span>d<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>iptables save<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis]# /sbin/iptables -I <span class="variable constant_">INPUT</span> -p tcp --dport <span class="number">6379</span> -j <span class="variable constant_">ACCEPT</span></span><br><span class="line">[root@localhost redis]# /etc/rc.<span class="property">d</span>/init.<span class="property">d</span>/iptables save</span><br></pre></td></tr></tbody></table></figure>
 
 <p>然后再运行一次测试用例，发现和刚才一样，还是连接超时，一大堆的异常，这又是怎么回事呢？端口已经打开了呀！</p>
 <p>可是仔细观察就会发现，在Linux虚拟机上连接到Redis服务的时候显示是127.0.0.1：6379&gt;，那我们把ip换成127.0.0.1试一下，很遗憾，失败了。</p>
@@ -391,8 +390,7 @@ Jedis是远程连接redis的主流集成工具，在使用Jedis的过程中踩�
 <p>bind后边指明的ip地址才是访问redis的合法地址，所以我们在其下边加入bind 192.168.94.129之后保存退出。</p>
 </blockquote>
 <p>此时我们重新启动redis服务：</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token punctuation">[</span>root@localhost redis<span class="token punctuation">]</span># <span class="token punctuation">.</span><span class="token operator">/</span>bin<span class="token operator">/</span>redis<span class="token operator">-</span>cli shutdown
-<span class="token punctuation">[</span>root@localhost redis<span class="token punctuation">]</span># <span class="token punctuation">.</span><span class="token operator">/</span>bin<span class="token operator">/</span>redis<span class="token operator">-</span>server <span class="token punctuation">.</span><span class="token operator">/</span>redis<span class="token punctuation">.</span>conf <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis]# ./bin/redis-cli shutdown</span><br><span class="line">[root@localhost redis]# ./bin/redis-server ./redis.<span class="property">conf</span> </span><br></pre></td></tr></tbody></table></figure>
 
 <p>然后再运行一次测试代码，哇，一抹绿色终于出现了，终于连接成功，可以用Java代码来操作redis啦，redis有什么指令，Jedis就有什么方法，所以Jedis的API根本不用去记，只要知道Redis有哪些常用的指令就好啦！</p>
 <p>OK，问题解决啦，继续你的旅程吧！加油。</p>
@@ -574,10 +572,7 @@ Jedis是远程连接redis的主流集成工具，在使用Jedis的过程中踩�
                     <div class="summary block-with-text">
                         
                             git Commit测试hashCode和equals方法是Object类中的两个常用方法。其定义如下：
-// hashCode()方法默认是native方法：
-public native int hashCode();
-
-// equal
+1234567// hashCode()方法默认是native方法：public native int hashCode();// e
                         
                     </div>
                     <div class="publish-info">
@@ -824,7 +819,7 @@ public native int hashCode();
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">78.2k</span>
+                <span class="white-color">77.7k</span>
             
 
             

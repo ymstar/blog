@@ -364,7 +364,7 @@ gcc  安装nginx需">
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.7k
+                        1.5k
                     </div>
                     
 
@@ -391,185 +391,52 @@ gcc  安装nginx需">
 <li>openssl<br>  OpenSSL 是一个强大的安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及SSL协议，并提供丰富的应用程序供测试或其它目的使用。<br>  nginx不仅支持http协议，还支持https（即在ssl协议上传输http），所以需要在linux安装openssl库。<br>  <code>yum install -y openssl openssl-devel</code></li>
 </ul>
 <p>然后进入刚刚解压的文件夹，执行以下命令：</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@localhost nginx-1.16.0]# .&#x2F;configure \
-&gt; --prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;nginx \
-&gt; --pid-path&#x3D;&#x2F;var&#x2F;run&#x2F;nginx&#x2F;nginx.pid \
-&gt; --lock-path&#x3D;&#x2F;var&#x2F;lock&#x2F;nginx.lock \
-&gt; --error-log-path&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;error.log \
-&gt; --http-log-path&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log \
-&gt; --with-http_gzip_static_module \
-&gt; --http-client-body-temp-path&#x3D;&#x2F;var&#x2F;temp&#x2F;nginx&#x2F;client \
-&gt; --http-proxy-temp-path&#x3D;&#x2F;var&#x2F;temp&#x2F;nginx&#x2F;proxy \
-&gt; --http-fastcgi-temp-path&#x3D;&#x2F;var&#x2F;temp&#x2F;nginx&#x2F;fastcgi \
-&gt; --http-uwsgi-temp-path&#x3D;&#x2F;var&#x2F;temp&#x2F;nginx&#x2F;uwsgi \
-&gt; --http-scgi-temp-path&#x3D;&#x2F;var&#x2F;temp&#x2F;nginx&#x2F;scgi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost nginx-1.16.0]# ./configure \</span><br><span class="line">&gt; --prefix=/usr/local/nginx \</span><br><span class="line">&gt; --pid-path=/var/run/nginx/nginx.pid \</span><br><span class="line">&gt; --lock-path=/var/lock/nginx.lock \</span><br><span class="line">&gt; --error-log-path=/var/log/nginx/error.log \</span><br><span class="line">&gt; --http-log-path=/var/log/nginx/access.log \</span><br><span class="line">&gt; --with-http_gzip_static_module \</span><br><span class="line">&gt; --http-client-body-temp-path=/var/temp/nginx/client \</span><br><span class="line">&gt; --http-proxy-temp-path=/var/temp/nginx/proxy \</span><br><span class="line">&gt; --http-fastcgi-temp-path=/var/temp/nginx/fastcgi \</span><br><span class="line">&gt; --http-uwsgi-temp-path=/var/temp/nginx/uwsgi \</span><br><span class="line">&gt; --http-scgi-temp-path=/var/temp/nginx/scgi</span><br></pre></td></tr></tbody></table></figure>
 
 <p>可以看到文件夹下多出一个Makefile，然后依次执行make指令和make install指令：</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@localhost ~]# make
-[root@localhost ~]# make install<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# make</span><br><span class="line">[root@localhost ~]# make install</span><br></pre></td></tr></tbody></table></figure>
 
 <p>在启动Nginx之前，先创建临时文件夹：</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@localhost ~]# mkdir &#x2F;var&#x2F;temp
-[root@localhost ~]# mkdir &#x2F;var&#x2F;temp&#x2F;nginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# mkdir /var/temp</span><br><span class="line">[root@localhost ~]# mkdir /var/temp/nginx</span><br></pre></td></tr></tbody></table></figure>
 
-<h2 id="启动Nginx"><a href="#启动Nginx" class="headerlink" title="启动Nginx"></a>启动Nginx</h2><p>进入Nginx的安装目录：&#x2F;usr&#x2F;local&#x2F;nginx，可以看到有conf、sbin、html三个文件夹，其中sbin中存放着的就是Nginx的可执行文件：</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@localhost ~]# cd &#x2F;usr&#x2F;local&#x2F;nginx
-[root@localhost ~]# cd sbin
-[root@localhost ~]# .&#x2F;nginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="启动Nginx"><a href="#启动Nginx" class="headerlink" title="启动Nginx"></a>启动Nginx</h2><p>进入Nginx的安装目录：/usr/local/nginx，可以看到有conf、sbin、html三个文件夹，其中sbin中存放着的就是Nginx的可执行文件：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /usr/local/nginx</span><br><span class="line">[root@localhost ~]# cd sbin</span><br><span class="line">[root@localhost ~]# ./nginx</span><br></pre></td></tr></tbody></table></figure>
 
 <h2 id="停止Nginx"><a href="#停止Nginx" class="headerlink" title="停止Nginx"></a>停止Nginx</h2><ol>
 <li><p>快速停止：查找到Nginx的进程id然后使用kill命令强制杀死进程。</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@localhost ~]# cd &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin
-[root@localhost ~]# .&#x2F;nginx -s stop<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /usr/local/nginx/sbin</span><br><span class="line">[root@localhost ~]# ./nginx -s stop</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>完整停止：等待Nginx进程处理完任务再进行停止。</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@localhost ~]# cd &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin
-[root@localhost ~]# .&#x2F;nginx -s quit<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /usr/local/nginx/sbin</span><br><span class="line">[root@localhost ~]# ./nginx -s quit</span><br></pre></td></tr></tbody></table></figure></li>
 </ol>
 <h2 id="重启Nginx"><a href="#重启Nginx" class="headerlink" title="重启Nginx"></a>重启Nginx</h2><ol>
 <li><p>先停止再启动</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@localhost ~]# cd &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin
-[root@localhost ~]# .&#x2F;nginx -s quit
-[root@localhost ~]# .&#x2F;nginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /usr/local/nginx/sbin</span><br><span class="line">[root@localhost ~]# ./nginx -s quit</span><br><span class="line">[root@localhost ~]# ./nginx</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>重新加载配置文件</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@localhost ~]# cd &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin
-[root@localhost ~]# .&#x2F;nginx -s reload<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /usr/local/nginx/sbin</span><br><span class="line">[root@localhost ~]# ./nginx -s reload</span><br></pre></td></tr></tbody></table></figure></li>
 </ol>
 <h2 id="测试Nginx"><a href="#测试Nginx" class="headerlink" title="测试Nginx"></a>测试Nginx</h2><p>Nginx的默认端口是80，需要在iptables中将80端口设为开放，打开iptables文件并加入以下信息：<br>打开iptables文件：<code>[root@localhost nginx]# vim /etc/sysconfig/iptables</code><br>在其中加入：<code>-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT</code><br>如下：<br><img src="/img/post-img/19-8-4-1.png" alt="iptables"><br>保存退出。<br>重启iptables:<br><code>[root@localhost ~]# service iptables restart</code></p>
 <p>然后在主机浏览器通过ip+端口访问Nginx，比如：192.168.94.192:80，看到如下信息，说明Nginx配置成功：<br><img src="/img/post-img/19-8-4-2.png" alt="Nginx欢迎界面"></p>
 <h2 id="设置Nginx开机自启动"><a href="#设置Nginx开机自启动" class="headerlink" title="设置Nginx开机自启动"></a>设置Nginx开机自启动</h2><p>这里使用编写shell脚本的方式设置：<br><code>[root@localhost ~]# vim /etc/init.d/nginx</code><br>输入如下脚本：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment"># nginx Startup script for the Nginx HTTP Server</span>
-<span class="token comment"># it is v.0.0.2 version.</span>
-<span class="token comment"># chkconfig: - 85 15</span>
-<span class="token comment"># description: Nginx is a high-performance web and proxy server.</span>
-<span class="token comment">#              It has a lot of features, but it's not for everyone.</span>
-<span class="token comment"># processname: nginx</span>
-<span class="token comment"># pidfile: /var/run/nginx.pid</span>
-<span class="token comment"># config: /usr/local/nginx/conf/nginx.conf</span>
-<span class="token assign-left variable">nginxd</span><span class="token operator">=</span>/usr/local/nginx/sbin/nginx
-<span class="token assign-left variable">nginx_config</span><span class="token operator">=</span>/usr/local/nginx/conf/nginx.conf
-<span class="token assign-left variable">nginx_pid</span><span class="token operator">=</span>/var/run/nginx.pid
-<span class="token assign-left variable">RETVAL</span><span class="token operator">=</span><span class="token number">0</span>
-<span class="token assign-left variable">prog</span><span class="token operator">=</span><span class="token string">"nginx"</span>
-<span class="token comment"># Source function library.</span>
-<span class="token builtin class-name">.</span> /etc/rc.d/init.d/functions
-<span class="token comment"># Source networking configuration.</span>
-<span class="token builtin class-name">.</span> /etc/sysconfig/network
-<span class="token comment"># Check that networking is up.</span>
-<span class="token punctuation">[</span> <span class="token variable">$&#123;NETWORKING&#125;</span> <span class="token operator">=</span> <span class="token string">"no"</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">exit</span> <span class="token number">0</span>
-<span class="token punctuation">[</span> -x <span class="token variable">$nginxd</span> <span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token builtin class-name">exit</span> <span class="token number">0</span>
-<span class="token comment"># Start nginx daemons functions.</span>
-<span class="token function-name function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">if</span> <span class="token punctuation">[</span> -e <span class="token variable">$nginx_pid</span> <span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token keyword">then</span>
-   <span class="token builtin class-name">echo</span> <span class="token string">"nginx already running...."</span>
-   <span class="token builtin class-name">exit</span> <span class="token number">1</span>
-<span class="token keyword">fi</span>
-   <span class="token builtin class-name">echo</span> -n $<span class="token string">"Starting <span class="token variable">$prog</span>: "</span>
-   daemon <span class="token variable">$nginxd</span> -c <span class="token variable">$&#123;nginx_config&#125;</span>
-   <span class="token assign-left variable">RETVAL</span><span class="token operator">=</span><span class="token variable">$?</span>
-   <span class="token builtin class-name">echo</span>
-   <span class="token punctuation">[</span> <span class="token variable">$RETVAL</span> <span class="token operator">=</span> <span class="token number">0</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token function">touch</span> /var/lock/subsys/nginx
-   <span class="token builtin class-name">return</span> <span class="token variable">$RETVAL</span>
-<span class="token punctuation">&#125;</span>
-<span class="token comment"># Stop nginx daemons functions.</span>
-<span class="token function-name function">stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token builtin class-name">echo</span> -n $<span class="token string">"Stopping <span class="token variable">$prog</span>: "</span>
-        killproc <span class="token variable">$nginxd</span>
-        <span class="token assign-left variable">RETVAL</span><span class="token operator">=</span><span class="token variable">$?</span>
-        <span class="token builtin class-name">echo</span>
-        <span class="token punctuation">[</span> <span class="token variable">$RETVAL</span> <span class="token operator">=</span> <span class="token number">0</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token function">rm</span> -f /var/lock/subsys/nginx /var/run/nginx.pid
-<span class="token punctuation">&#125;</span>
-<span class="token comment"># reload nginx service functions.</span>
-<span class="token function-name function">reload</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token builtin class-name">echo</span> -n $<span class="token string">"Reloading <span class="token variable">$prog</span>: "</span>
-    <span class="token comment">#kill -HUP `cat $&#123;nginx_pid&#125;`</span>
-    killproc <span class="token variable">$nginxd</span> -HUP
-    <span class="token assign-left variable">RETVAL</span><span class="token operator">=</span><span class="token variable">$?</span>
-    <span class="token builtin class-name">echo</span>
-<span class="token punctuation">&#125;</span>
-<span class="token comment"># See how we were called.</span>
-<span class="token keyword">case</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token keyword">in</span>
-start<span class="token punctuation">)</span>
-        start
-        <span class="token punctuation">;</span><span class="token punctuation">;</span>
-stop<span class="token punctuation">)</span>
-        stop
-        <span class="token punctuation">;</span><span class="token punctuation">;</span>
-reload<span class="token punctuation">)</span>
-        reload
-        <span class="token punctuation">;</span><span class="token punctuation">;</span>
-restart<span class="token punctuation">)</span>
-        stop
-        start
-        <span class="token punctuation">;</span><span class="token punctuation">;</span>
-status<span class="token punctuation">)</span>
-        status <span class="token variable">$prog</span>
-        <span class="token assign-left variable">RETVAL</span><span class="token operator">=</span><span class="token variable">$?</span>
-        <span class="token punctuation">;</span><span class="token punctuation">;</span>
-*<span class="token punctuation">)</span>
-        <span class="token builtin class-name">echo</span> $<span class="token string">"Usage: <span class="token variable">$prog</span> &#123;start|stop|restart|reload|status|help&#125;"</span>
-        <span class="token builtin class-name">exit</span> <span class="token number">1</span>
-<span class="token keyword">esac</span>
-<span class="token builtin class-name">exit</span> <span class="token variable">$RETVAL</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">nginx Startup script <span class="keyword">for</span> the Nginx HTTP Server</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">it is v.0.0.2 version.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">chkconfig: - 85 15</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">description: Nginx is a high-performance web and proxy server.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             It has a lot of features, but it<span class="string">'s not for everyone.</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">processname: nginx</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">pidfile: /var/run/nginx.pid</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">config: /usr/local/nginx/conf/nginx.conf</span></span></span><br><span class="line">nginxd=/usr/local/nginx/sbin/nginx</span><br><span class="line">nginx_config=/usr/local/nginx/conf/nginx.conf</span><br><span class="line">nginx_pid=/var/run/nginx.pid</span><br><span class="line">RETVAL=0</span><br><span class="line">prog="nginx"</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Source function library.</span></span></span><br><span class="line">. /etc/rc.d/init.d/functions</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Source networking configuration.</span></span></span><br><span class="line">. /etc/sysconfig/network</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Check that networking is up.</span></span></span><br><span class="line">[ ${NETWORKING} = "no" ] &amp;&amp; exit 0</span><br><span class="line">[ -x $nginxd ] || exit 0</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Start nginx daemons functions.</span></span></span><br><span class="line">start() {</span><br><span class="line">if [ -e $nginx_pid ];then</span><br><span class="line">   echo "nginx already running...."</span><br><span class="line">   exit 1</span><br><span class="line">fi</span><br><span class="line">   echo -n $"Starting $prog: "</span><br><span class="line">   daemon $nginxd -c ${nginx_config}</span><br><span class="line">   RETVAL=$?</span><br><span class="line">   echo</span><br><span class="line">   [ $RETVAL = 0 ] &amp;&amp; touch /var/lock/subsys/nginx</span><br><span class="line">   return $RETVAL</span><br><span class="line">}</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Stop nginx daemons functions.</span></span></span><br><span class="line">stop() {</span><br><span class="line">        echo -n $"Stopping $prog: "</span><br><span class="line">        killproc $nginxd</span><br><span class="line">        RETVAL=$?</span><br><span class="line">        echo</span><br><span class="line">        [ $RETVAL = 0 ] &amp;&amp; rm -f /var/lock/subsys/nginx /var/run/nginx.pid</span><br><span class="line">}</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">reload nginx service functions.</span></span></span><br><span class="line">reload() {</span><br><span class="line">    echo -n $"Reloading $prog: "</span><br><span class="line">    #kill -HUP `cat ${nginx_pid}`</span><br><span class="line">    killproc $nginxd -HUP</span><br><span class="line">    RETVAL=$?</span><br><span class="line">    echo</span><br><span class="line">}</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">See how we were called.</span></span></span><br><span class="line">case "$1" in</span><br><span class="line">start)</span><br><span class="line">        start</span><br><span class="line">        ;;</span><br><span class="line">stop)</span><br><span class="line">        stop</span><br><span class="line">        ;;</span><br><span class="line">reload)</span><br><span class="line">        reload</span><br><span class="line">        ;;</span><br><span class="line">restart)</span><br><span class="line">        stop</span><br><span class="line">        start</span><br><span class="line">        ;;</span><br><span class="line">status)</span><br><span class="line">        status $prog</span><br><span class="line">        RETVAL=$?</span><br><span class="line">        ;;</span><br><span class="line">*)</span><br><span class="line">        echo $"Usage: $prog {start|stop|restart|reload|status|help}"</span><br><span class="line">        exit 1</span><br><span class="line">esac</span><br><span class="line">exit $RETVAL</span><br></pre></td></tr></tbody></table></figure>
 
 <p>保存并退出。</p>
-<p>设置文件的访问权限：<br><code>chmod a+x /etc/init.d/nginx</code> (a+x &#x3D;&#x3D;&gt; all user can execute  所有用户可执行)</p>
+<p>设置文件的访问权限：<br><code>chmod a+x /etc/init.d/nginx</code> (a+x ==&gt; all user can execute  所有用户可执行)</p>
 <p>加入到rc.local中：<br><code>[root@localhost ~]# vim /etc/rc.local</code><br>加入一行：<code>/etc/init.d/nginx start</code>，下次重启会生效。</p>
-<h1 id="ftp配置"><a href="#ftp配置" class="headerlink" title="ftp配置"></a>ftp配置</h1><h2 id="安装vsftpd组件"><a href="#安装vsftpd组件" class="headerlink" title="安装vsftpd组件"></a>安装vsftpd组件</h2><p><code>[root@localhost ~]# yum -y install vsftpd</code><br>安装完后，有&#x2F;etc&#x2F;vsftpd&#x2F;vsftpd.conf 文件，是vsftp的配置文件。</p>
+<h1 id="ftp配置"><a href="#ftp配置" class="headerlink" title="ftp配置"></a>ftp配置</h1><h2 id="安装vsftpd组件"><a href="#安装vsftpd组件" class="headerlink" title="安装vsftpd组件"></a>安装vsftpd组件</h2><p><code>[root@localhost ~]# yum -y install vsftpd</code><br>安装完后，有/etc/vsftpd/vsftpd.conf 文件，是vsftp的配置文件。</p>
 <h2 id="添加一个ftp用户"><a href="#添加一个ftp用户" class="headerlink" title="添加一个ftp用户"></a>添加一个ftp用户</h2><p>此用户就是用来登录ftp服务器用的。<br><code>[root@localhost ~]#  useradd ftpuser</code><br>添加密码：<br><code>[root@localhost ~]# passwd ftpuser</code></p>
 <h2 id="开启21端口"><a href="#开启21端口" class="headerlink" title="开启21端口"></a>开启21端口</h2><p>因为ftp默认的端口为21，而centos默认是没有开启的，所以要修改iptables文件<br><code>[root@localhost ~]# vim /etc/sysconfig/iptables</code><br>在22 -j ACCEPT 下面另起一行输入跟那行差不多的，只是把22换成21，然后：wq保存。<br>重启iptables:<br><code>[root@localhost ~]# service iptables restart</code></p>
 <h2 id="修改selinux"><a href="#修改selinux" class="headerlink" title="修改selinux"></a>修改selinux</h2><p>执行以下命令查看状态：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># getsebool -a | grep ftp  </span>
-allow_ftpd_anon_write --<span class="token operator">></span> off
-allow_ftpd_full_access --<span class="token operator">></span> off
-allow_ftpd_use_cifs --<span class="token operator">></span> off
-allow_ftpd_use_nfs --<span class="token operator">></span> off
-ftp_home_dir --<span class="token operator">></span> off
-ftpd_connect_db --<span class="token operator">></span> off
-ftpd_use_passive_mode --<span class="token operator">></span> off
-httpd_enable_ftp_server --<span class="token operator">></span> off
-tftp_anon_write --<span class="token operator">></span> off<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># getsebool -a | grep ftp  </span></span><br><span class="line">allow_ftpd_anon_write --&gt; off</span><br><span class="line">allow_ftpd_full_access --&gt; off</span><br><span class="line">allow_ftpd_use_cifs --&gt; off</span><br><span class="line">allow_ftpd_use_nfs --&gt; off</span><br><span class="line">ftp_home_dir --&gt; off</span><br><span class="line">ftpd_connect_db --&gt; off</span><br><span class="line">ftpd_use_passive_mode --&gt; off</span><br><span class="line">httpd_enable_ftp_server --&gt; off</span><br><span class="line">tftp_anon_write --&gt; off</span><br></pre></td></tr></tbody></table></figure>
 
 <p>执行上面命令，返回的结果中allow_ftpd_full_access和ftp_home_dir都是off，代表没有开启外网的访问<br><code>[root@localhost ~]# setsebool -P allow_ftpd_full_access on</code><br><code>[root@localhost ~]# setsebool -P ftp_home_dir on</code></p>
 <h2 id="关闭匿名访问"><a href="#关闭匿名访问" class="headerlink" title="关闭匿名访问"></a>关闭匿名访问</h2><p><code>[root@localhost ~]# vim /etc/vsftpd/vsftpd.conf</code><br><img src="/img/post-img/19-8-4-3.png" alt="vsftptd.conf"></p>
 <h2 id="设置开机自启"><a href="#设置开机自启" class="headerlink" title="设置开机自启"></a>设置开机自启</h2><p><code>[root@localhost ~]# chkconfig vsftpd on</code></p>
 <h2 id="测试ftp服务"><a href="#测试ftp服务" class="headerlink" title="测试ftp服务"></a>测试ftp服务</h2><p>将Nginx作为项目图片服务器，需要配置nginx.conf文件：<br><img src="/img/post-img/19-8-4-4.png" alt="nginx.conf"><br>使用java代码测试，需要依赖Apache的commons-net依赖。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>yangming<span class="token punctuation">.</span>controller</span><span class="token punctuation">;</span>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yangming.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.commons.net.ftp.FTP;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.net.ftp.FTPClient;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FtpTest</span> {</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testFTPClient</span><span class="params">()</span> <span class="keyword">throws</span> IOException {</span><br><span class="line">        <span class="comment">//创建一个FTP客户端</span></span><br><span class="line">        <span class="type">FTPClient</span> <span class="variable">ftpClient</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FTPClient</span>();</span><br><span class="line">        <span class="comment">//创建连接</span></span><br><span class="line">        ftpClient.connect(<span class="string">"192.168.94.129"</span>,<span class="number">21</span>);</span><br><span class="line">        <span class="comment">//登录</span></span><br><span class="line">        ftpClient.login(<span class="string">"ftpuser"</span>,<span class="string">"ftpuser"</span>);</span><br><span class="line">        <span class="comment">//创建一个文件输入流，读取一张图片文件</span></span><br><span class="line">        <span class="type">FileInputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="keyword">new</span> <span class="title class_">File</span>(</span><br><span class="line">                <span class="string">"C:\\Users\\Administor\\Pictures\\Saved Pictures\\timg.jpg"</span>));</span><br><span class="line">        <span class="comment">//指定文件上传的路径</span></span><br><span class="line">        ftpClient.changeWorkingDirectory(<span class="string">"/home/ftpuser/www/images"</span>);</span><br><span class="line">        <span class="comment">//指定上传文件的格式，默认文本格式，需要改成二进制格式</span></span><br><span class="line">        ftpClient.setFileType(FTP.BINARY_FILE_TYPE);</span><br><span class="line">        <span class="comment">//上传文件</span></span><br><span class="line">        ftpClient.storeFile(<span class="string">"test.jpg"</span>,inputStream);</span><br><span class="line">        <span class="comment">//退出登录</span></span><br><span class="line">        ftpClient.logout();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>net<span class="token punctuation">.</span>ftp<span class="token punctuation">.</span></span>FTP<span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>net<span class="token punctuation">.</span>ftp<span class="token punctuation">.</span></span><span class="token class-name">FTPClient</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span></span><span class="token class-name">Test</span><span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span><span class="token class-name">File</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span><span class="token class-name">FileInputStream</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span><span class="token class-name">IOException</span><span class="token punctuation">;</span>
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">FtpTest</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Test</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testFTPClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">IOException</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">//创建一个FTP客户端</span>
-        <span class="token class-name">FTPClient</span> ftpClient <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FTPClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">//创建连接</span>
-        ftpClient<span class="token punctuation">.</span><span class="token function">connect</span><span class="token punctuation">(</span><span class="token string">"192.168.94.129"</span><span class="token punctuation">,</span><span class="token number">21</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">//登录</span>
-        ftpClient<span class="token punctuation">.</span><span class="token function">login</span><span class="token punctuation">(</span><span class="token string">"ftpuser"</span><span class="token punctuation">,</span><span class="token string">"ftpuser"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">//创建一个文件输入流，读取一张图片文件</span>
-        <span class="token class-name">FileInputStream</span> inputStream <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileInputStream</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span>
-                <span class="token string">"C:\\Users\\Administor\\Pictures\\Saved Pictures\\timg.jpg"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">//指定文件上传的路径</span>
-        ftpClient<span class="token punctuation">.</span><span class="token function">changeWorkingDirectory</span><span class="token punctuation">(</span><span class="token string">"/home/ftpuser/www/images"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">//指定上传文件的格式，默认文本格式，需要改成二进制格式</span>
-        ftpClient<span class="token punctuation">.</span><span class="token function">setFileType</span><span class="token punctuation">(</span>FTP<span class="token punctuation">.</span>BINARY_FILE_TYPE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">//上传文件</span>
-        ftpClient<span class="token punctuation">.</span><span class="token function">storeFile</span><span class="token punctuation">(</span><span class="token string">"test.jpg"</span><span class="token punctuation">,</span>inputStream<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">//退出登录</span>
-        ftpClient<span class="token punctuation">.</span><span class="token function">logout</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>此时访问192.168.94.129&#x2F;images&#x2F;test.jpg就可以看到上传的图片了。</p>
+<p>此时访问192.168.94.129/images/test.jpg就可以看到上传的图片了。</p>
 
             </div>
             <hr/>
@@ -831,12 +698,12 @@ AbstractQueuedSynchronizer简称AQS，是一个用于构建锁和同步容器的
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%B9%B6%E5%8F%91/" target="_blank">
-                        <span class="chip bg-color">并发</span>
-                    </a>
-                    
                     <a href="/tags/AQS/" target="_blank">
                         <span class="chip bg-color">AQS</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%B9%B6%E5%8F%91/" target="_blank">
+                        <span class="chip bg-color">并发</span>
                     </a>
                     
                 </div>
@@ -996,7 +863,7 @@ AbstractQueuedSynchronizer简称AQS，是一个用于构建锁和同步容器的
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">78.2k</span>
+                <span class="white-color">77.7k</span>
             
 
             

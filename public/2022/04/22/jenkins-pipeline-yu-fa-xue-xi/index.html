@@ -6,9 +6,7 @@
     <meta charset="utf-8">
     <meta name="keywords" content="阿呆的个人博客">
     <meta name="description" content="1、动态步骤——when通过stage内的when语法，可以实现pipeline的动态步骤。
-environment &amp;#123;
-      // 根据构建id的奇偶性决定FOO是0还是1
-      FOO = &#34;$&amp;#123;curr">
+12345678910111213141516171819202122232425262728environment {      // 根据构建">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -339,7 +337,7 @@ environment &amp;#123;
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        159
+                        145
                     </div>
                     
 
@@ -358,34 +356,7 @@ environment &amp;#123;
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="1、动态步骤——when"><a href="#1、动态步骤——when" class="headerlink" title="1、动态步骤——when"></a>1、动态步骤——when</h2><p>通过stage内的when语法，可以实现pipeline的动态步骤。</p>
-<pre class="line-numbers language-groovy" data-language="groovy"><code class="language-groovy">environment <span class="token punctuation">&#123;</span>
-      <span class="token comment">// 根据构建id的奇偶性决定FOO是0还是1</span>
-      FOO <span class="token operator">=</span> <span class="token string gstring">"<span class="token expression"><span class="token punctuation">$</span><span class="token punctuation">&#123;</span>currentBuild<span class="token punctuation">.</span><span class="token function">getNumber</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">2</span><span class="token punctuation">&#125;</span></span>"</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token function">stage</span><span class="token punctuation">(</span><span class="token string gstring">"When"</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    when <span class="token punctuation">&#123;</span>
-        <span class="token comment">// 只有master分支会执行此步骤</span>
-        branch <span class="token string gstring">"master"</span>
-        
-        <span class="token comment">// 只有非master分支会执行此步骤</span>
-        not <span class="token punctuation">&#123;</span>
-            branch <span class="token string gstring">"master"</span>
-        <span class="token punctuation">&#125;</span>
-        
-        <span class="token comment">// 只有环境变量FOO的值等于0时才执行此步骤</span>
-        environment name<span class="token punctuation">:</span> <span class="token string gstring">"FOO"</span><span class="token punctuation">,</span> value<span class="token punctuation">:</span> <span class="token string gstring">"0"</span>
-        
-        <span class="token comment">// 自定义脚本返回true/false决定是否执行此步骤，true为执行，false为不执行</span>
-        expression <span class="token punctuation">&#123;</span>
-          <span class="token comment">// 这里可以是任意的groovy脚本</span>
-          <span class="token keyword">return</span> <span class="token boolean">false</span>
-        <span class="token punctuation">&#125;</span>
-      <span class="token punctuation">&#125;</span>
-      steps <span class="token punctuation">&#123;</span>
-        echo <span class="token string gstring">"World"</span>
-      <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight groovy"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">environment {</span><br><span class="line">      <span class="comment">// 根据构建id的奇偶性决定FOO是0还是1</span></span><br><span class="line">      FOO = <span class="string">"${currentBuild.getNumber() % 2}"</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">stage(<span class="string">"When"</span>) {</span><br><span class="line">    when {</span><br><span class="line">        <span class="comment">// 只有master分支会执行此步骤</span></span><br><span class="line">        branch <span class="string">"master"</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 只有非master分支会执行此步骤</span></span><br><span class="line">        not {</span><br><span class="line">            branch <span class="string">"master"</span></span><br><span class="line">        }</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 只有环境变量FOO的值等于0时才执行此步骤</span></span><br><span class="line">        environment <span class="attr">name:</span> <span class="string">"FOO"</span>, <span class="attr">value:</span> <span class="string">"0"</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 自定义脚本返回true/false决定是否执行此步骤，true为执行，false为不执行</span></span><br><span class="line">        expression {</span><br><span class="line">          <span class="comment">// 这里可以是任意的groovy脚本</span></span><br><span class="line">          <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">      steps {</span><br><span class="line">        echo <span class="string">"World"</span></span><br><span class="line">      }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <p>build视图：</p>
 <p><img src="https://yangmingblog-1259175198.cos.ap-beijing.myqcloud.com/uPic/2022/image-20220422181059256.png" alt="image-20220422181059256"></p>
@@ -812,7 +783,7 @@ environment &amp;#123;
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">78.2k</span>
+                <span class="white-color">77.7k</span>
             
 
             

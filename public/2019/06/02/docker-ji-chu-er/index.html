@@ -350,7 +350,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        611
+                        593
                     </div>
                     
 
@@ -382,7 +382,7 @@
 </li>
 <li><p>卷会一直存在，知道没有容器使用，可以安全地卸载它。</p>
 <h4 id="1-1-创建数据卷"><a href="#1-1-创建数据卷" class="headerlink" title="1.1. 创建数据卷"></a>1.1. 创建数据卷</h4><blockquote>
-<p>$ docker volume create -d local test<br>test<br>$ sudo ls -l &#x2F;var&#x2F;lib&#x2F;docker&#x2F;volumes<br>总用量 28<br>-rw——- 1 root root 32768 6月   2 17:39 metadata.db<br>drwxr-xr-x 3 root root  4096 6月   2 17:39 test</p>
+<p>$ docker volume create -d local test<br>test<br>$ sudo ls -l /var/lib/docker/volumes<br>总用量 28<br>-rw——- 1 root root 32768 6月   2 17:39 metadata.db<br>drwxr-xr-x 3 root root  4096 6月   2 17:39 test</p>
 </blockquote>
 </li>
 </ul>
@@ -390,12 +390,12 @@
 <h4 id="1-2-绑定数据卷"><a href="#1-2-绑定数据卷" class="headerlink" title="1.2. 绑定数据卷"></a>1.2. 绑定数据卷</h4><p>在创建容器时将主机本地的任意路径挂载到容器内作为数据卷，这种形式创建的数据卷称为绑定数据卷。</p>
 <p>docker run命令使用-mount选项来使用数据卷。该选项支持三种类型的数据卷：</p>
 <ul>
-<li>volume：普通数据卷，映射到主机&#x2F;var&#x2F;lib&#x2F;docker&#x2F;volumes路径下；</li>
+<li>volume：普通数据卷，映射到主机/var/lib/docker/volumes路径下；</li>
 <li>bind：绑定数据卷，映射到主机指定路径下；</li>
 <li>tmpfs：临时数据卷 ，只存在于内存中。</li>
 </ul>
 <blockquote>
-<p>使用training&#x2F;webapp镜像创建一个web容器，并创建一个数据卷挂载到容器的&#x2F;opt&#x2F;webapp目录：<br>$ docker run -d -P –name web –mount type&#x3D;bind,source&#x3D;&#x2F;webapp,destination&#x3D;&#x2F;opt&#x2F;webapp training&#x2F;webapp python app.py<br>4c8d75fe28918c96c610200c1fb164dc1e10cbc78b93eef1000e26e3fa328619</p>
+<p>使用training/webapp镜像创建一个web容器，并创建一个数据卷挂载到容器的/opt/webapp目录：<br>$ docker run -d -P –name web –mount type=bind,source=/webapp,destination=/opt/webapp training/webapp python app.py<br>4c8d75fe28918c96c610200c1fb164dc1e10cbc78b93eef1000e26e3fa328619</p>
 </blockquote>
 <p>注意：本地目录必须是绝对路径，容器内目录可以为相对路径。</p>
 <h3 id="2、数据卷容器"><a href="#2、数据卷容器" class="headerlink" title="2、数据卷容器"></a>2、数据卷容器</h3><h3 id="3、利用数据卷容器来迁移数据"><a href="#3、利用数据卷容器来迁移数据" class="headerlink" title="3、利用数据卷容器来迁移数据"></a>3、利用数据卷容器来迁移数据</h3>
@@ -816,7 +816,7 @@
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">78.2k</span>
+                <span class="white-color">77.7k</span>
             
 
             

@@ -8,7 +8,7 @@
     <meta name="description" content="单一职责原则
 单一职责原则 (Single Responsibility Principle)：一个类只负责一个功能领域中的相应职责；或者说，只有一个因素会导致一个类的变化。
 
-    这个原则很好理解，一个软件实体（大到一个模块，小到一个">
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这个原则很好理">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -356,7 +356,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        4.6k
+                        4.7k
                     </div>
                     
 
@@ -377,20 +377,11 @@
                 <h1 id="单一职责原则"><a href="#单一职责原则" class="headerlink" title="单一职责原则"></a>单一职责原则</h1><blockquote>
 <p>单一职责原则 (Single Responsibility Principle)：一个类只负责一个功能领域中的相应职责；或者说，只有一个因素会导致一个类的变化。</p>
 </blockquote>
-<p>    这个原则很好理解，一个软件实体（大到一个模块，小到一个方法）承担的职责越多，那么这个实体被复用的可能性就越低，同时这些职责高度耦合在一起，可能导致其中一个职责变动，影响其他职责的正常运作。</p>
-<p>    举个例子，比如说现在要从数据库里查一些数据，并对这里数据进行一些必要的处理，然后再封装成一个对象返回，可以看到这些步骤之间的关联性并不大，如果把这些操作方法写在一个类里，那大概就是这样的效果：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DataProcessor</span> <span class="token punctuation">&#123;</span>  
-    <span class="token comment">// 获取数据库连接</span>
-    <span class="token keyword">public</span> <span class="token class-name">Connection</span> <span class="token function">getConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span>  
-    <span class="token comment">// 查询数据</span>
-    <span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Data</span><span class="token punctuation">></span></span> <span class="token function">queryData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span>
-    <span class="token comment">// 处理数据</span>
-    <span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Data</span><span class="token punctuation">></span></span> <span class="token function">processData</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Data</span><span class="token punctuation">></span></span> data<span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span>
-    <span class="token comment">// 封装对象</span>
-    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">encapsulate</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Data</span><span class="token punctuation">></span></span> data<span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;这个原则很好理解，一个软件实体（大到一个模块，小到一个方法）承担的职责越多，那么这个实体被复用的可能性就越低，同时这些职责高度耦合在一起，可能导致其中一个职责变动，影响其他职责的正常运作。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;举个例子，比如说现在要从数据库里查一些数据，并对这里数据进行一些必要的处理，然后再封装成一个对象返回，可以看到这些步骤之间的关联性并不大，如果把这些操作方法写在一个类里，那大概就是这样的效果：</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DataProcessor</span> {  </span><br><span class="line">    <span class="comment">// 获取数据库连接</span></span><br><span class="line">    <span class="keyword">public</span> Connection <span class="title function_">getConnection</span><span class="params">()</span>{...}  </span><br><span class="line">    <span class="comment">// 查询数据</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;Data&gt; <span class="title function_">queryData</span><span class="params">()</span>{...}</span><br><span class="line">    <span class="comment">// 处理数据</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;Data&gt; <span class="title function_">processData</span><span class="params">(List&lt;Data&gt; data)</span>{...}</span><br><span class="line">    <span class="comment">// 封装对象</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">encapsulate</span><span class="params">(List&lt;Data&gt; data)</span>{...}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<p>    很明显DataProcessor类承担了太多它不应该承担的职责，如果有其他的类也需要获取数据库连接，或者查询数据，那么代码将产生重复的代码，因此可以对这个类进行拆分：</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;很明显DataProcessor类承担了太多它不应该承担的职责，如果有其他的类也需要获取数据库连接，或者查询数据，那么代码将产生重复的代码，因此可以对这个类进行拆分：</p>
 <ul>
 <li><p>DBUtil：负责连接数据库，提供getConnection()方法；</p>
 </li>
@@ -399,328 +390,130 @@
 <li><p>DataEncapsulater：负责将数据进行封装，提供encapsulate()方法；</p>
 </li>
 </ul>
-<p>    拆分后的效果：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DBUtil</span> <span class="token punctuation">&#123;</span>  
-    <span class="token comment">// 获取数据库连接</span>
-    <span class="token keyword">public</span> <span class="token class-name">Connection</span> <span class="token function">getConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span>  
-<span class="token punctuation">&#125;</span>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;拆分后的效果：</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DBUtil</span> {  </span><br><span class="line">    <span class="comment">// 获取数据库连接</span></span><br><span class="line">    <span class="keyword">public</span> Connection <span class="title function_">getConnection</span><span class="params">()</span>{...}  </span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DataDAO</span> {  </span><br><span class="line">    <span class="comment">// 注入DBUtil依赖</span></span><br><span class="line">    <span class="keyword">private</span> DBUtil dbUtil;</span><br><span class="line">    <span class="comment">// 查询数据</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;Data&gt; <span class="title function_">queryData</span><span class="params">()</span>{...}</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DataProcessor</span> {  </span><br><span class="line">    <span class="keyword">private</span> DataDAO dataDAO;</span><br><span class="line">    <span class="comment">// 处理数据</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;Data&gt; <span class="title function_">processData</span><span class="params">(List&lt;Data&gt; data)</span>{...}</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DataEncapsulater</span> {  </span><br><span class="line">    <span class="comment">// 封装对象</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">encapsulate</span><span class="params">(List&lt;Data&gt; data)</span>{...}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DataDAO</span> <span class="token punctuation">&#123;</span>  
-    <span class="token comment">// 注入DBUtil依赖</span>
-    <span class="token keyword">private</span> <span class="token class-name">DBUtil</span> dbUtil<span class="token punctuation">;</span>
-    <span class="token comment">// 查询数据</span>
-    <span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Data</span><span class="token punctuation">></span></span> <span class="token function">queryData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DataProcessor</span> <span class="token punctuation">&#123;</span>  
-    <span class="token keyword">private</span> <span class="token class-name">DataDAO</span> dataDAO<span class="token punctuation">;</span>
-    <span class="token comment">// 处理数据</span>
-    <span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Data</span><span class="token punctuation">></span></span> <span class="token function">processData</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Data</span><span class="token punctuation">></span></span> data<span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DataEncapsulater</span> <span class="token punctuation">&#123;</span>  
-    <span class="token comment">// 封装对象</span>
-    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">encapsulate</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Data</span><span class="token punctuation">></span></span> data<span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>    拆分之后每一个类都遵循单一职责原则，实现各自类的代码复用。</p>
-<p>    单一职责原则是实现<strong>高内聚、低耦合</strong>的指导方针，运用的单一职责原则要求设计人员对类的多重职责进行分析，并按照职责将其拆分，这并不是件容易的事情。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;拆分之后每一个类都遵循单一职责原则，实现各自类的代码复用。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;单一职责原则是实现<strong>高内聚、低耦合</strong>的指导方针，运用的单一职责原则要求设计人员对类的多重职责进行分析，并按照职责将其拆分，这并不是件容易的事情。</p>
 <hr>
 <h1 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h1><blockquote>
 <p>开闭原则 (Open-Closed Principle)：一个软件实体应当对扩展开放，对修改关闭。即软件实体应尽量在不修改原有代码的情况下进行扩展。</p>
 </blockquote>
-<p>    同样，这里的软件实体也可以指一个完整的软件模块或者一个模块的局部模块，或者是一个独立的类。</p>
-<p>    任何软件系统都避免不了一个永恒的问题：需求更改。所以一个系统在面对新需求时的改动成本，衡量了一个系统的灵活性与稳定性。而开闭原则的目的就是提高系统的灵活性和稳定性。</p>
-<p>    <strong>抽象化</strong>是开闭原则的关键，通过为系统提供一个相对稳定的抽象层，而在实现层实现具体你的行为，这样即使需要修改系统的行为，也无需修改抽象层，只需要新增对应的实现类来实现具体的业务功能即可，从而达到不修改已有代码的基础上扩展系统功能。</p>
-<p>    举个例子，比如说有一个形状工厂，根据输入的字符串，返回对应的形状，伪代码大概是这个样子：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">interface</span> <span class="token class-name">Shape</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-<span class="token keyword">class</span> <span class="token class-name">Square</span> <span class="token keyword">implements</span> <span class="token class-name">Shape</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-<span class="token keyword">class</span> <span class="token class-name">Circle</span> <span class="token keyword">implements</span> <span class="token class-name">Shape</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-<span class="token keyword">class</span> <span class="token class-name">ShapeFactory</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token class-name">Shape</span> <span class="token function">produceShape</span><span class="token punctuation">(</span><span class="token class-name">String</span> type<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">Shape</span> s <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>type<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"square"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            s <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Square</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>type<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"circle"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            s <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Circle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">return</span> s<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>   
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;同样，这里的软件实体也可以指一个完整的软件模块或者一个模块的局部模块，或者是一个独立的类。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;任何软件系统都避免不了一个永恒的问题：需求更改。所以一个系统在面对新需求时的改动成本，衡量了一个系统的灵活性与稳定性。而开闭原则的目的就是提高系统的灵活性和稳定性。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>抽象化</strong>是开闭原则的关键，通过为系统提供一个相对稳定的抽象层，而在实现层实现具体你的行为，这样即使需要修改系统的行为，也无需修改抽象层，只需要新增对应的实现类来实现具体的业务功能即可，从而达到不修改已有代码的基础上扩展系统功能。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;举个例子，比如说有一个形状工厂，根据输入的字符串，返回对应的形状，伪代码大概是这个样子：</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Shape</span> {}</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Square</span> <span class="keyword">implements</span> <span class="title class_">Shape</span> {}</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Circle</span> <span class="keyword">implements</span> <span class="title class_">Shape</span> {}</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ShapeFactory</span> {</span><br><span class="line">    <span class="keyword">public</span> Shape <span class="title function_">produceShape</span><span class="params">(String type)</span> {</span><br><span class="line">        <span class="type">Shape</span> <span class="variable">s</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(type.equals(<span class="string">"square"</span>)){</span><br><span class="line">            s = <span class="keyword">new</span> <span class="title class_">Square</span>();</span><br><span class="line">        }<span class="keyword">else</span> <span class="keyword">if</span>(type.equals(<span class="string">"circle"</span>)){</span><br><span class="line">            s = <span class="keyword">new</span> <span class="title class_">Circle</span>();</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    }   </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<p>    上面这段代码正常执行是没有问题的，也能满足业务需求，但是如果有一天需要加一种新的形状triangle，需要改什么？首先需要添加一种Shape实现，没有问题，但是问题是还需要修改ShapeFactory的代码逻辑，这就很糟糕了，加一个改一次？卷铺盖走人吧兄弟。</p>
-<p>    把上面的代码简单的改造一下：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">interface</span> <span class="token class-name">Shape</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-<span class="token keyword">class</span> <span class="token class-name">Square</span> <span class="token keyword">implements</span> <span class="token class-name">Shape</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-<span class="token keyword">class</span> <span class="token class-name">Circle</span> <span class="token keyword">implements</span> <span class="token class-name">Shape</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-<span class="token keyword">interface</span> <span class="token class-name">ShapeFactory</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token class-name">Shape</span> <span class="token function">produceShape</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">class</span> <span class="token class-name">SquareFactory</span> <span class="token keyword">implements</span> <span class="token class-name">ShapeFactory</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token class-name">Shape</span> <span class="token function">produceShape</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Square</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span> 
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">class</span> <span class="token class-name">CircleFactory</span> <span class="token keyword">implements</span> <span class="token class-name">ShapeFactory</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token class-name">Shape</span> <span class="token function">produceShape</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Circle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span> 
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;上面这段代码正常执行是没有问题的，也能满足业务需求，但是如果有一天需要加一种新的形状triangle，需要改什么？首先需要添加一种Shape实现，没有问题，但是问题是还需要修改ShapeFactory的代码逻辑，这就很糟糕了，加一个改一次？卷铺盖走人吧兄弟。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;把上面的代码简单的改造一下：</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Shape</span> {}</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Square</span> <span class="keyword">implements</span> <span class="title class_">Shape</span> {}</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Circle</span> <span class="keyword">implements</span> <span class="title class_">Shape</span> {}</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">ShapeFactory</span> {</span><br><span class="line">    <span class="keyword">public</span> Shape <span class="title function_">produceShape</span><span class="params">()</span></span><br><span class="line">}</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SquareFactory</span> <span class="keyword">implements</span> <span class="title class_">ShapeFactory</span>{</span><br><span class="line">    <span class="keyword">public</span> Shape <span class="title function_">produceShape</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Square</span>();</span><br><span class="line">    } </span><br><span class="line">}</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CircleFactory</span> <span class="keyword">implements</span> <span class="title class_">ShapeFactory</span>{</span><br><span class="line">    <span class="keyword">public</span> Shape <span class="title function_">produceShape</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Circle</span>();</span><br><span class="line">    } </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<p>    把ShapeFactory提取成一个抽象层，不同的形状工厂提供具体实现，这样新加一种形状的时候，就只需要新加一个工厂就可以了，符合开闭原则。</p>
-<p>    注意：因为xml和properties等格式的配置文件是纯文本文件，可以直接通过VI编辑器或记事本进行编辑，且无须编译，因此在软件开发中，一般不把对配置文件的修改认为是对系统源代码的修改。如果一个系统在扩展时只涉及到修改配置文件，而原有的Java代码或C#代码没有做任何修改，该系统即可认为是一个符合开闭原则的系统。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;把ShapeFactory提取成一个抽象层，不同的形状工厂提供具体实现，这样新加一种形状的时候，就只需要新加一个工厂就可以了，符合开闭原则。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;注意：因为xml和properties等格式的配置文件是纯文本文件，可以直接通过VI编辑器或记事本进行编辑，且无须编译，因此在软件开发中，一般不把对配置文件的修改认为是对系统源代码的修改。如果一个系统在扩展时只涉及到修改配置文件，而原有的Java代码或C#代码没有做任何修改，该系统即可认为是一个符合开闭原则的系统。</p>
 <hr>
-<h1 id="里氏替换原则"><a href="#里氏替换原则" class="headerlink" title="里氏替换原则"></a>里氏替换原则</h1><p>    里氏替换原则的定义非常之抽象，甚至可以说是完全看不懂，放出来看一看就行了，但是解释完应该就能明白它是干啥的了。</p>
+<h1 id="里氏替换原则"><a href="#里氏替换原则" class="headerlink" title="里氏替换原则"></a>里氏替换原则</h1><p>&nbsp;&nbsp;&nbsp;&nbsp;里氏替换原则的定义非常之抽象，甚至可以说是完全看不懂，放出来看一看就行了，但是解释完应该就能明白它是干啥的了。</p>
 <blockquote>
 <p>里氏替换原则 (Liskov Substitution Principle)：如果对每一个类型为S的对象o1，都有类型为T的对象o2，使得以T定义的所有程序P在所有的对象o1代换o2时，程序P的行为没有变化，那么类型S是类型T的子类型。</p>
 </blockquote>
-<p>    怎么样，懂了吗？还请看懂的给我讲讲。</p>
-<p>    也不整那么些废话了，直接来个通俗易懂的例子，比如说，一个方法的声明是这个样子：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">function</span><span class="token punctuation">(</span><span class="token class-name">BaseClass</span> clazz<span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;怎么样，懂了吗？还请看懂的给我讲讲。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;也不整那么些废话了，直接来个通俗易懂的例子，比如说，一个方法的声明是这个样子：</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">function</span><span class="params">(BaseClass clazz)</span>{...}</span><br></pre></td></tr></tbody></table></figure>
 
-<p>    方法的声明参数类型是BaseClass，但是调用这个方法的时候，如果传BaseClass的子类，不会有任何问题，但是不能传其他的类型包括BaseClass的父类。</p>
-<p>    这样是不是有点明白了？还不明白？那就再通俗一点。</p>
-<p>    其实这个原则最终表达的一层意思就是，子类在继承或实现父类的时候，只实现自己的功能，而不修改父类原有的功能。又绕了？上段代码：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">A</span><span class="token punctuation">&#123;</span>  
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">func1</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  
-        <span class="token keyword">return</span> a<span class="token operator">-</span>b<span class="token punctuation">;</span>  
-    <span class="token punctuation">&#125;</span>  
-<span class="token punctuation">&#125;</span>  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;方法的声明参数类型是BaseClass，但是调用这个方法的时候，如果传BaseClass的子类，不会有任何问题，但是不能传其他的类型包括BaseClass的父类。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;这样是不是有点明白了？还不明白？那就再通俗一点。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;其实这个原则最终表达的一层意思就是，子类在继承或实现父类的时候，只实现自己的功能，而不修改父类原有的功能。又绕了？上段代码：</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>{  </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">func1</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> {  </span><br><span class="line">        <span class="keyword">return</span> a-b;  </span><br><span class="line">    }  </span><br><span class="line">}  </span><br></pre></td></tr></tbody></table></figure>
 
-<p>    类A有一个方法，功能是计算两个数的减法。这个时候想要给这段代码加一个功能，让它支持加法和乘法，并且这两个功能要让他的子类B实现，怎么写？那就让B继承一下A呗：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">B</span> <span class="token keyword">extends</span> <span class="token class-name">A</span><span class="token punctuation">&#123;</span>  
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">func1</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>  
-        <span class="token keyword">return</span> a<span class="token operator">+</span>b<span class="token punctuation">;</span>  
-    <span class="token punctuation">&#125;</span>  
+<p>&nbsp;&nbsp;&nbsp;&nbsp;类A有一个方法，功能是计算两个数的减法。这个时候想要给这段代码加一个功能，让它支持加法和乘法，并且这两个功能要让他的子类B实现，怎么写？那就让B继承一下A呗：</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">B</span> <span class="keyword">extends</span> <span class="title class_">A</span>{  </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">func1</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span>{  </span><br><span class="line">        <span class="keyword">return</span> a+b;  </span><br><span class="line">    }  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">func2</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span>{  </span><br><span class="line">        <span class="keyword">return</span> a*b;  </span><br><span class="line">    }  </span><br><span class="line">}  </span><br></pre></td></tr></tbody></table></figure>
 
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">func2</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>  
-        <span class="token keyword">return</span> a<span class="token operator">*</span>b<span class="token punctuation">;</span>  
-    <span class="token punctuation">&#125;</span>  
-<span class="token punctuation">&#125;</span>  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>    这样类B就实现了加法和乘法，看起来没毛病，但是你会发现，类A原本的减法不能用了，被子类B重写掉了，这就给原有的功能造成了问题。</p>
-<p>    假如就这么写，和上一个例子结合一下，那就是：</p>
-<p>    如果一个方法的参数声明成类A，那么按照第一个例子的说法，传类B进去应该不会有任何问题，那么问题来了，如果按第二个实例的写法，传类B过去，编译上虽然不会有问题，但是当调用func1()方法的时候，传类A和传类B的结果是不一样的，也就是说把函数声明里的类A换成类B的结果是不一样的，也就是不能互相换！也就是不符合里氏替换原则。</p>
-<p>    好，下一个！</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;这样类B就实现了加法和乘法，看起来没毛病，但是你会发现，类A原本的减法不能用了，被子类B重写掉了，这就给原有的功能造成了问题。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;假如就这么写，和上一个例子结合一下，那就是：</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;如果一个方法的参数声明成类A，那么按照第一个例子的说法，传类B进去应该不会有任何问题，那么问题来了，如果按第二个实例的写法，传类B过去，编译上虽然不会有问题，但是当调用func1()方法的时候，传类A和传类B的结果是不一样的，也就是说把函数声明里的类A换成类B的结果是不一样的，也就是不能互相换！也就是不符合里氏替换原则。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;好，下一个！</p>
 <hr>
 <h1 id="依赖倒置原则"><a href="#依赖倒置原则" class="headerlink" title="依赖倒置原则"></a>依赖倒置原则</h1><blockquote>
-<p>    依赖倒置原则 (Dependence Inversion Principle)：抽象不应该依赖于细节，细节应该依赖与抽象，简言之，应该面向抽象编程，而不是面向细节编程</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;依赖倒置原则 (Dependence Inversion Principle)：抽象不应该依赖于细节，细节应该依赖与抽象，简言之，应该面向抽象编程，而不是面向细节编程</p>
 </blockquote>
-<p>    这个原则其实说了一个事：在程序中传递参数或者声明关联关系的时候，尽量使用抽象层类类声明，而不是具体的实现类，然后为了保证这样的做法可行，就要求实现类里应该只实现抽象层里声明的方法，而不应该有多余的业务方法，否则通过抽象层访问不到实现层的多余方法。</p>
-<p>    到这里，你可能会发现，前面说的这几个原则之间存在着一些微妙的联系，这些原则并不是孤立存在单独出现的，而一般都是同时出现，同时运用，相辅相成，从而达成一致的目标——解耦。</p>
-<p>    回到依赖倒置原则，还是举个例子来理解一下，生活中不乏这样的场景。</p>
-<p>    以DVD为例，不知道DVD是啥？只能说，年轻真好。DVD能播放磁带，但是你会发现，不管什么样品牌什么样型号的DVD，或者什么类型的磁带，都能开箱即用，放进去就播，这是因为DVD厂商和磁带厂商之间达成了一种共同的标准，这个标准就是传说中的抽象层。用代码表述一下。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">MusicCD</span><span class="token punctuation">&#123;</span>  
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>  
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"这是一张音乐CD"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-    <span class="token punctuation">&#125;</span>  
-<span class="token punctuation">&#125;</span>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;这个原则其实说了一个事：在程序中传递参数或者声明关联关系的时候，尽量使用抽象层类类声明，而不是具体的实现类，然后为了保证这样的做法可行，就要求实现类里应该只实现抽象层里声明的方法，而不应该有多余的业务方法，否则通过抽象层访问不到实现层的多余方法。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;到这里，你可能会发现，前面说的这几个原则之间存在着一些微妙的联系，这些原则并不是孤立存在单独出现的，而一般都是同时出现，同时运用，相辅相成，从而达成一致的目标——解耦。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;回到依赖倒置原则，还是举个例子来理解一下，生活中不乏这样的场景。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;以DVD为例，不知道DVD是啥？只能说，年轻真好。DVD能播放磁带，但是你会发现，不管什么样品牌什么样型号的DVD，或者什么类型的磁带，都能开箱即用，放进去就播，这是因为DVD厂商和磁带厂商之间达成了一种共同的标准，这个标准就是传说中的抽象层。用代码表述一下。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MusicCD</span>{  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">play</span><span class="params">()</span>{  </span><br><span class="line">        System.out.println(<span class="string">"这是一张音乐CD"</span>); </span><br><span class="line">    }  </span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DVD</span>{  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">broadcast</span><span class="params">(MusicCD musicCD)</span>{  </span><br><span class="line">        System.out.println(<span class="string">"DVD开始播放音乐CD"</span>);  </span><br><span class="line">        musicCD.play(); </span><br><span class="line">    }  </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token keyword">class</span> DVD<span class="token punctuation">&#123;</span>  
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">broadcast</span><span class="token punctuation">(</span><span class="token class-name">MusicCD</span> musicCD<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>  
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"DVD开始播放音乐CD"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-        musicCD<span class="token punctuation">.</span><span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-    <span class="token punctuation">&#125;</span>  
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Client</span>{  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>{  </span><br><span class="line">        <span class="type">DVD</span> <span class="variable">dvd</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DVD</span>();  </span><br><span class="line">        dvd.broadcast(<span class="keyword">new</span> <span class="title class_">MusicCD</span>());  </span><br><span class="line">    }  </span><br><span class="line">}  </span><br></pre></td></tr></tbody></table></figure>
 
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span><span class="token punctuation">&#123;</span>  
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>  
-        <span class="token class-name">DVD</span> dvd <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">DVD</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-        dvd<span class="token punctuation">.</span><span class="token function">broadcast</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">MusicCD</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-    <span class="token punctuation">&#125;</span>  
-<span class="token punctuation">&#125;</span>  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;这段代码实现了一个能播放音乐CD的DVD，非常美好，但假如有一天，你听音乐听腻了，想播放一张电影CD，你会发现，你的DVD干不了这个事，它只会播放音乐CD，要想看电影CD，不好意思，换个DVD，多痛苦啊。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;所以自然会想到，应该给这个音乐CD整个抽象，抽象出和它具有共性的一类东西，就是CD，然后让DVD只管播放CD，而不管是什么CD。按照这个思路来改造一下：</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;先整个CD的接口抽象，具有抽象的播放行为。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">CD</span>{  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">play</span><span class="params">()</span>;  </span><br><span class="line">} </span><br></pre></td></tr></tbody></table></figure>
 
-<p>    这段代码实现了一个能播放音乐CD的DVD，非常美好，但假如有一天，你听音乐听腻了，想播放一张电影CD，你会发现，你的DVD干不了这个事，它只会播放音乐CD，要想看电影CD，不好意思，换个DVD，多痛苦啊。</p>
-<p>    所以自然会想到，应该给这个音乐CD整个抽象，抽象出和它具有共性的一类东西，就是CD，然后让DVD只管播放CD，而不管是什么CD。按照这个思路来改造一下：</p>
-<p>    先整个CD的接口抽象，具有抽象的播放行为。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">interface</span> CD<span class="token punctuation">&#123;</span>  
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-<span class="token punctuation">&#125;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;再让音乐CD和电影CD都去实现抽象的CD，实现不同的播放行为。当然还会有更多类型的CD。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MusicCD</span> <span class="keyword">implements</span> <span class="title class_">CD</span> {  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">play</span><span class="params">()</span>{  </span><br><span class="line">        System.out.println(<span class="string">"这是一张音乐CD"</span>); </span><br><span class="line">    }  </span><br><span class="line">}  </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MovieCD</span> <span class="keyword">implements</span> <span class="title class_">CD</span>{  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">play</span><span class="params">()</span>{  </span><br><span class="line">        System.out.println(<span class="string">"这是一张电影CD"</span>); </span><br><span class="line">    }   </span><br><span class="line">} </span><br></pre></td></tr></tbody></table></figure>
 
-<p>    再让音乐CD和电影CD都去实现抽象的CD，实现不同的播放行为。当然还会有更多类型的CD。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">MusicCD</span> <span class="token keyword">implements</span> CD <span class="token punctuation">&#123;</span>  
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>  
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"这是一张音乐CD"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-    <span class="token punctuation">&#125;</span>  
-<span class="token punctuation">&#125;</span>  
-<span class="token keyword">class</span> <span class="token class-name">MovieCD</span> <span class="token keyword">implements</span> CD<span class="token punctuation">&#123;</span>  
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>  
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"这是一张电影CD"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-    <span class="token punctuation">&#125;</span>   
-<span class="token punctuation">&#125;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;然后让DVD能播放CD：</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">DVD</span>{  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">broadcast</span><span class="params">(CD cd)</span>{  </span><br><span class="line">        System.out.println(<span class="string">"DVD开始播放CD"</span>);  </span><br><span class="line">        cd.play(); </span><br><span class="line">    }  </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<p>    然后让DVD能播放CD：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> DVD<span class="token punctuation">&#123;</span>  
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">broadcast</span><span class="token punctuation">(</span><span class="token class-name">CD</span> cd<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>  
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"DVD开始播放CD"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-        cd<span class="token punctuation">.</span><span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-    <span class="token punctuation">&#125;</span>  
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>    这样我们的DVD就比较全能了，只要是CD，它就能放，这就舒服了不是。</p>
-<p>    但是注意具体的CD实现里不能干别的事，比如说MusicCD里还会讲故事，对不起，讲故事这种行为在CD的抽象里没说，所以DVD根本不知道你会讲故事，你会也没用，我调不着。</p>
-<p>    好！下一个！</p>
-<p>    顶不住了今天，明天再下一个吧。。。。</p>
+<p>&nbsp;&nbsp;&nbsp; 这样我们的DVD就比较全能了，只要是CD，它就能放，这就舒服了不是。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;但是注意具体的CD实现里不能干别的事，比如说MusicCD里还会讲故事，对不起，讲故事这种行为在CD的抽象里没说，所以DVD根本不知道你会讲故事，你会也没用，我调不着。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;好！下一个！</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;顶不住了今天，明天再下一个吧。。。。</p>
 <hr>
-<p>    哎嗨！今天又是元气满满的一个晚上呢！接着来！</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;哎嗨！今天又是元气满满的一个晚上呢！接着来！</p>
 <h1 id="接口隔离原则"><a href="#接口隔离原则" class="headerlink" title="接口隔离原则"></a>接口隔离原则</h1><blockquote>
 <p>接口隔离原则 (Interface Segregation Principle)：使用多个专门的接口，而不使用单一的总接口，即客户端不应该依赖那些它不需要的接口。</p>
 </blockquote>
-<p>    接口隔离原则强调，一个接口应该只承担它应当承担的角色，有点像单一职责原则，只不过单一职责原则是针对以个类或者一个模块来说，接口隔离原则是针对接口而言。</p>
-<p>    直接上例子，这个例子我苦思冥想了十分钟啊！虽然不怎么合理，但是对这个原则来说很形象，仅供参考。</p>
-<p>    比如说有一个学校，这个学校开设了一些课程，比如说，厨师课程、挖掘机课程、程序员课程，等等，但是这个学校要求学校里的所有学生必须要学习所有课程，也就是说，只要是这个学校的学生，就既要学厨师课程，又得学挖掘机课程，还得学程序员课程，尽管可能用人单位向这所学校只招一个厨师，那学生学习的挖掘机和程序员技能，就白学了。到这可还清楚？</p>
-<p>    那怎么改善这种情况呢？在不改变学生必须学习学校的所有课程这一前提下，让用人单位招到技能专一的学生？那自然是多开几个学校，每个学校开设一种课程或者一类课程，用人单位用什么人就去什么学校招，是不是就解决了呢。</p>
-<p>    用代码表达来体会一下：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 学校接口</span>
-<span class="token keyword">interface</span> <span class="token class-name">School</span><span class="token punctuation">&#123;</span>  
-    <span class="token comment">// 厨师课程</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">cooking</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-    <span class="token comment">// 程序员课程</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">coding</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// 挖掘机课程（不会翻译，凑合看）</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> 挖土<span class="token function">ing</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;接口隔离原则强调，一个接口应该只承担它应当承担的角色，有点像单一职责原则，只不过单一职责原则是针对以个类或者一个模块来说，接口隔离原则是针对接口而言。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;直接上例子，这个例子我苦思冥想了十分钟啊！虽然不怎么合理，但是对这个原则来说很形象，仅供参考。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;比如说有一个学校，这个学校开设了一些课程，比如说，厨师课程、挖掘机课程、程序员课程，等等，但是这个学校要求学校里的所有学生必须要学习所有课程，也就是说，只要是这个学校的学生，就既要学厨师课程，又得学挖掘机课程，还得学程序员课程，尽管可能用人单位向这所学校只招一个厨师，那学生学习的挖掘机和程序员技能，就白学了。到这可还清楚？</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;那怎么改善这种情况呢？在不改变学生必须学习学校的所有课程这一前提下，让用人单位招到技能专一的学生？那自然是多开几个学校，每个学校开设一种课程或者一类课程，用人单位用什么人就去什么学校招，是不是就解决了呢。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;用代码表达来体会一下：</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 学校接口</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">School</span>{  </span><br><span class="line">    <span class="comment">// 厨师课程</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">cooking</span><span class="params">()</span>;  </span><br><span class="line">    <span class="comment">// 程序员课程</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">coding</span><span class="params">()</span>;</span><br><span class="line">    <span class="comment">// 挖掘机课程（不会翻译，凑合看）</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> 挖土ing();</span><br><span class="line">} </span><br></pre></td></tr></tbody></table></figure>
 
-<p>    然后这个学校（接口）的所有学生（实现类），必须学习（实现）学校的所有课程（方法）：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Student1</span> <span class="token keyword">implements</span> <span class="token class-name">School</span><span class="token punctuation">&#123;</span>
-    <span class="token comment">// 厨师课程</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">cooking</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span>  
-    <span class="token comment">// 程序员课程</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">coding</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span>
-    <span class="token comment">// 挖掘机课程（不会翻译，凑合看）</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> 挖土<span class="token function">ing</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;然后这个学校（接口）的所有学生（实现类），必须学习（实现）学校的所有课程（方法）：</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student1</span> <span class="keyword">implements</span> <span class="title class_">School</span>{</span><br><span class="line">    <span class="comment">// 厨师课程</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">cooking</span><span class="params">()</span>{...}  </span><br><span class="line">    <span class="comment">// 程序员课程</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">coding</span><span class="params">()</span>{...}</span><br><span class="line">    <span class="comment">// 挖掘机课程（不会翻译，凑合看）</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> 挖土ing(){...}</span><br><span class="line">} </span><br></pre></td></tr></tbody></table></figure>
 
-<p>    然后有一家公司，来这所学校招人，只要一个会敲代码的程序员：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Compony</span><span class="token punctuation">&#123;</span>  
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">employ</span><span class="token punctuation">(</span><span class="token class-name">School</span> s<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>  
-        s<span class="token punctuation">.</span><span class="token function">coding</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-    <span class="token punctuation">&#125;</span>  
-<span class="token punctuation">&#125;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;然后有一家公司，来这所学校招人，只要一个会敲代码的程序员：</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Compony</span>{  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">employ</span><span class="params">(School s)</span>{  </span><br><span class="line">        s.coding();  </span><br><span class="line">    }  </span><br><span class="line">} </span><br></pre></td></tr></tbody></table></figure>
 
-<p>    那这样这个学生的厨师技能和挖掘机技能就白学了不是，费那劲干啥。所以开多几个学校：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 厨师学校</span>
-<span class="token keyword">interface</span> <span class="token class-name">CookingSchool</span><span class="token punctuation">&#123;</span>  
-    <span class="token comment">// 厨师课程</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">cooking</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-<span class="token punctuation">&#125;</span> 
-<span class="token comment">// 程序员学校</span>
-<span class="token keyword">interface</span> <span class="token class-name">CodingSchool</span><span class="token punctuation">&#123;</span>  
-    <span class="token comment">// 程序员课程</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">coding</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span> 
-<span class="token comment">// 挖掘机学校</span>
-<span class="token keyword">interface</span> 挖土<span class="token class-name">School</span><span class="token punctuation">&#123;</span>  
-    <span class="token comment">// 挖掘机课程（不会翻译，凑合看）</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> 挖土<span class="token function">ing</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-<span class="token punctuation">&#125;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;那这样这个学生的厨师技能和挖掘机技能就白学了不是，费那劲干啥。所以开多几个学校：</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 厨师学校</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">CookingSchool</span>{  </span><br><span class="line">    <span class="comment">// 厨师课程</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">cooking</span><span class="params">()</span>; </span><br><span class="line">} </span><br><span class="line"><span class="comment">// 程序员学校</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">CodingSchool</span>{  </span><br><span class="line">    <span class="comment">// 程序员课程</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">coding</span><span class="params">()</span>;</span><br><span class="line">} </span><br><span class="line"><span class="comment">// 挖掘机学校</span></span><br><span class="line">interface 挖土School{  </span><br><span class="line">    <span class="comment">// 挖掘机课程（不会翻译，凑合看）</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> 挖土ing(); </span><br><span class="line">} </span><br></pre></td></tr></tbody></table></figure>
 
-<p>    实现类（学生）就没有必要写了，直接看看这下公司是怎么招人的：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Compony</span><span class="token punctuation">&#123;</span> 
-    <span class="token comment">// 去厨师学校招一个会做饭的 </span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">employ1</span><span class="token punctuation">(</span><span class="token class-name">CookingSchool</span> cs<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>  
-        cs<span class="token punctuation">.</span><span class="token function">cooking</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-    <span class="token punctuation">&#125;</span>  
-    <span class="token comment">// 去程序员学校招一个会敲代码的</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">employ2</span><span class="token punctuation">(</span><span class="token class-name">CodingSchool</span> cs<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>  
-        cs<span class="token punctuation">.</span><span class="token function">coding</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-    <span class="token punctuation">&#125;</span> 
-<span class="token punctuation">&#125;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;实现类（学生）就没有必要写了，直接看看这下公司是怎么招人的：</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Compony</span>{ </span><br><span class="line">    <span class="comment">// 去厨师学校招一个会做饭的 </span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">employ1</span><span class="params">(CookingSchool cs)</span>{  </span><br><span class="line">        cs.cooking();  </span><br><span class="line">    }  </span><br><span class="line">    <span class="comment">// 去程序员学校招一个会敲代码的</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">employ2</span><span class="params">(CodingSchool cs)</span>{  </span><br><span class="line">        cs.coding();  </span><br><span class="line">    } </span><br><span class="line">} </span><br></pre></td></tr></tbody></table></figure>
 
-<p>    这，就是接口隔离原则！下一个！</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;这，就是接口隔离原则！下一个！</p>
 <hr>
-<h1 id="组合-x2F-聚合复用原则"><a href="#组合-x2F-聚合复用原则" class="headerlink" title="组合&#x2F;聚合复用原则"></a>组合&#x2F;聚合复用原则</h1><blockquote>
-<p>组合&#x2F;聚合复用原则 (Composite&#x2F;Aggregate Reuse Principle)：尽量使用对象组合，而不是继承来达到复用的目的。</p>
+<h1 id="组合-x2F-聚合复用原则"><a href="#组合-x2F-聚合复用原则" class="headerlink" title="组合/聚合复用原则"></a>组合/聚合复用原则</h1><blockquote>
+<p>组合/聚合复用原则 (Composite/Aggregate Reuse Principle)：尽量使用对象组合，而不是继承来达到复用的目的。</p>
 </blockquote>
-<p>    定义已经说的比较清楚了，就是想复用代码的时候，尽量不要用继承，而是用组合或者聚合这种对象的关联关系来实现。那就要问了：为什么呢？人家继承怎么就不建议用了呢？简单分析一波：</p>
-<p>    首先，使用组合&#x2F;聚合关系，可以让系统更加灵活，因为类与类之间的耦合度不高，一个类变化对另一个类的影响很小，而继承就不一样了，子类直接继承父类，父类方法的实现细节也直接暴露给了子类，这就破坏了面向对象的封装性，而且使用继承必须要严格遵守里式替换原则，否则系统的复杂度和维护难度嗖的一下就上去了，理解？直接上例子。</p>
-<p>    这个例子说的是这么个事儿：一个业务场景需要连接数据库，假设是MySQL，整了一个DBUtil，但是业务类直接继承这个DBUtil，就像这样：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">DBUtil</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token class-name">Connection</span> <span class="token function">getConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">class</span> <span class="token class-name">CustomerService</span> <span class="token keyword">extends</span> <span class="token class-name">DBUtil</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">getConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;定义已经说的比较清楚了，就是想复用代码的时候，尽量不要用继承，而是用组合或者聚合这种对象的关联关系来实现。那就要问了：为什么呢？人家继承怎么就不建议用了呢？简单分析一波：</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;首先，使用组合/聚合关系，可以让系统更加灵活，因为类与类之间的耦合度不高，一个类变化对另一个类的影响很小，而继承就不一样了，子类直接继承父类，父类方法的实现细节也直接暴露给了子类，这就破坏了面向对象的封装性，而且使用继承必须要严格遵守里式替换原则，否则系统的复杂度和维护难度嗖的一下就上去了，理解？直接上例子。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;这个例子说的是这么个事儿：一个业务场景需要连接数据库，假设是MySQL，整了一个DBUtil，但是业务类直接继承这个DBUtil，就像这样：</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">DBUtil</span>{</span><br><span class="line">    <span class="keyword">public</span> Connection <span class="title function_">getConnection</span><span class="params">()</span>;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CustomerService</span> <span class="keyword">extends</span> <span class="title class_">DBUtil</span>{</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">save</span><span class="params">()</span>{</span><br><span class="line">        ...</span><br><span class="line">        <span class="built_in">super</span>.getConnection();</span><br><span class="line">        ...</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<p>     看起来也没啥问题，但是如果有一天，系统的数据库要改为Oracle，可咋整啊，新加一个OracleDBUtil，让CustomerService继承OracleDBUtil？还是直接修改DBUtil把getConnection()的逻辑换成Oracle的？无论怎样都违反了开闭原则，所以这种设计本身就是有问题的，简单改造一下：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">interface</span> <span class="token class-name">DBUtil</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token class-name">Connection</span> <span class="token function">getConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;看起来也没啥问题，但是如果有一天，系统的数据库要改为Oracle，可咋整啊，新加一个OracleDBUtil，让CustomerService继承OracleDBUtil？还是直接修改DBUtil把getConnection()的逻辑换成Oracle的？无论怎样都违反了开闭原则，所以这种设计本身就是有问题的，简单改造一下：</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">DBUtil</span>{</span><br><span class="line">    <span class="keyword">public</span> Connection <span class="title function_">getConnection</span><span class="params">()</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MysqlDBUtil</span> <span class="keyword">implements</span> <span class="title class_">DBUtil</span>{</span><br><span class="line">    <span class="keyword">public</span> Connection <span class="title function_">getConnection</span><span class="params">()</span>{</span><br><span class="line">        <span class="comment">// 连接MySQL的逻辑</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">OracleDBUtil</span> <span class="keyword">implements</span> <span class="title class_">DBUtil</span>{</span><br><span class="line">    <span class="keyword">public</span> Connection <span class="title function_">getConnection</span><span class="params">()</span>{</span><br><span class="line">        <span class="comment">// 连接Oracle的逻辑</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CustomerService</span>{</span><br><span class="line">    <span class="keyword">private</span> DBUtil dbUtil;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">save</span><span class="params">()</span>{</span><br><span class="line">        ...</span><br><span class="line">        dbUtil.getConnection();</span><br><span class="line">        ...</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token keyword">class</span> <span class="token class-name">MysqlDBUtil</span> <span class="token keyword">implements</span> <span class="token class-name">DBUtil</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token class-name">Connection</span> <span class="token function">getConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token comment">// 连接MySQL的逻辑</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">class</span> <span class="token class-name">OracleDBUtil</span> <span class="token keyword">implements</span> <span class="token class-name">DBUtil</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token class-name">Connection</span> <span class="token function">getConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token comment">// 连接Oracle的逻辑</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">class</span> <span class="token class-name">CustomerService</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token class-name">DBUtil</span> dbUtil<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-        dbUtil<span class="token punctuation">.</span><span class="token function">getConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>    这样一来，CustomerService和DBUtil的关系变为关联关系，同时将DBUtil抽象，由不同的数据库具体实现，方便扩展。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;这样一来，CustomerService和DBUtil的关系变为关联关系，同时将DBUtil抽象，由不同的数据库具体实现，方便扩展。</p>
 <hr>
-<p>    转眼间（三天过去了），就来到了最后一个原则，哦不，它不叫原则，它叫法则，牛不牛批？来看看它是个什么鬼。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;转眼间（三天过去了），就来到了最后一个原则，哦不，它不叫原则，它叫法则，牛不牛批？来看看它是个什么鬼。</p>
 <h1 id="迪米特法则"><a href="#迪米特法则" class="headerlink" title="迪米特法则"></a>迪米特法则</h1><blockquote>
 <p>迪米特法则(Law Of Demeter)：一个软件实体应当尽可能少地与其他实体发生相互作用。</p>
 </blockquote>
-<p>    迪米特法则，又称为最少知道原则，意思就是知道它的人最少的原则。解释完毕，收工！</p>
-<p>    开个玩笑，这里说的最少知道是针对一个软件实体而言的，也就是说，一个软件实体，应该对与他无关的软件实体，知道的越少越好。</p>
-<p>    还有一种解释：一个软件实体应该之和他的直接朋友通信，而不要和陌生人说话，那么谁是直接朋友，谁又是陌生人呢？</p>
-<p>    直接朋友包括：当前对象本身（废话），以参数形式传入到当前对象方法中的对象（方法引用），当前对象的成员对象（成员对象，包括集合中的对象），当前对象创建的对象（孩子）。除此之外，都算陌生人。与陌生人之间的交互必须通过一个合理的第三者来做中间人。</p>
-<p>    还是有点抽象？没关系，上例子。</p>
-<p>    这个例子说的是这么个事儿：校长，老师和班级，校长让老师去统计班级有多少学生，而不是校长直接统计，上代码：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">President</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">countStudentNumber</span><span class="token punctuation">(</span><span class="token class-name">Teacher</span> teacher<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token class-name">Class</span> <span class="token keyword">class</span> <span class="token operator">=</span> teacher<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">countStudentNumber</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;迪米特法则，又称为最少知道原则，意思就是知道它的人最少的原则。解释完毕，收工！</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;开个玩笑，这里说的最少知道是针对一个软件实体而言的，也就是说，一个软件实体，应该对与他无关的软件实体，知道的越少越好。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;还有一种解释：一个软件实体应该之和他的直接朋友通信，而不要和陌生人说话，那么谁是直接朋友，谁又是陌生人呢？</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;直接朋友包括：当前对象本身（废话），以参数形式传入到当前对象方法中的对象（方法引用），当前对象的成员对象（成员对象，包括集合中的对象），当前对象创建的对象（孩子）。除此之外，都算陌生人。与陌生人之间的交互必须通过一个合理的第三者来做中间人。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;还是有点抽象？没关系，上例子。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;这个例子说的是这么个事儿：校长，老师和班级，校长让老师去统计班级有多少学生，而不是校长直接统计，上代码：</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">President</span>{</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">countStudentNumber</span><span class="params">(Teacher teacher)</span>{</span><br><span class="line">        <span class="type">Class</span> <span class="variable">class</span> <span class="operator">=</span> teacher.getClass();</span><br><span class="line">        class.countStudentNumber();</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Teacher</span>{</span><br><span class="line">    <span class="keyword">public</span> Class <span class="title function_">getClass</span><span class="params">()</span>{</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Class</span>();</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Class</span>{</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">countStudentNumber</span><span class="params">()</span>{</span><br><span class="line">        System.out.println(<span class="string">"班级有30人"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token keyword">class</span> <span class="token class-name">Teacher</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token class-name">Class</span> <span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Class</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;先别喷，这只是个反例，校长先从老师那里获取到班级，然后亲自调用了统计人数，再把校长累死，直接告诉校长个数不就行了：</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">President</span>{</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">countStudentNumber</span><span class="params">(Teacher teacher)</span>{</span><br><span class="line">        teacher.countStudentNumber();</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Teacher</span>{</span><br><span class="line">    <span class="keyword">public</span> Class <span class="title function_">getClass</span><span class="params">()</span>{</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Class</span>();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">countStudentNumber</span><span class="params">()</span>{</span><br><span class="line">        <span class="built_in">this</span>.getClass().countStudentNumber();</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="comment">// Class类不变</span></span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token keyword">class</span> <span class="token class-name">Class</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">countStudentNumber</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"班级有30人"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>    先别喷，这只是个反例，校长先从老师那里获取到班级，然后亲自调用了统计人数，再把校长累死，直接告诉校长个数不就行了：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">President</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">countStudentNumber</span><span class="token punctuation">(</span><span class="token class-name">Teacher</span> teacher<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        teacher<span class="token punctuation">.</span><span class="token function">countStudentNumber</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">class</span> <span class="token class-name">Teacher</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token class-name">Class</span> <span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Class</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">countStudentNumber</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">countStudentNumber</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token comment">// Class类不变</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>    这样校长和班级之间没有直接交互，而是通过中间人老师来实现，从而达到校长和班级之间解耦的目的。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;这样校长和班级之间没有直接交互，而是通过中间人老师来实现，从而达到校长和班级之间解耦的目的。</p>
 
             </div>
             <hr/>
@@ -1146,7 +939,7 @@
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">78.2k</span>
+                <span class="white-color">77.7k</span>
             
 
             

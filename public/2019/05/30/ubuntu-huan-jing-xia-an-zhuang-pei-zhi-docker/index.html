@@ -364,7 +364,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        833
+                        804
                     </div>
                     
 
@@ -387,7 +387,7 @@
 </blockquote>
 <h3 id="1-系统要求"><a href="#1-系统要求" class="headerlink" title="1. 系统要求"></a>1. 系统要求</h3><p>Ubuntu系统对Docker的支持十分成熟，只要是64位的即可。<br>Docker目前支持的最低的Ubuntu版本为14.04 LTS，但实际上从稳定性上考虑，推荐使用16.04 LTS或18.04 LTS版本，并且系统内核越新越好，以支持Docker最新的特性。</p>
 <blockquote>
-<p>查看内核版本详细信息：（二选其一即可）<br>$ uname -a<br>$ cat &#x2F;proc&#x2F;version</p>
+<p>查看内核版本详细信息：（二选其一即可）<br>$ uname -a<br>$ cat /proc/version</p>
 </blockquote>
 <h3 id="2-添加镜像源"><a href="#2-添加镜像源" class="headerlink" title="2. 添加镜像源"></a>2. 添加镜像源</h3><p>首先需要安装apt-transport-https等软件包支持https协议的源：</p>
 <blockquote>
@@ -407,7 +407,7 @@
 </blockquote>
 <p>添加Docker稳定版的官方软件源：(注意“bionic”处与查看到的代号相一致)</p>
 <blockquote>
-<p>$ sudo add-apt-erpository <br>“deb [arch&#x3D;amd64] <a target="_blank" rel="noopener" href="https://download.docker.com/linux/ubuntu">https://download.docker.com/linux/ubuntu</a> <br>bionic stable”</p>
+<p>$ sudo add-apt-erpository <br>“deb [arch=amd64] <a target="_blank" rel="noopener" href="https://download.docker.com/linux/ubuntu">https://download.docker.com/linux/ubuntu</a> <br>bionic stable”</p>
 </blockquote>
 <p>添加成功后，再次更新apt软件包缓存：</p>
 <blockquote>
@@ -429,23 +429,23 @@
 <p>用户更新组信息，退出并重新登录后即可生效。</p>
 <p>Docker服务启动实际上是调用了dockerd命令，支持多种启动参数。因此，用户可以直接通过执行dockerd命令来启动Docker服务，如下面的命令启动Docker服务，开启debug模式，并监听在本地的2376端口：</p>
 <blockquote>
-<p>$ dockerd -D -H tcp:&#x2F;&#x2F;127.0.0.1:2376</p>
+<p>$ dockerd -D -H tcp://127.0.0.1:2376</p>
 </blockquote>
-<p>这些选项可以写入&#x2F;etc&#x2F;docker&#x2F;路径下的daemon.json文件中，由dockerd服务启动时读取：</p>
+<p>这些选项可以写入/etc/docker/路径下的daemon.json文件中，由dockerd服务启动时读取：</p>
 <blockquote>
-<p>{<br>&amp;emsp;&amp;emsp;”debug”: true,<br>&amp;emsp;&amp;emsp;”hosts”: [“tcp:&#x2F;&#x2F;127.0.0.1:2376”]<br>}</p>
+<p>{<br>&amp;emsp;&amp;emsp;”debug”: true,<br>&amp;emsp;&amp;emsp;”hosts”: [“tcp://127.0.0.1:2376”]<br>}</p>
 </blockquote>
-<p>当然，操作系统也对Docker服务进行了封装，以Ubuntu为例，Docker服务的默认配置文件为&#x2F;etc&#x2F;default&#x2F;docker，可以通过修改其中的DOCKER_OPTS来修改服务启动的参数，例如让Docker服务开启网络2375端口的监听：</p>
+<p>当然，操作系统也对Docker服务进行了封装，以Ubuntu为例，Docker服务的默认配置文件为/etc/default/docker，可以通过修改其中的DOCKER_OPTS来修改服务启动的参数，例如让Docker服务开启网络2375端口的监听：</p>
 <blockquote>
-<p>DOCKER_OPTS&#x3D;”$DOCKER_OPTS -H tcp:&#x2F;&#x2F;0.0.0.0:2375 -H unix:&#x2F;&#x2F;&#x2F;var&#x2F;run&#x2F;docker.sock”</p>
+<p>DOCKER_OPTS=”$DOCKER_OPTS -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock”</p>
 </blockquote>
 <p>修改之后，通过service命令来重启Docker服务：</p>
 <blockquote>
 <p>sudo service docker restart</p>
 </blockquote>
-<p>另外，使用国外的镜像源下载速度慢，修改镜像源可以加快下载速度。切换到root权限，打开&#x2F;etc&#x2F;docker&#x2F;daemon.json文件，添加如下内容：</p>
+<p>另外，使用国外的镜像源下载速度慢，修改镜像源可以加快下载速度。切换到root权限，打开/etc/docker/daemon.json文件，添加如下内容：</p>
 <blockquote>
-<p>{<br>“registry-mirrors”: [<br>“<a target="_blank" rel="noopener" href="https://kfwkfulq.mirror.aliyuncs.com&quot;/">https://kfwkfulq.mirror.aliyuncs.com&quot;</a>,<br>“<a target="_blank" rel="noopener" href="https://2lqq34jg.mirror.aliyuncs.com&quot;/">https://2lqq34jg.mirror.aliyuncs.com&quot;</a>,<br>“<a target="_blank" rel="noopener" href="https://pee6w651.mirror.aliyuncs.com&quot;/">https://pee6w651.mirror.aliyuncs.com&quot;</a>,<br>“<a target="_blank" rel="noopener" href="https://registry.docker-cn.com&quot;/">https://registry.docker-cn.com&quot;</a>,<br>“<a target="_blank" rel="noopener" href="http://hub-mirror.c.163.com&quot;/">http://hub-mirror.c.163.com&quot;</a><br>],<br>“dns”: [“8.8.8.8”,”8.8.4.4”]<br>}</p>
+<p>{<br>“registry-mirrors”: [<br>“<a target="_blank" rel="noopener" href="https://kfwkfulq.mirror.aliyuncs.com&quot;/">https://kfwkfulq.mirror.aliyuncs.com"</a>,<br>“<a target="_blank" rel="noopener" href="https://2lqq34jg.mirror.aliyuncs.com&quot;/">https://2lqq34jg.mirror.aliyuncs.com"</a>,<br>“<a target="_blank" rel="noopener" href="https://pee6w651.mirror.aliyuncs.com&quot;/">https://pee6w651.mirror.aliyuncs.com"</a>,<br>“<a target="_blank" rel="noopener" href="https://registry.docker-cn.com&quot;/">https://registry.docker-cn.com"</a>,<br>“<a target="_blank" rel="noopener" href="http://hub-mirror.c.163.com&quot;/">http://hub-mirror.c.163.com"</a><br>],<br>“dns”: [“8.8.8.8”,”8.8.4.4”]<br>}</p>
 </blockquote>
 <p>此外，如果服务不正常，可以通过查看Docker服务的日志信息来解决问题，Ubuntu系统上可以执行<code>journalctl -u docker.service</code></p>
 <p>每次重启Docker服务后，可以通过查看docker信息（<code>docker info</code>命令），确保服务已经正常运行。</p>
@@ -869,7 +869,7 @@
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">78.2k</span>
+                <span class="white-color">77.7k</span>
             
 
             

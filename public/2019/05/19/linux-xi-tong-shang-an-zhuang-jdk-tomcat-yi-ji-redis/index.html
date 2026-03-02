@@ -360,7 +360,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        921
+                        913
                     </div>
                     
 
@@ -382,57 +382,33 @@
 <p>环境：VMware搭载CentOS6.5版本Linux系统，SecureCRT远程登录控制，安装JDK1.8，Tomcat9.0.10，Redis5.0.4</p>
 </blockquote>
 <h3 id="一、安装JDK1-8"><a href="#一、安装JDK1-8" class="headerlink" title="一、安装JDK1.8"></a>一、安装JDK1.8</h3><p>首先检查Linux系统上是否有JDK，一般Linux系统会有默认的openJDK，将其卸载掉。</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">rpm <span class="token operator">-</span>qa <span class="token operator">|</span> grep <span class="token operator">-</span>i java     <span class="token comment">// 查询系统上是否存在默认JDK</span>
-
-rpm <span class="token operator">-</span>e <span class="token operator">--</span>nodeps 查出来的程序名     <span class="token comment">// 将查询出来的默认JDK卸载掉</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep -i java     <span class="comment">// 查询系统上是否存在默认JDK</span></span><br><span class="line"></span><br><span class="line">rpm -e --nodeps 查出来的程序名     <span class="comment">// 将查询出来的默认JDK卸载掉</span></span><br></pre></td></tr></tbody></table></figure>
 
 <p>安装依赖：</p>
 <p><code>yum install glibc.i686</code></p>
-<p>将下载好的.tar.gz压缩包上传到Linux系统，解压到&#x2F;usr&#x2F;local&#x2F;java目录下。</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">mkdir <span class="token operator">-</span>p <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>java      <span class="token comment">// 循环创建文件夹</span>
-
-tar <span class="token operator">-</span>zxvf jdk<span class="token operator">-</span>8u181<span class="token operator">-</span>linux<span class="token operator">-</span>x64<span class="token punctuation">.</span>tar<span class="token punctuation">.</span>gz <span class="token operator">-</span><span class="token constant">C</span> <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>java     <span class="token comment">// 将压缩包解压到指定目录下</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>将下载好的.tar.gz压缩包上传到Linux系统，解压到/usr/local/java目录下。</p>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /usr/local/java      <span class="comment">// 循环创建文件夹</span></span><br><span class="line"></span><br><span class="line">tar -zxvf jdk-8u181-linux-x64.<span class="property">tar</span>.<span class="property">gz</span> -C /usr/local/java     <span class="comment">// 将压缩包解压到指定目录下</span></span><br></pre></td></tr></tbody></table></figure>
 
 <p>配置环境变量:</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">vim <span class="token operator">/</span>etc<span class="token operator">/</span>profile     <span class="token comment">// 使用vim编辑器查看配置文件</span>
-<span class="token comment">// 按下i键进入修改模式</span>
-<span class="token comment">//在文件末尾加入以下内容：</span>
-
-#<span class="token keyword">set</span> java enviroment
-<span class="token constant">JAVA_HOME</span><span class="token operator">=</span><span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>java<span class="token operator">/</span>jdk1<span class="token punctuation">.</span><span class="token number">8.0_181</span>
-<span class="token constant">CLASSPATH</span><span class="token operator">=</span><span class="token punctuation">.</span><span class="token operator">:</span>$<span class="token constant">JAVA_HOME</span><span class="token operator">/</span>lib<span class="token punctuation">.</span>tools<span class="token punctuation">.</span>jar
-<span class="token constant">PATH</span><span class="token operator">=</span>$<span class="token constant">JAVA_HOME</span><span class="token operator">/</span>bin<span class="token operator">:</span>$<span class="token constant">PATH</span>
-<span class="token keyword">export</span> <span class="token constant">JAVA_HOME</span> <span class="token constant">CLASSPATH</span> <span class="token constant">PATH</span>
-
-<span class="token comment">// 按Ctrl+C退出编辑，:wq保存退出</span>
-<span class="token comment">// 执行以下命令重新加载环境变量</span>
-
-source <span class="token operator">/</span>etc<span class="token operator">/</span>profile      <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile     <span class="comment">// 使用vim编辑器查看配置文件</span></span><br><span class="line"><span class="comment">// 按下i键进入修改模式</span></span><br><span class="line"><span class="comment">//在文件末尾加入以下内容：</span></span><br><span class="line"></span><br><span class="line">#set java enviroment</span><br><span class="line"><span class="variable constant_">JAVA_HOME</span>=<span class="regexp">/usr/</span>local/java/jdk1<span class="number">.8</span><span class="number">.0_181</span></span><br><span class="line"><span class="variable constant_">CLASSPATH</span>=.:$JAVA_HOME/lib.<span class="property">tools</span>.<span class="property">jar</span></span><br><span class="line"><span class="variable constant_">PATH</span>=$JAVA_HOME/<span class="attr">bin</span>:$PATH</span><br><span class="line"><span class="keyword">export</span> <span class="variable constant_">JAVA_HOME</span> <span class="variable constant_">CLASSPATH</span> <span class="variable constant_">PATH</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 按Ctrl+C退出编辑，:wq保存退出</span></span><br><span class="line"><span class="comment">// 执行以下命令重新加载环境变量</span></span><br><span class="line"></span><br><span class="line">source /etc/profile      </span><br></pre></td></tr></tbody></table></figure>
 
 <p>至此JDK1.8安装完成。</p>
-<h3 id="二、安装Tomcat9-0-10"><a href="#二、安装Tomcat9-0-10" class="headerlink" title="二、安装Tomcat9.0.10"></a>二、安装Tomcat9.0.10</h3><p>将下载好的.tar.gz压缩包上传到Linux系统，并解压到&#x2F;usr&#x2F;local&#x2F;tomcat目录下：</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">mkdir <span class="token operator">-</span>p <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>tomcat     <span class="token comment">// 创建文件夹</span>
-
-tar <span class="token operator">-</span>zxvf apache<span class="token operator">-</span>tomcat<span class="token operator">-</span><span class="token number">9.0</span><span class="token number">.10</span><span class="token punctuation">.</span>tar<span class="token punctuation">.</span>gz <span class="token operator">-</span><span class="token constant">C</span> <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>tomcat    <span class="token comment">// 解压到指定文件夹</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="二、安装Tomcat9-0-10"><a href="#二、安装Tomcat9-0-10" class="headerlink" title="二、安装Tomcat9.0.10"></a>二、安装Tomcat9.0.10</h3><p>将下载好的.tar.gz压缩包上传到Linux系统，并解压到/usr/local/tomcat目录下：</p>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /usr/local/tomcat     <span class="comment">// 创建文件夹</span></span><br><span class="line"></span><br><span class="line">tar -zxvf apache-tomcat-<span class="number">9.0</span><span class="number">.10</span>.<span class="property">tar</span>.<span class="property">gz</span> -C /usr/local/tomcat    <span class="comment">// 解压到指定文件夹</span></span><br></pre></td></tr></tbody></table></figure>
 
 <p>进入安装目录下的bin目录，运行startup.sh文件，启动服务器。</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">cd <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>tomcat<span class="token operator">/</span>apache<span class="token operator">-</span>tomcat<span class="token operator">-</span><span class="token number">9.0</span><span class="token number">.10</span><span class="token punctuation">.</span>tar<span class="token punctuation">.</span>gz<span class="token operator">/</span>bin
-
-<span class="token punctuation">.</span><span class="token operator">/</span>startup<span class="token punctuation">.</span>sh       <span class="token comment">// 启动服务</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/tomcat/apache-tomcat-<span class="number">9.0</span><span class="number">.10</span>.<span class="property">tar</span>.<span class="property">gz</span>/bin</span><br><span class="line"></span><br><span class="line">./startup.<span class="property">sh</span>       <span class="comment">// 启动服务</span></span><br></pre></td></tr></tbody></table></figure>
 
 <p>看到如下信息表示服务启动成功：</p>
 <p><img src="/img/post-img/5-19.png" alt="tomcat启动成功"></p>
 <p>在主机（安装VMware的电脑）上访问ip（Linux虚拟机的ip）+端口号（8080），咦，怎么访问不到？</p>
 <p>原来是Linux防火墙默认拦截了8080端口，只要把端口打开就好了。</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token operator">/</span>sbin<span class="token operator">/</span>iptables <span class="token operator">-</span><span class="token constant">I</span> <span class="token constant">INPUT</span> <span class="token operator">-</span>p tcp <span class="token operator">--</span>dprot <span class="token number">8080</span> <span class="token operator">-</span>j <span class="token constant">ACCEPT</span>    <span class="token comment">// 打开8080端口</span>
-
-<span class="token operator">/</span>etc<span class="token operator">/</span>rc<span class="token punctuation">.</span>d<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>iptables save     <span class="token comment">// 保存配置</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/sbin/iptables -I <span class="variable constant_">INPUT</span> -p tcp --dprot <span class="number">8080</span> -j <span class="variable constant_">ACCEPT</span>    <span class="comment">// 打开8080端口</span></span><br><span class="line"></span><br><span class="line">/etc/rc.<span class="property">d</span>/init.<span class="property">d</span>/iptables save     <span class="comment">// 保存配置</span></span><br></pre></td></tr></tbody></table></figure>
 
 <p>然后再访问ip+8080就可以看到熟悉的tom猫页面了：</p>
 <p><img src="/img/post-img/5-19-1.png" alt="tomcat主页"></p>
 <p>关闭服务器：</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 在bin目录下执行：</span>
-<span class="token punctuation">.</span><span class="token operator">/</span>shutdowm<span class="token punctuation">.</span>sh<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在bin目录下执行：</span></span><br><span class="line">./shutdowm.<span class="property">sh</span></span><br></pre></td></tr></tbody></table></figure>
 
 <p>至此Tomcat9.0.10安装完毕。</p>
 <h3 id="三、安装Redis5-0-4"><a href="#三、安装Redis5-0-4" class="headerlink" title="三、安装Redis5.0.4"></a>三、安装Redis5.0.4</h3><p>安装依赖：</p>
@@ -442,25 +418,17 @@ tar <span class="token operator">-</span>zxvf apache<span class="token operator"
 <p>进入刚刚解压的redis-5.0.4目录，在该目录下执行   make   命令，进行编译。</p>
 <p>等一会过后出现如下信息表示编译成功：</p>
 <p><img src="/img/post-img/5-19-2.png" alt="redis编译成功"></p>
-<p>然后在该目录下执行以下命令进行安装：（&#x2F;usr&#x2F;local&#x2F;redis文件夹会自动创建）</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token punctuation">[</span>root@localhost redis<span class="token operator">-</span><span class="token number">5.0</span><span class="token number">.4</span><span class="token punctuation">]</span># make <span class="token constant">PREFIX</span><span class="token operator">=</span><span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>redis install
-
-<span class="token comment">// 将配置文件复制到安装目录下，用以自定义配置</span>
-<span class="token punctuation">[</span>root@localhost redis<span class="token operator">-</span><span class="token number">5.0</span><span class="token number">.4</span><span class="token punctuation">]</span># cp redis<span class="token punctuation">.</span>conf <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>redis<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然后在该目录下执行以下命令进行安装：（/usr/local/redis文件夹会自动创建）</p>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis-<span class="number">5.0</span><span class="number">.4</span>]# make <span class="variable constant_">PREFIX</span>=<span class="regexp">/usr/</span>local/redis install</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将配置文件复制到安装目录下，用以自定义配置</span></span><br><span class="line">[root@localhost redis-<span class="number">5.0</span><span class="number">.4</span>]# cp redis.<span class="property">conf</span> /usr/local/redis</span><br></pre></td></tr></tbody></table></figure>
 
 <p>前端启动redis服务：</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token punctuation">[</span>root@localhost redis<span class="token operator">-</span><span class="token number">5.0</span><span class="token number">.4</span><span class="token punctuation">]</span># cd <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>redis
-<span class="token punctuation">[</span>root@localhost redis<span class="token punctuation">]</span># <span class="token punctuation">.</span><span class="token operator">/</span>bin<span class="token operator">/</span>redis<span class="token operator">-</span>server<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis-<span class="number">5.0</span><span class="number">.4</span>]# cd /usr/local/redis</span><br><span class="line">[root@localhost redis]# ./bin/redis-server</span><br></pre></td></tr></tbody></table></figure>
 
 <p>出现如下信息表示服务启动成功：</p>
 <p><img src="/img/post-img/5-19-3.png" alt="redis启动成功"></p>
 <p>其中6379是Redis默认端口号，PID是进程ID，方便停止进程。</p>
 <p>在另一个窗口（session）中使用如下命令连接Redis服务：</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 默认连接本机的6379端口</span>
-<span class="token punctuation">[</span>root@localhost bin<span class="token punctuation">]</span># <span class="token punctuation">.</span><span class="token operator">/</span>redis<span class="token operator">-</span>cli      
-
-<span class="token comment">// 根据ip和端口号连接指定redis服务</span>
-<span class="token punctuation">[</span>root@localhost bin<span class="token punctuation">]</span># <span class="token punctuation">.</span><span class="token operator">/</span>redis<span class="token operator">-</span>cli <span class="token operator">-</span>h <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span> <span class="token operator">-</span>p <span class="token number">6379</span>   <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 默认连接本机的6379端口</span></span><br><span class="line">[root@localhost bin]# ./redis-cli      </span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据ip和端口号连接指定redis服务</span></span><br><span class="line">[root@localhost bin]# ./redis-cli -h <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> -p <span class="number">6379</span>   </span><br></pre></td></tr></tbody></table></figure>
 
 <p>后端启动redis服务：</p>
 <p>进入redis.conf文件修改daemonize属性为yes</p>
@@ -468,12 +436,7 @@ tar <span class="token operator">-</span>zxvf apache<span class="token operator"
 <p><code>[root@localhost redis]# ./bin/redis-server ./redis.conf</code></p>
 <p>页面显示没有前端启动那么花里胡哨，但确实启动了，所谓后端启动。</p>
 <p>关闭redis：</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 1、查询到pid   使用   kill -9 pid  杀死进程</span>
-<span class="token punctuation">[</span>root@localhost redis<span class="token punctuation">]</span># ps <span class="token operator">-</span>ef <span class="token operator">|</span> grep redis
-<span class="token punctuation">[</span>root@localhost redis<span class="token punctuation">]</span># kill <span class="token operator">-</span><span class="token number">9</span> pid
-
-<span class="token comment">// 2、正常结束</span>
-<span class="token punctuation">[</span>root@localhost redis<span class="token punctuation">]</span># <span class="token punctuation">.</span><span class="token operator">/</span>bin<span class="token operator">/</span>redis<span class="token operator">-</span>cli shutdown<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1、查询到pid   使用   kill -9 pid  杀死进程</span></span><br><span class="line">[root@localhost redis]# ps -ef | grep redis</span><br><span class="line">[root@localhost redis]# kill -<span class="number">9</span> pid</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、正常结束</span></span><br><span class="line">[root@localhost redis]# ./bin/redis-cli shutdown</span><br></pre></td></tr></tbody></table></figure>
 
 <p>至此，Redis5.0.4安装完毕。</p>
 <p>开启你的Redis之旅吧。</p>
@@ -918,7 +881,7 @@ tar <span class="token operator">-</span>zxvf apache<span class="token operator"
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">78.2k</span>
+                <span class="white-color">77.7k</span>
             
 
             

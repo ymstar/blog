@@ -390,7 +390,7 @@
 <p>首先进入腾讯云官网，查看产品，其他服务商类似：</p>
 <p><img src="https://yangmingblog-1259175198.cos.ap-beijing.myqcloud.com/uPic/2022/image-20220318181232326.png" alt="腾讯云产品"></p>
 <p>可以看到这里有我们需要的服务器，那么云服务器和轻量应用服务器有什么区别呢？</p>
-<p>轻量应用服务器更聚焦于中小企业、开发者、云计算入门者、学生等用户群体，适合搭建中小型网站、博客、小程序、云盘&#x2F;图床、学习环境搭建等场景，这些场景的特点是：轻量级、低负载且访问量不大。</p>
+<p>轻量应用服务器更聚焦于中小企业、开发者、云计算入门者、学生等用户群体，适合搭建中小型网站、博客、小程序、云盘/图床、学习环境搭建等场景，这些场景的特点是：轻量级、低负载且访问量不大。</p>
 <p>所以我们搭建博客来说，轻量应用服务器就够用了。</p>
 <p>至于套餐，基本入门级别或者基础版本就够用，2核2G，或者2核4G都可以，自行选择就行。</p>
 <p>购买完成之后，就可以在控制台看到自己的服务器了，然后远程登录，修改下密码，我们的服务器就准备好了。</p>
@@ -415,8 +415,8 @@
 </blockquote>
 <p>hexo常用的几个命令，先来熟悉一下：</p>
 <blockquote>
-<p>hexo new post “title” ，新建一篇文章，会默认建在source&#x2F;_posts目录下。</p>
-<p>hexo g，当我们在source&#x2F;_posts目录下编辑好我们的文章后，使用该命令来生成静态文件。</p>
+<p>hexo new post “title” ，新建一篇文章，会默认建在source/_posts目录下。</p>
+<p>hexo g，当我们在source/_posts目录下编辑好我们的文章后，使用该命令来生成静态文件。</p>
 <p>hexo s，生成静态文件之后，我们想先来看看是什么样子，所以该命令就是启动本地服务器进行预览，默认使用4000端口，		也就是执行hexo s后就可以通过访问 <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a> 来访问我们的博客了。</p>
 <p>Hexo d，在本地确认没有问题之后，使用h该命令，将静态文件推送到我们的远端仓库。</p>
 </blockquote>
@@ -427,21 +427,21 @@
 <p>安装完成后可以通过<strong>git –version</strong> 来查看git版本，确认git是否安装成功。</p>
 <p>Node.js的安装也很简单，在官网<a target="_blank" rel="noopener" href="https://nodejs.org/en/">https://nodejs.org/en/</a> 下载你系统需要的安装包，按照提示安装即可。安装完成后通过<strong>node -v</strong>来查看node版本，确认node是否安装成功。</p>
 <p>安装成功后我们把node的镜像源修改一下，提升我们后面包下载的速度：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry http://registry.npm.taobao.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry http://registry.npm.taobao.org/</span><br></pre></td></tr></tbody></table></figure>
 
 <p>这些都准备好之后，我们就可以开始安装我们的hexo程序并配置博客目录了。</p>
 <h2 id="2-2-安装配置hexo"><a href="#2-2-安装配置hexo" class="headerlink" title="2.2 安装配置hexo"></a>2.2 安装配置hexo</h2><p>安装hexo非常的假简单，只需要一个命令：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> -g hexo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></tbody></table></figure>
 
 <p>等待安装完成就好了，通过<strong>hexo v</strong>命令查看版本，看到类似下面信息，就说明hexo已经安装成功了。</p>
 <p><img src="https://yangmingblog-1259175198.cos.ap-beijing.myqcloud.com/uPic/2022/image-20220328130603314.png" alt="hexo版本信息"></p>
 <p>安装好hexo后我们开始正式创建我们的博客目录，在你的计算机的任何一个位置，新建一个文件夹，起一个酷酷的名字，但是最好是英文，比如xxxBlogDir，我这里以test为例。</p>
 <p>进入我们刚才创建的目录，在这个目录下打开终端窗口，执行一个命令，来初始化我们的博客结构，也就是自动生成我们上面说到的那些文件夹和文件，这个命令就是：</p>
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">hexo init<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></tbody></table></figure>
 
 <p>执行之后只需要静静地等待，之后你就可以看到一个类似我们上面说过的目录结构，你可以随便在这里先看一看。</p>
 <p><img src="https://yangmingblog-1259175198.cos.ap-beijing.myqcloud.com/uPic/2022/image-20220328175535468.png" alt="初始化"></p>
-<p>当你看到这样的信息的时候，就证明你的博客目录已经初始化完成了，在source&#x2F;_posts目录下，有一个默认的hello_world.md文件，也就是我们的博客文章，后续的所有文章都放在这里。我们先来看一下这个默认的文件内容：</p>
+<p>当你看到这样的信息的时候，就证明你的博客目录已经初始化完成了，在source/_posts目录下，有一个默认的hello_world.md文件，也就是我们的博客文章，后续的所有文章都放在这里。我们先来看一下这个默认的文件内容：</p>
 <p><img src="https://yangmingblog-1259175198.cos.ap-beijing.myqcloud.com/uPic/2022/image-20220328193510538.png" alt="hello_world.md"></p>
 <p>就是很简单的一个markdown文件，它最终会被渲染成什么样子呢？是不是迫不及待想看看了，不要着急，我们继续往下看。</p>
 <h2 id="2-3-初窥博客页面"><a href="#2-3-初窥博客页面" class="headerlink" title="2.3 初窥博客页面"></a>2.3 初窥博客页面</h2><p>还是在当前目录下，执行一下<strong>hexo g</strong>，可以看到下面的信息，生成了一些静态文件，同时生成了public目录。</p>
@@ -453,69 +453,48 @@
 <p>哇哦，是不是很神奇，我们的markdown文档已经被渲染成一个炫酷的页面了！什么？你觉得有点丑？没关系，这只是一个主题的问题，后续可以通过更换主题来把我们的博客装修的漂漂亮亮！</p>
 <p>现在这个页面我们在本地可以看到了，那怎样才能让其他人也能访问到我们的博客呢？这就需要把我们的静态资源，放在一个外网也可以访问到的地方，没错，远端仓库。</p>
 <p>但是通过hexo将代码推送到远端，需要用到一个hexo的插件，叫做<strong>hexo-deployer-git</strong>，我们也把它下载一下，为了我们下面推送做准备。通过以下命令下载：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> hexo-deployer-git --save<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></tbody></table></figure>
 
 <p>至于远端仓库，可以是GitHub，也可以是服务器自建仓库，我们这篇文章就采用的就是在我们自己的服务器上建一个私有仓库来实现。</p>
 <p>你可能料到了，没错，我们要上服务器了。所以如果你前面跳过了一节，现在请参照前面的内容，准备一台服务器，当然如果你不想准备，那么就搜索使用GitHub Pages搭建博客的教程，前面那些已经有了，远端仓库是什么真的不重要。</p>
 <h1 id="3、服务器端配置"><a href="#3、服务器端配置" class="headerlink" title="3、服务器端配置"></a>3、服务器端配置</h1><p>我们远程SSH连接到我们的云服务器上，现在的服务器应该是非常纯净的，或许会有一些内置的应用程序。不重要，我们来安装一下。</p>
 <h2 id="3-1-安装配置Nginx"><a href="#3-1-安装配置Nginx" class="headerlink" title="3.1 安装配置Nginx"></a>3.1 安装配置Nginx</h2><p>我们使用Nginx作为浏览器到服务器的一个代理。使用下面的命令来安装：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt-get</span> <span class="token function">install</span> nginx
-<span class="token comment"># 或者</span>
-yum <span class="token function">install</span> nginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt-get install nginx</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者</span></span><br><span class="line">yum install nginx</span><br></pre></td></tr></tbody></table></figure>
 
 <p>下载完成后，我们测试一下是否安装成功。首先通过下面的命令把Nginx启动起来：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl start nginx.service<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start nginx.service</span><br></pre></td></tr></tbody></table></figure>
 
 <p>然后在浏览器输入你的主机IP，应该能看到这样的信息：</p>
 <p><img src="https://yangmingblog-1259175198.cos.ap-beijing.myqcloud.com/uPic/2022/1460000021503623.png" alt="Nginx默认页"></p>
 <p>证明Nginx已经安装完成。但是这样我们每次输入IP，都会看到这样的一个页面，肯定是不行的，所以我们要把它换成我们的博客静态页。</p>
 <p>但是现在服务器上并没有存放我们静态资源的文件夹，所以要先创建一个：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> -p /www/blog/yangmingblog<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /www/blog/yangmingblog</span><br></pre></td></tr></tbody></table></figure>
 
-<p>这个目录创建好之后，我们来配置一下nginx的配置文件，让它的默认页指向我们的博客静态资源文件夹。找到你服务器上Nginx的配置文件，一般在&#x2F;etc&#x2F;nginx&#x2F;nginx.conf，具体由你的服务器而定，反正先找到它，然后使用vim编辑器打开它。</p>
+<p>这个目录创建好之后，我们来配置一下nginx的配置文件，让它的默认页指向我们的博客静态资源文件夹。找到你服务器上Nginx的配置文件，一般在/etc/nginx/nginx.conf，具体由你的服务器而定，反正先找到它，然后使用vim编辑器打开它。</p>
 <p>在文件的最后，加入下面的代码：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">server<span class="token punctuation">&#123;</span>  
-    listen <span class="token number">80</span> default_server<span class="token punctuation">;</span>  
-    root /www/blog/yangmingblog<span class="token punctuation">;</span>  <span class="token comment">#  这里就是我们刚才创建的目录</span>
-    server_name <span class="token number">101.43</span>.32.xxx<span class="token punctuation">;</span>  <span class="token comment"># 这个位置填写你的主机公网域名，有域名的也可以写域名</span>
-    index index.php index.html index.htm default.php default.htm default.html<span class="token punctuation">;</span>
-    location /<span class="token punctuation">&#123;</span>  
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">server{  </span><br><span class="line">    listen 80 default_server;  </span><br><span class="line">    root /www/blog/yangmingblog;  #  这里就是我们刚才创建的目录</span><br><span class="line">    server_name 101.43.32.xxx;  # 这个位置填写你的主机公网域名，有域名的也可以写域名</span><br><span class="line">    index index.php index.html index.htm default.php default.htm default.html;</span><br><span class="line">    location /{  </span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <p>完成后保存退出**:wq**</p>
 <p>到这里我们的Nginx配置就结束了，这个时候重启Nginx再访问IP，会发现白页了，因为我们的静态资源目录里还没有文件，那么文件从哪里来呢，从git仓库来，所以来创建我们的git仓库。</p>
-<h2 id="3-2-初始化并配置远端仓库"><a href="#3-2-初始化并配置远端仓库" class="headerlink" title="3.2 初始化并配置远端仓库"></a>3.2 初始化并配置远端仓库</h2><p>进入到&#x2F;var目录下，创建一个文件夹，例如就叫repo，作为我们的远程仓库。然后进入文件夹，使用<strong>git init</strong>命令，初始化一个git仓库。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> /var/repo  <span class="token comment"># 新建仓库文件夹</span>
-<span class="token builtin class-name">cd</span> /var/repo
-<span class="token function">git</span> init --bare blog_static.git  <span class="token comment"># 仓库命名为blog_static，因为要存放博客静态资源</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="3-2-初始化并配置远端仓库"><a href="#3-2-初始化并配置远端仓库" class="headerlink" title="3.2 初始化并配置远端仓库"></a>3.2 初始化并配置远端仓库</h2><p>进入到/var目录下，创建一个文件夹，例如就叫repo，作为我们的远程仓库。然后进入文件夹，使用<strong>git init</strong>命令，初始化一个git仓库。</p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/repo  # 新建仓库文件夹</span><br><span class="line">cd /var/repo</span><br><span class="line">git init --bare blog_static.git  # 仓库命名为blog_static，因为要存放博客静态资源</span><br></pre></td></tr></tbody></table></figure>
 
 <p>进入blog_static.git，这就是我们的远端仓库了！那怎么能让刚才的静态资源目录，保持和仓库同步呢？</p>
 <p>在blog_static.git下，有一个hooks文件夹，我们进入这个文件夹，新建一个文件，叫做post-receive：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> hooks
-<span class="token function">vim</span> post-receive<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd hooks</span><br><span class="line">vim post-receive</span><br></pre></td></tr></tbody></table></figure>
 
 <p>填入下面的内容：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment"># --work-tree 的内容就是刚才创建的静态资源目录</span>
-<span class="token comment"># --git-dir 的内容就是我们的git仓库</span>
-<span class="token function">git</span> --work-tree<span class="token operator">=</span>/www/blog/yangmingblog --git-dir<span class="token operator">=</span>/var/repo/blog_static.git checkout -f<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--work-tree 的内容就是刚才创建的静态资源目录</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--git-dir 的内容就是我们的git仓库</span></span><br><span class="line">git --work-tree=/www/blog/yangmingblog --git-dir=/var/repo/blog_static.git checkout -f</span><br></pre></td></tr></tbody></table></figure>
 
 <p>到这里，我们在服务器端的配置就大功告成了！你离你的博客网站只差一步之遥！</p>
 <h2 id="3-3-配置本地hexo推送仓库"><a href="#3-3-配置本地hexo推送仓库" class="headerlink" title="3.3 配置本地hexo推送仓库"></a>3.3 配置本地hexo推送仓库</h2><p>准备好远端仓库之后，我们还需要告诉本地的hexo，推送的时候，要往哪里推。</p>
 <p>还记得刚才我们准备的本地博客目录吗，里边有一个**_config.yml**，就是它！打开！</p>
 <p>这里面有很多的配置项，直接决定了我们博客的页面，这些配置我们后面再说，先拉到最底部，有一个叫做deploy的配置，只需要把这个配置设置成我们的远端仓库地址就好了：</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># Deployment</span>
-<span class="token comment">## Docs: https://hexo.io/docs/one-command-deployment</span>
-<span class="token key atrule">deploy</span><span class="token punctuation">:</span>
-  <span class="token key atrule">type</span><span class="token punctuation">:</span> git
-  <span class="token key atrule">repo</span><span class="token punctuation">:</span> root@101.43.32.xxx<span class="token punctuation">:</span>/var/repo/blog_static <span class="token comment"># 你的用户名+ip+仓库地址</span>
-  <span class="token key atrule">branch</span><span class="token punctuation">:</span> master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">root@101.43.32.xxx:/var/repo/blog_static</span> <span class="comment"># 你的用户名+ip+仓库地址</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></tbody></table></figure>
 
 <p>随着你的一个ctrl+s，宣告着本次博客系统搭建的结束！还不赶紧来试试？</p>
 <p>依次执行下面的命令：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">hexo g
-hexo d <span class="token comment"># 可能会让你输入服务器密码</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d # 可能会让你输入服务器密码</span><br></pre></td></tr></tbody></table></figure>
 
 <p>当你看到类似下面的信息的时候，就意味着推送成功了：</p>
 <p><img src="https://yangmingblog-1259175198.cos.ap-beijing.myqcloud.com/uPic/2022/image-20220328215609528.png" alt="hexo d"></p>
@@ -758,7 +737,7 @@ hexo d <span class="token comment"># 可能会让你输入服务器密码</span>
                             单一职责原则
 单一职责原则 (Single Responsibility Principle)：一个类只负责一个功能领域中的相应职责；或者说，只有一个因素会导致一个类的变化。
 
-    这个原则很好理解，一个软件实体（大到一个模块，小到一个
+&nbsp;&nbsp;&nbsp;&nbsp;这个原则很好理
                         
                     </div>
                     <div class="publish-info">
@@ -945,7 +924,7 @@ hexo d <span class="token comment"># 可能会让你输入服务器密码</span>
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">78.2k</span>
+                <span class="white-color">77.7k</span>
             
 
             

@@ -6,7 +6,9 @@
     <meta charset="utf-8">
     <meta name="keywords" content="java NIO浅析, 阿呆的个人博客">
     <meta name="description" content="
-NIO（Non-blocking I&amp;#x2F;O，在Java领域，也称为New I&amp;#x2F;O），是一种同步非阻塞的I&amp;#x2F;O模型，也是I&amp;#x2F;O多路复用的基础，已经被越来越多地应用到大型应用服务器，成为解决高并发与大量连">
+NIO（Non-blocking I/O，在Java领域，也称为New I/O），是一种同步非阻塞的I/O模型，也是I/O多路复用的基础，已经被越来越多地应用到大型应用服务器，成为解决高并发与大量连接、I/O处理问题的有效方式。
+
+NIO">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -373,7 +375,7 @@ NIO（Non-blocking I&amp;#x2F;O，在Java领域，也称为New I&amp;#x2F;O）�
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>NIO（Non-blocking I&#x2F;O，在Java领域，也称为New I&#x2F;O），是一种同步非阻塞的I&#x2F;O模型，也是I&#x2F;O多路复用的基础，已经被越来越多地应用到大型应用服务器，成为解决高并发与大量连接、I&#x2F;O处理问题的有效方式。</p>
+<p>NIO（Non-blocking I/O，在Java领域，也称为New I/O），是一种同步非阻塞的I/O模型，也是I/O多路复用的基础，已经被越来越多地应用到大型应用服务器，成为解决高并发与大量连接、I/O处理问题的有效方式。</p>
 </blockquote>
 <p>NIO主要有三大核心部分：<strong>Channel(通道)<strong>，</strong>Buffer(缓冲区)<strong>，</strong>Selector(选择器)<strong>。传统IO基于字节流和字符流进行操作，而NIO基于Channel和Buffer进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中。Selector用于监听多个通道的事件（比如：连接打开，数据到达）。因此，</strong>单个线程可以监听多个数据通道</strong>。</p>
 <h2 id="NIO与IO的主要区别"><a href="#NIO与IO的主要区别" class="headerlink" title="NIO与IO的主要区别"></a>NIO与IO的主要区别</h2><ul>
@@ -479,30 +481,7 @@ NIO（Non-blocking I&amp;#x2F;O，在Java领域，也称为New I&amp;#x2F;O）�
 <p>这是在一个单线程中使用一个Selector处理3个Channel的图示：<br><img src="/img/post-img/19-5-25-1.png" alt="selector图示"></p>
 <p>要使用Selector，得向Selector注册Channel，然后调用它的select()方法。这个方法会一直阻塞到某个注册的通道有事件就绪。一旦这个方法返回，线程就可以处理这些事件，事件的例子有如新连接进来，数据接收等。</p>
 <p><strong>选择器相当于一个观察者，用来监听通道感兴趣的事件，一个选择器可以绑定多个通道</strong>。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 1. 选择器的创建</span>
-<span class="token class-name">Selector</span> selector<span class="token operator">=</span><span class="token class-name">Selector</span><span class="token punctuation">.</span><span class="token keyword">open</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 2. 向选择器注册通道</span>
-channel<span class="token punctuation">.</span><span class="token function">configureBlocking</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">SelectionKey</span> key <span class="token operator">=</span> channel<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>selector<span class="token punctuation">,</span><span class="token class-name">SelectionKey</span><span class="token punctuation">.</span>事件<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 一共有四种事件</span>
-<span class="token comment">// SelectionKey.OP_CONNECT  ：请求连接</span>
-<span class="token comment">// SelectionKey.OP_ACCEPT  ：接收请求</span>
-<span class="token comment">// SelectionKey.OP_READ  ：读取</span>
-<span class="token comment">// SelectionKey.OP_WRITE  ：写入</span>
-<span class="token comment">// 注意：使用选择器时，通道必须是非阻塞的</span>
-selector<span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//代表注册的事件发生是可以执行它下边的代码，否则阻塞</span>
-<span class="token comment">// 3. SelectionKey</span>
-<span class="token class-name">ServerSocketChannel</span> ssc <span class="token operator">=</span> <span class="token punctuation">(</span>强转<span class="token punctuation">)</span>key<span class="token punctuation">.</span><span class="token function">channel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">SocketChannel</span> sc <span class="token operator">=</span> <span class="token punctuation">(</span>强转<span class="token punctuation">)</span>key<span class="token punctuation">.</span><span class="token function">channel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 4. 通过Selector选择通道</span>
-<span class="token comment">//一旦向Selector注册了一或多个通道，就可以调用几个重载的select()方法。这些方法返回你所感兴趣的事件（如连接、接受、读或写）已经准备就绪的那些通道。换句话说，如果你对“读就绪”的通道感兴趣，select()方法会返回读事件已经就绪的那些通道。下面是select()方法：</span>
-<span class="token keyword">int</span> <span class="token function">select</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 阻塞到至少有一个通道在你注册的事件上就绪了。</span>
-<span class="token keyword">int</span> <span class="token function">select</span><span class="token punctuation">(</span><span class="token keyword">long</span> timeout<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 和select()一样，除了最长会阻塞timeout毫秒(参数)</span>
-<span class="token keyword">int</span> <span class="token function">selectNow</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 不会阻塞，不管什么通道就绪都立刻返回.（注：此方法执行非阻塞的选择操作。如果自从前一次选择操作后，没有通道变成可选择的，则此方法直接返回零）。</span>
-<span class="token comment">/**select()方法返回的int值表示有多少通道已经就绪。亦即，自上次调用select()方法后有多少通道变成就绪状态。如果调用select()方法，因为有一个通道变成就绪状态，返回了1，若再次调用select()方法，如果另一个通道就绪了，它会再次返回1。如果对第一个就绪的channel没有做任何操作，现在就有两个就绪的通道，但在每次select()方法调用之间，只有一个通道就绪了。*/</span>
-
-<span class="token comment">// 5. 关闭选择器</span>
-<span class="token comment">// 用完Selector后调用其close()方法会关闭该Selector，且使注册到该Selector上的所有SelectionKey实例无效。通道本身并不会关闭。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 选择器的创建</span></span><br><span class="line">Selector selector=Selector.open();</span><br><span class="line"><span class="comment">// 2. 向选择器注册通道</span></span><br><span class="line">channel.configureBlocking(<span class="literal">false</span>);</span><br><span class="line"><span class="type">SelectionKey</span> <span class="variable">key</span> <span class="operator">=</span> channel.register(selector,SelectionKey.事件);</span><br><span class="line"><span class="comment">// 一共有四种事件</span></span><br><span class="line"><span class="comment">// SelectionKey.OP_CONNECT&nbsp;&nbsp;：请求连接</span></span><br><span class="line"><span class="comment">// SelectionKey.OP_ACCEPT&nbsp;&nbsp;：接收请求</span></span><br><span class="line"><span class="comment">// SelectionKey.OP_READ&nbsp;&nbsp;：读取</span></span><br><span class="line"><span class="comment">// SelectionKey.OP_WRITE&nbsp;&nbsp;：写入</span></span><br><span class="line"><span class="comment">// 注意：使用选择器时，通道必须是非阻塞的</span></span><br><span class="line">selector.select(); <span class="comment">//代表注册的事件发生是可以执行它下边的代码，否则阻塞</span></span><br><span class="line"><span class="comment">// 3. SelectionKey</span></span><br><span class="line"><span class="type">ServerSocketChannel</span> <span class="variable">ssc</span> <span class="operator">=</span> (强转)key.channel();</span><br><span class="line"><span class="type">SocketChannel</span> <span class="variable">sc</span> <span class="operator">=</span> (强转)key.channel();</span><br><span class="line"><span class="comment">// 4. 通过Selector选择通道</span></span><br><span class="line"><span class="comment">//一旦向Selector注册了一或多个通道，就可以调用几个重载的select()方法。这些方法返回你所感兴趣的事件（如连接、接受、读或写）已经准备就绪的那些通道。换句话说，如果你对“读就绪”的通道感兴趣，select()方法会返回读事件已经就绪的那些通道。下面是select()方法：</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">select</span><span class="params">()</span>; <span class="comment">// 阻塞到至少有一个通道在你注册的事件上就绪了。</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">select</span><span class="params">(<span class="type">long</span> timeout)</span>; <span class="comment">// 和select()一样，除了最长会阻塞timeout毫秒(参数)</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">selectNow</span><span class="params">()</span>; <span class="comment">// 不会阻塞，不管什么通道就绪都立刻返回.（注：此方法执行非阻塞的选择操作。如果自从前一次选择操作后，没有通道变成可选择的，则此方法直接返回零）。</span></span><br><span class="line"><span class="comment">/**select()方法返回的int值表示有多少通道已经就绪。亦即，自上次调用select()方法后有多少通道变成就绪状态。如果调用select()方法，因为有一个通道变成就绪状态，返回了1，若再次调用select()方法，如果另一个通道就绪了，它会再次返回1。如果对第一个就绪的channel没有做任何操作，现在就有两个就绪的通道，但在每次select()方法调用之间，只有一个通道就绪了。*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. 关闭选择器</span></span><br><span class="line"><span class="comment">// 用完Selector后调用其close()方法会关闭该Selector，且使注册到该Selector上的所有SelectionKey实例无效。通道本身并不会关闭。</span></span><br></pre></td></tr></tbody></table></figure>
 
 <p>相关链接：<a target="_blank" rel="noopener" href="https://tech.meituan.com/nio.html">美团技术团队-java NIO浅析</a></p>
 
@@ -922,7 +901,7 @@ selector<span class="token punctuation">.</span><span class="token function">sel
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">78.2k</span>
+                <span class="white-color">77.7k</span>
             
 
             
