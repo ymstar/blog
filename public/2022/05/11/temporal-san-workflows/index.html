@@ -1,0 +1,1001 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Temporal（三）Workflows, 阿呆的个人博客">
+    <meta name="description" content="在Temporal文档中，对Workflow的描述分为了Workflow Type、Workflow Definition和Workflow Execution。我们先来了解一下这些概念的定义，才能理解它的使用。
+先来看下这三个概念之间的关">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Temporal（三）Workflows | 阿呆的个人博客</title>
+    <link rel="icon" type="image/jpeg" href="/favicon.jpeg">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+	<script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+	<script src="https://v1.hitokoto.cn/?c=d&encode=js&select=%23hitokoto" defer></script>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/img/favicon.jpeg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">阿呆的个人博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/img/favicon.jpeg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">阿呆的个人博客</div>
+        <div class="logo-desc">
+            
+            阿呆的个人博客
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        Temporal（三）Workflows
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%BC%95%E6%93%8E/" target="_blank">
+                                <span class="chip bg-color">工作流引擎</span>
+                            </a>
+                        
+                            <a href="/tags/Temporal/" target="_blank">
+                                <span class="chip bg-color">Temporal</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%BC%95%E6%93%8E/" class="post-category" target="_blank">
+                                工作流引擎
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-05-11
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        2.8k
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        9 分
+                    </div>
+                    
+                
+				
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>在Temporal文档中，对Workflow的描述分为了Workflow Type、Workflow Definition和Workflow Execution。我们先来了解一下这些概念的定义，才能理解它的使用。</p>
+<p>先来看下这三个概念之间的关系：</p>
+<p><img src="https://yangmingblog-1259175198.cos.ap-beijing.myqcloud.com/uPic/2022/image-20220511141123798.png" alt="Workflow 概念"></p>
+<h2 id="Workflow-Type"><a href="#Workflow-Type" class="headerlink" title="Workflow Type"></a>Workflow Type</h2><p>Workflow的类型，其实就是一个Workflow的name，因为Temporal是通过name来区分工作流的，所以工作流的name就代表了类型，同时同一Worker内不能有重名的Workflow。</p>
+<p>既然是一种类型，就可以执行多次，那么每次执行，就会实例化为一个Workflow Execution。</p>
+<p>同时这些Workflow的name，是Worker的队列之间隔离的，也就是说如果你有多个Worker，都有名叫Workflow-1的工作流，但是具体实现不同，那么在不同的Worker里会映射到不同的工作流定义，也就是Workflow Definition。</p>
+<h2 id="Workflow-Definition"><a href="#Workflow-Definition" class="headerlink" title="Workflow Definition"></a>Workflow Definition</h2><p>工作流定义，这个很好理解，就是你描述具体Workflow执行的代码，也就是开发人员来定义的部分。</p>
+<p>目前Temporal支持的SDK有Go、Java、PHP和TypeScript。</p>
+<p>虽然是开发人员来定义的流程，但是Temporal对于工作流定义的代码还有一些限制：</p>
+<ol>
+<li><h3 id="代码必须具备确定性"><a href="#代码必须具备确定性" class="headerlink" title="代码必须具备确定性"></a>代码必须具备确定性</h3><p> 这句话怎么理解？我们先来看一下不具备确定性的代码有哪些。</p>
+<p> 比如我们在代码里存在分支判断，但是分支判断的条件，是不确定的，也就是随着你执行的次数或者时间到推移，每次调用这段代码可能得到的结果都不是确定的，那么就代表这段代码不具备确定性，这种代码写在Workflow里是不允许的。</p>
+<p> 针对workflow而言，如果一个Workflow Execution已经发起之后，就不能再修改Workflow Definition的代码了。比如我们开启了一个定时的Workflow，但是在定时器到达之前，重新修改并提交了Workflow Definition的代码，那么到定时器触发的时候，工作流将执行失败。</p>
+<p> 那么怎么避免这种不确定性呢？</p>
+<p> Temporal提供的方案是对Workflow进行版本化管理，版本化我们后面再说。还有就是Temporal API提供了一些对于非确定性的替代方案，比如提供了等待、随机数等方法。</p>
+</li>
+<li><h3 id="尽量的处理可能发生的异常"><a href="#尽量的处理可能发生的异常" class="headerlink" title="尽量的处理可能发生的异常"></a>尽量的处理可能发生的异常</h3><p> 开发人员不需要关心工作流在执行过程中由于Worker进程或者Temporal集群发生故障而导致的中断，因为这样的中断Temporal是可以恢复的。</p>
+<p> 但是需要处理代码中可能出现的异常，因为这是唯一可能导致工作流失败的原因。</p>
+</li>
+</ol>
+<h2 id="Workflow-Execution"><a href="#Workflow-Execution" class="headerlink" title="Workflow Execution"></a>Workflow Execution</h2><p>工作流执行，表示一种工作流类型对应的一种工作流定义的一次执行流程。</p>
+<p>每个Workflow Execution都有自己的本地状态，并且拥有本地状态的独占访问权。所有的Workflow Execution之间并行执行，并且通过Signals互相通信，也可以利用Activities和外部环境通信。</p>
+<p>Workflow Execution的执行历史事件最大限制为50000个，数据存储最大限制为50MB。每产生10000个事件会产生一个警告，达到50000个事件或者数据达到50MB时，工作流将会被强制停止</p>
+<p>虽然单次Workflow Execution对于大小和吞吐量是有一定限制的，但是Temporal允许数百万到数十亿个工作流通知执行。</p>
+<p>Workflow Execution具有以下特点：</p>
+<ul>
+<li><h3 id="持久性"><a href="#持久性" class="headerlink" title="持久性"></a>持久性</h3><p>  一次Workflow Execution就是我们对Workflow Definition的执行，无论这个过程会持续几秒还是几年，这就是所谓的持久性。</p>
+</li>
+<li><h3 id="可靠性"><a href="#可靠性" class="headerlink" title="可靠性"></a>可靠性</h3><p>  可靠性代表在Workflow Execution执行过程中对故障的响应能力。Temporal对于由于技术设施中断导致的故障具有很好的恢复性，可以保持Workflow Execution在中断时的状态，以及从最新的状态恢复执行。</p>
+</li>
+<li><h3 id="可扩展性"><a href="#可扩展性" class="headerlink" title="可扩展性"></a>可扩展性</h3><p>  可扩展性是指Temporal的负载能力。Temporal集群和Worker进程的设计和性质，让Temporal可以支撑数十亿个工作流同时执行。</p>
+</li>
+<li><h3 id="支持异步调用"><a href="#支持异步调用" class="headerlink" title="支持异步调用"></a>支持异步调用</h3><p>  其实Workflow Execution就是再重复向Temporal平台发送指令和等待指令返回的过程。</p>
+<p>  <img src="https://yangmingblog-1259175198.cos.ap-beijing.myqcloud.com/uPic/2022/image-20220511160807978.png" alt="Temporal原理"></p>
+<p>  在进行下面这些动作时，支持异步阻塞等待：</p>
+<ol>
+<li>开启一个子工作流时，可以在子工作流开启后阻塞，知道子工作流执行结果返回；</li>
+<li>发送Signal时，可以在发送Signal之后阻塞，等待Signal返回；</li>
+<li>开始Activity执行时，可以在开启Activity后阻塞，直到Activity执行结果返回；</li>
+<li>向一个Workflow Execution发送取消请求时，可以异步等待请求结果；</li>
+<li>开启定时器时，可以阻塞流程，直到定时器触发；</li>
+<li>通过调用await方法主动阻塞流程。</li>
+</ol>
+</li>
+<li><h3 id="有状态的"><a href="#有状态的" class="headerlink" title="有状态的"></a>有状态的</h3><p>  Workflow Execution的状态分为Open和Closed两种：</p>
+<p>  <img src="https://yangmingblog-1259175198.cos.ap-beijing.myqcloud.com/uPic/2022/image-20220511162242499.png" alt="Workflow Execution状态"></p>
+<p>  只有Running状态属于Open，无论是正在处理流程还是在阻塞等待，状态都体现为Running。</p>
+<p>  Closed包含六种状态，表示工作流已经结束，六种状态分别为：</p>
+<ol>
+<li>Completed：Workflow Execution已经成功结束；</li>
+<li>Continued-As-New：定时Workflow到达定时周期时，开启新的Workflow，之前的Workflow会变成此状态；</li>
+<li>Terminated：Workflow Execution被终止；</li>
+<li>Cancelled：Workflow Execution被取消，意味着成功处理了一个取消请求；</li>
+<li>Failed：Workflow Execution发生异常并执行失败；</li>
+<li>Timed Out：Workflow Execution触发了超时限制；</li>
+</ol>
+</li>
+</ul>
+<p>上面说到一个Workflow Execution的执行时长是没有限制的，但是对于事件的个数和数据量是有限制的。所以还是尽量不要去屑无限期运行的工作流。如果真的有无限期执行的需求，可以使用Continue-As-New功能，结束本工作流，并启动一个具有相同WorkflowId并且RunId不同的Workflow Execution。</p>
+<p>通过定期“Continue-As-New”可以合理解决单次执行的大小和吞吐量限制。</p>
+<h2 id="Workflow-Id"><a href="#Workflow-Id" class="headerlink" title="Workflow Id"></a>Workflow Id</h2><p>Workflow Id是Workflow Execution的流程标识符，是可以自定义的具有业务语义的一串字符串，例如客户id或者订单id等。</p>
+<p>在一个namespace内，对于同一个Workflow Id，最多只有一个Workflow Execution处于Open状态，也就是Running。如果尝试开启一个与正在Running的Workflow 具有相同Id的Workflow，会提示“Workflow execution already started”。</p>
+<p>一个Workflow Execution可以通过Namespace+Workflow Id+Run Id来唯一标识。</p>
+<h2 id="Workflow-Id-重用策略"><a href="#Workflow-Id-重用策略" class="headerlink" title="Workflow Id 重用策略"></a>Workflow Id 重用策略</h2><p>通过配置Workflow Id Reuse Policy，可以指定开启新Workflow Execution时可不可以使用已有的Workflow Id。</p>
+<p>但是需要注意，一个新的Workflow Execution永远不可能与处于Open状态Workflow Execution有相同的工作流 ID。</p>
+<p>Workflow Id Reuse Policy有三个可选值：</p>
+<ul>
+<li><strong>Allow Duplicate</strong> : 允许使用先前已经Closed的Workflow Execution的Id，无论Closed状态是什么。如果没有指定，这个是默认值。</li>
+<li><strong>Allow Duplicate Failed Only</strong> : 只有当Workflow Execution的Closed状态不是Completed时，才允许重用Id。</li>
+<li><strong>Reject Duplicate</strong> : 无论什么情况都不允许重用Id</li>
+</ul>
+<p>注意：命名空间内的Workflow Execution是可以设置保留期限的。例如设置为30天，则只能看到近30天内的Workflow Execution。Workflow Id 重用策略也只会对有效期内的Workflow  Execution进行Id对比。</p>
+<h2 id="Run-Id"><a href="#Run-Id" class="headerlink" title="Run Id"></a>Run Id</h2><p>Run Id 是一个Workflow Execution的全局唯一标识。</p>
+<h2 id="Child-Workflow"><a href="#Child-Workflow" class="headerlink" title="Child Workflow"></a>Child Workflow</h2><p>子工作流是由另一个工作流产生的工作流。任何一个工作流（包括子工作流）都可以产生子工作流。</p>
+<p>工作流在开启子工作流时，必须等待子工作流创建成功，但是可以选择同步或者异步等待子工作流执行结果。</p>
+<p>子工作流上可以设置Parent Close Policy（父关闭策略），来指定当父工作流到达Closed状态时的动作。</p>
+<p>如果子工作流使用了Continue-As-New，那么在父工作流眼中，视为一个Workflow Execution。</p>
+<h3 id="什么时候使用Child-Workflow？"><a href="#什么时候使用Child-Workflow？" class="headerlink" title="什么时候使用Child Workflow？"></a>什么时候使用Child Workflow？</h3><ul>
+<li><p>突破工作流执行历史事件的限制</p>
+<p>  例如，一个Workflow Execution是没有足够的空间来生成100000个Activity执行的，但是如果由一个工作流开启1000个子工作流，每个子工作流生成1000个Activity，就可以实现1000000个Activity的执行。</p>
+<p>  但是另一方面，子工作流的部分事件，在父工作流里也是要维护的，所以理论上单个父工作流产生不超过1000个子工作流。</p>
+</li>
+<li><p>考虑将子工作流视为独立的服务</p>
+<p>  子工作流也是一个普通的工作流，由Worker来负责调度执行，而不是父工作流管理，所以子工作流可以作为一个完全独立的服务。这也意味着父子之间不会共享任何的本地状态，和普通工作流一样，只能通过Signal进行通信。</p>
+</li>
+<li><p>用单个工作流来代表单个资源</p>
+<p>  例如，管理主机升级的工作流，可以为每个主机生成一个子工作流。</p>
+</li>
+</ul>
+<h3 id="Parent-Close-Policy"><a href="#Parent-Close-Policy" class="headerlink" title="Parent Close Policy"></a>Parent Close Policy</h3><p>这个配置只对子工作流生效。决定了当父工作流到达Closed状态时（Completed, Failed, or Timed out），子工作流会发生什么。有以下三个可选值：</p>
+<ul>
+<li><strong>Abandon</strong> : 子工作流不会受到任何影响</li>
+<li><strong>Terminate</strong> : 默认值，子工作流被强制关闭</li>
+<li><strong>Request Cancel</strong> : 给子工作流发送一个取消请求</li>
+</ul>
+<h2 id="Temporal-定时任务"><a href="#Temporal-定时任务" class="headerlink" title="Temporal 定时任务"></a>Temporal 定时任务</h2><p>Temporal作为一个工作流引擎，定时任务必不可少。</p>
+<p>在开启Workflow Execution时，可以指定”cronSchedule“选项，设置一个Cron表达式，来配置Workflow的执行周期。开始workflow后，workflow会立刻创建并处于Running状态，但是不会立刻调度执行，而是有一定的delay，直到到达Cron表达式所指定的下一次时间。</p>
+<p>只有在当前执行状态为Completed、Failed或Timed Out后，才会触发下一次运行。也就是说，如果设置了重试策略，并且运行失败或超时，则将首先根据重试策略进行重试，直到运行完成或重试策略已经用尽。如果到达根据 Cron 计划的下一次运行时间，但是由于当前运行仍处于Open状态（包括重试），则服务器将跳过下一次计划的运行。</p>
+<h3 id="Cron"><a href="#Cron" class="headerlink" title="Cron"></a>Cron</h3><p>Temporal里的Cron表达式比较特殊，只有5位，分别为：</p>
+<p><img src="https://yangmingblog-1259175198.cos.ap-beijing.myqcloud.com/uPic/2022/image-20220512101811220.png" alt="Temporal Cron"></p>
+<p>而且需要特别注意，Temporal里的Cron表达式，默认是以UTC时区解析的，国内使用的话，要在你的目标时间上减去8小时之后，再生成Cron表达式。</p>
+<p>启动一个定时Workflow之后，什么时候能停下来呢？</p>
+<p>一种方式是直接使用API调用terminate命令，定时workflow会立刻终止，状态为Terminated。</p>
+<p>另一种方式是等到workflow到达超时限制时间，会自动结束，状态为Timedout。</p>
+<p>使用API发送Cancellation请求，只会影响当前的执行，不会取消整个定时。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>本文详细介绍了Temporal里Workflow的概念，下一篇文章，详解Activity！</p>
+<p>我是阿呆，一个不务正业的程序员，我们明天见！</p>
+
+            </div>
+            <hr/>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">您的赏识将是我前进的动力~</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/05/17/temporal-si-activities/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Temporal（四）Activities">
+                        
+                        <span class="card-title">Temporal（四）Activities</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            奋笔疾书ing…
+
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2022-05-17
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%BC%95%E6%93%8E/" class="post-category" target="_blank">
+                                    工作流引擎
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%BC%95%E6%93%8E/" target="_blank">
+                        <span class="chip bg-color">工作流引擎</span>
+                    </a>
+                    
+                    <a href="/tags/Temporal/" target="_blank">
+                        <span class="chip bg-color">Temporal</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/04/22/jenkins-pipeline-yu-fa-xue-xi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        
+                        <span class="card-title"></span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1、动态步骤——when通过stage内的when语法，可以实现pipeline的动态步骤。
+environment &#123;
+      // 根据构建id的奇偶性决定FOO是0还是1
+      FOO = "$&#123;curr
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2022-04-22
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-user fa-fw"></i>
+                            阿呆
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('20')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 阿呆的个人博客<br />'
+            + '作者: 阿呆<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处，谢谢。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://github.com/learneryog" target="_blank">yangming</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a> 的
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">hexo-theme-matery</a>主题搭建.
+			
+			<span id="sitetime"></span>
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">78.2k</span>
+            
+
+            
+			
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+
+
+    <a href="mailto:18710551637@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=794961994" class="tooltipped" data-tooltip="QQ联系我: 794961994" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+</div>
+    </div>
+</footer>
+
+
+
+<div class="progress-bar"></div>
+
+<script language=javascript> 
+	function siteTime() { 
+		window.setTimeout("siteTime()", 1000); 
+		var seconds = 1000; 
+		var minutes = seconds * 60; 
+		var hours = minutes * 60; 
+		var days = hours * 24; 
+		var years = days * 365; 
+		var today = new Date(); 
+		var todayYear = today.getFullYear(); 
+		var todayMonth = today.getMonth() + 1; 
+		var todayDate = today.getDate(); 
+		var todayHour = today.getHours(); 
+		var todayMinute = today.getMinutes(); 
+		var todaySecond = today.getSeconds(); 
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳) 
+		year - 作为date对象的年份，为4位年份值 
+		month - 0-11之间的整数，做为date对象的月份 
+		day - 1-31之间的整数，做为date对象的天数 
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数 
+		minutes - 0-59之间的整数，做为date对象的分钟数 
+		seconds - 0-59之间的整数，做为date对象的秒数 
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */ 
+		var t1 = Date.UTC(2017, 09, 11, 00, 00, 00); //北京时间2018-2-13 00:00:00 
+		var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond); 
+		var diff = t2 - t1; 
+		var diffYears = Math.floor(diff / years); 
+		var diffDays = Math.floor((diff / days) - diffYears * 365); 
+		var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours); 
+		var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes); 
+		var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds); 
+		document.getElementById("sitetime").innerHTML = "本站已运行 " +diffYears+" 年 "+diffDays + " 天 " + diffHours + " 小时 
+		" + diffMinutes + " 分钟 " + diffSeconds + " 秒"; 
+	}
+	siteTime(); 
+</script>
+
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    <script src="/libs/others/clicklove.js"></script>
+
+
+
+<!-- 雪花特效 --> 
+
+
+<script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) }) </script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
