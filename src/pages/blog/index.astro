@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+// 按年份分组
+const postsByYear = posts.reduce((acc, post) => {
+  const year = post.data.pubDate.getFullYear();
+  if (!acc[year]) acc[year] = [];
+  acc[year].push(post);
+  return acc;
+}, {} as Record<number, typeof posts>);
+
+const years = Object.keys(postsByYear).map(Number).sort((a, b) => b - a);
+---
+
+<Base title="博客 · 阿呆" description="阿呆的技术博客文章列表">
+  <div class="container-prose py-16 sm:py-20">
+    <h1 class="text-3xl font-bold text-ink sm:text-4xl">博客</h1>
+    <p class="mt-2 text-ink-muted">共 {posts.length} 篇文章</p>
+
+    <div class="mt-12">
+      {years.map((year) => (
+        <section class="mb-12">
+          <h2 class="mb-4 text-sm font-semibold text-ink-muted">{year}</h2>
+          <div class="divide-y divide-surface-border">
+            {postsByYear[year].map((post) => (
+              <a
+                href={`/blog/${post.slug}`}
+                class="flex items-baseline gap-4 py-4 group"
+              >
+                <time class="shrink-0 text-sm text-ink-muted tabular-nums">
+                  {post.data.pubDate.toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' })}
+                </time>
+                <span class="text-base text-ink group-hover:text-accent transition-colors">
+                  {post.data.title}
+                </span>
+                <span class="ml-auto shrink-0 tag text-xs">
+                  {post.data.category}
+                </span>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </div>
+</Base>

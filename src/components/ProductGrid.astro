@@ -1,0 +1,19 @@
+---
+import { projects } from '../data/projects';
+import ProductCard from './ProductCard.astro';
+---
+
+<section class="container-page py-16 sm:py-20">
+  <div class="mb-10 flex items-end justify-between">
+    <div>
+      <h2 class="text-2xl font-bold text-ink sm:text-3xl">我的产品</h2>
+      <p class="mt-2 text-sm text-ink-muted">个人开发与维护的网站和工具</p>
+    </div>
+  </div>
+
+  <div class="grid gap-6 sm:grid-cols-2">
+    {projects.map((project) => (
+      <ProductCard project={project} />
+    ))}
+  </div>
+</section>
