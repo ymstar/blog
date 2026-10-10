@@ -16,7 +16,7 @@ export const projects: Project[] = [
     url: 'https://kaleida.com.cn',
     type: 'online',
     openSource: false,
-    icon: '/products/kaleida.jpeg',
+    icon: '/products/kaleida.png',
     accent: 'from-blue-500 to-cyan-400',
   },
   {
