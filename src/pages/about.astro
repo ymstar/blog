@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+
+const skills = [
+  'Java', 'Spring Boot', 'Temporal', '分布式系统', 'Docker', 'Redis', 'MySQL', 'Nginx',
+];
+---
+
+<Base title="关于 · 阿呆" description="关于阿呆">
+  <div class="container-prose py-16 sm:py-20">
+    <h1 class="text-3xl font-bold text-ink sm:text-4xl">关于我</h1>
+
+    <div class="mt-8 flex flex-col items-center gap-6 sm:flex-row sm:items-start">
+      <img
+        src="/avatar.jpeg"
+        alt="阿呆"
+        width="120"
+        height="120"
+        class="h-24 w-24 rounded-full border-4 border-surface-subtle object-cover shadow-md sm:h-30 sm:w-30"
+      />
+      <div class="text-center sm:text-left">
+        <h2 class="text-xl font-bold text-ink">阿呆</h2>
+        <p class="mt-1 text-sm text-ink-light">Java 开发工程师</p>
+      </div>
+    </div>
+
+    <div class="prose prose-slate mt-10 max-w-none prose-headings:text-ink prose-a:text-accent">
+      <p>
+        知乎【阿呆】，个人公众号【Coder阿呆】。一个不务正业的程序员，不愿躺平的年轻人。
+        如果你和我一样不愿待在舒适区，那么欢迎一起交流学习。
+      </p>
+
+      <h2>技能</h2>
+      <div class="not-prose flex flex-wrap gap-2">
+        {skills.map((skill) => (
+          <span class="tag">{skill}</span>
+        ))}
+      </div>
+
+      <h2>联系方式</h2>
+      <ul>
+        <li>邮箱：794961994@qq.com</li>
+        <li>GitHub：<a href="https://github.com/ymstar" target="_blank" rel="noopener noreferrer">github.com/ymstar</a></li>
+        <li>CSDN：<a href="https://blog.csdn.net/weixin_41657730" target="_blank" rel="noopener noreferrer">博客主页</a></li>
+      </ul>
+    </div>
+  </div>
+</Base>

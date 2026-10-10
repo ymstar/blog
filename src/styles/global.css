@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-surface text-ink font-sans antialiased;
+  }
+  a {
+    @apply transition-colors duration-200;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto max-w-content px-6;
+  }
+  .container-prose {
+    @apply mx-auto max-w-prose px-6;
+  }
+  .card {
+    @apply rounded-card border border-surface-border bg-surface transition-all duration-200;
+  }
+  .card-hover {
+    @apply hover:-translate-y-1 hover:shadow-lg hover:border-accent-light;
+  }
+  .tag {
+    @apply inline-flex items-center rounded-full bg-surface-subtle px-3 py-1 text-sm text-ink-light;
+  }
+  .link-accent {
+    @apply text-accent hover:text-accent-dark;
+  }
+}

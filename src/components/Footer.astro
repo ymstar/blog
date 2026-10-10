@@ -1,0 +1,35 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-surface-border bg-surface-subtle">
+  <div class="container-page flex flex-col items-center gap-4 py-8 sm:flex-row sm:justify-between">
+    <p class="text-sm text-ink-muted">
+      © {year} 阿呆 · 用 Astro 构建
+    </p>
+    <div class="flex items-center gap-6">
+      <a
+        href="https://github.com/ymstar"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-sm text-ink-light hover:text-ink"
+      >
+        GitHub
+      </a>
+      <a
+        href="mailto:794961994@qq.com"
+        class="text-sm text-ink-light hover:text-ink"
+      >
+        邮箱
+      </a>
+      <a
+        href="https://blog.csdn.net/weixin_41657730"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-sm text-ink-light hover:text-ink"
+      >
+        CSDN
+      </a>
+    </div>
+  </div>
+</footer>

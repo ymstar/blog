@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('posts'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 5);
+---
+
+<section class="container-page py-16 sm:py-20">
+  <div class="mb-10 flex items-end justify-between">
+    <div>
+      <h2 class="text-2xl font-bold text-ink sm:text-3xl">最新文章</h2>
+      <p class="mt-2 text-sm text-ink-muted">偶尔写点东西，大多是技术笔记</p>
+    </div>
+    <a href="/blog" class="link-accent text-sm font-medium">
+      查看全部 →
+    </a>
+  </div>
+
+  <div class="divide-y divide-surface-border">
+    {posts.map((post) => (
+      <a
+        href={`/blog/${post.slug}`}
+        class="flex items-baseline gap-4 py-4 group"
+      >
+        <time class="shrink-0 text-sm text-ink-muted tabular-nums">
+          {post.data.pubDate.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+        </time>
+        <span class="text-base text-ink group-hover:text-accent transition-colors">
+          {post.data.title}
+        </span>
+        <span class="ml-auto shrink-0 tag text-xs">
+          {post.data.category}
+        </span>
+      </a>
+    ))}
+  </div>
+</section>

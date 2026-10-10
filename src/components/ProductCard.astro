@@ -1,0 +1,43 @@
+---
+import type { Project } from '../data/projects';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+
+const typeLabel = {
+  online: '在线产品',
+  docs: '文档站',
+  tool: '开源工具',
+};
+---
+
+<a
+  href={project.url}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="card card-hover group flex flex-col gap-3 p-6"
+>
+  <!-- 顶部渐变条 -->
+  <div class={`h-1.5 w-12 rounded-full bg-gradient-to-r ${project.accent}`}></div>
+
+  <div class="flex items-start justify-between">
+    <h3 class="text-xl font-bold text-ink group-hover:text-accent">
+      {project.name}
+    </h3>
+    <svg class="h-5 w-5 shrink-0 text-ink-muted transition-transform group-hover:translate-x-1 group-hover:text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M7 17L17 7M17 7H8M17 7V16" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </div>
+
+  <p class="text-sm text-ink-light leading-relaxed">
+    {project.description}
+  </p>
+
+  <div class="flex flex-wrap items-center gap-2 pt-1">
+    <span class="tag">{typeLabel[project.type]}</span>
+    {project.openSource && <span class="tag">开源</span>}
+  </div>
+</a>
