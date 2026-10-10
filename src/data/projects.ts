@@ -5,6 +5,7 @@ export interface Project {
   type: 'online' | 'docs' | 'tool';
   openSource: boolean;
   repo?: string;
+  icon: string; // /products/xxx.png
   accent: string; // tailwind gradient classes
 }
 
@@ -15,6 +16,7 @@ export const projects: Project[] = [
     url: 'https://kaleida.com.cn',
     type: 'online',
     openSource: false,
+    icon: '/products/kaleida.jpeg',
     accent: 'from-blue-500 to-cyan-400',
   },
   {
@@ -24,6 +26,7 @@ export const projects: Project[] = [
     type: 'tool',
     openSource: true,
     repo: 'https://github.com/ymstar/dyhub',
+    icon: '/products/dyhub.png',
     accent: 'from-pink-500 to-rose-400',
   },
   {
@@ -33,6 +36,7 @@ export const projects: Project[] = [
     type: 'online',
     openSource: true,
     repo: 'https://github.com/ymstar/cookbook',
+    icon: '/products/cookbook.png',
     accent: 'from-orange-500 to-amber-400',
   },
   {
@@ -41,6 +45,7 @@ export const projects: Project[] = [
     url: 'https://hbzhiyuan.site',
     type: 'online',
     openSource: false,
+    icon: '/products/hbzhiyuan.png',
     accent: 'from-violet-500 to-purple-400',
   },
 ];
