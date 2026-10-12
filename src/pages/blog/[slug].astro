@@ -3,50 +3,124 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('posts');
-  return posts.map((post) => ({
+  const posts = (await getCollection('posts')).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
+  return posts.map((post, i) => ({
     params: { slug: post.slug },
-    props: { post },
+    props: {
+      post,
+      prev: posts[i + 1] || null,
+      next: posts[i - 1] || null,
+    },
   }));
 }
 
-const { post } = Astro.props;
+const { post, prev, next } = Astro.props;
 const { Content } = await render(post);
+
+// 估算阅读时间（按字数 / 300）
+const wordCount = post.body?.length || 0;
+const readingTime = Math.max(1, Math.ceil(wordCount / 500));
+
+// 分类颜色
+const categoryColors: Record<string, string> = {
+  '并发': 'bg-blue-100 text-blue-700',
+  'java': 'bg-orange-100 text-orange-700',
+  'Java': 'bg-orange-100 text-orange-700',
+  'java源码': 'bg-amber-100 text-amber-700',
+  'Docker': 'bg-cyan-100 text-cyan-700',
+  'Linux': 'bg-green-100 text-green-700',
+  'Spring': 'bg-green-100 text-green-700',
+  'Temporal': 'bg-violet-100 text-violet-700',
+  '博客搭建': 'bg-pink-100 text-pink-700',
+  '设计模式': 'bg-purple-100 text-purple-700',
+  'DevOps': 'bg-indigo-100 text-indigo-700',
+};
+const catColor = categoryColors[post.data.category] || 'bg-slate-100 text-slate-700';
 ---
 
 <Base title={`${post.data.title} · 阿呆`} description={post.data.title}>
-  <article class="container-prose py-16 sm:py-20">
-    <!-- 文章头 -->
-    <header class="mb-10">
-      <div class="flex items-center gap-3 text-sm text-ink-muted">
-        <time>
+  <!-- 文章头部 -->
+  <section class="border-b border-surface-border bg-surface-subtle">
+    <div class="container-prose py-12 sm:py-16">
+      <!-- 返回链接 -->
+      <a href="/blog" class="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-accent transition-colors">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        博客
+      </a>
+
+      <!-- 元信息 -->
+      <div class="mt-6 flex flex-wrap items-center gap-3 text-sm text-ink-muted">
+        <time class="font-medium">
           {post.data.pubDate.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}
         </time>
-        <span>·</span>
-        <span class="tag">{post.data.category}</span>
+        <span class="h-4 w-px bg-surface-border"></span>
+        <span class="inline-flex items-center gap-1">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 6v6l4 2" stroke-linecap="round" />
+          </svg>
+          {readingTime} 分钟阅读
+        </span>
+        <span class={`rounded-full px-2.5 py-0.5 text-xs font-medium ${catColor}`}>
+          {post.data.category}
+        </span>
       </div>
-      <h1 class="mt-4 text-3xl font-bold text-ink sm:text-4xl">
+
+      <!-- 标题 -->
+      <h1 class="mt-4 text-3xl font-bold leading-tight text-ink sm:text-4xl">
         {post.data.title}
       </h1>
+
+      <!-- 标签 -->
       {post.data.tags.length > 0 && (
-        <div class="mt-4 flex flex-wrap gap-2">
+        <div class="mt-5 flex flex-wrap gap-2">
           {post.data.tags.map((tag) => (
             <span class="tag">#{tag}</span>
           ))}
         </div>
       )}
-    </header>
+    </div>
+  </section>
 
-    <!-- 正文 -->
-    <div class="prose prose-slate max-w-none prose-headings:font-bold prose-headings:text-ink prose-a:text-accent prose-a:no-underline hover:prose-a:underline prose-code:rounded prose-code:bg-surface-subtle prose-code:px-1.5 prose-code:py-0.5 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-pre:bg-surface-subtle prose-pre:text-ink prose-img:rounded-card">
+  <!-- 正文 -->
+  <article class="container-prose py-12 sm:py-16">
+    <div class="prose prose-slate max-w-none prose-headings:font-bold prose-headings:text-ink prose-h2:mt-10 prose-h2:mb-4 prose-h3:mt-8 prose-h3:mb-3 prose-p:leading-relaxed prose-a:text-accent prose-a:no-underline hover:prose-a:underline prose-code:rounded prose-code:bg-surface-subtle prose-code:px-1.5 prose-code:py-0.5 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-pre:rounded-card prose-pre:bg-surface-subtle prose-pre:text-ink prose-img:rounded-card prose-blockquote:border-l-accent prose-blockquote:border-l-4 prose-blockquote:text-ink-light prose-li:my-0.5 prose-ul:my-4 prose-ol:my-4">
       <Content />
     </div>
-
-    <!-- 底部导航 -->
-    <footer class="mt-16 border-t border-surface-border pt-8">
-      <a href="/blog" class="link-accent text-sm font-medium">
-        ← 返回博客列表
-      </a>
-    </footer>
   </article>
+
+  <!-- 上下篇导航 -->
+  <section class="border-t border-surface-border bg-surface-subtle">
+    <div class="container-prose py-10">
+      <div class="grid gap-4 sm:grid-cols-2">
+        {prev ? (
+          <a
+            href={`/blog/${prev.slug}`}
+            class="card card-hover group p-5"
+          >
+            <span class="text-xs text-ink-muted">← 上一篇</span>
+            <p class="mt-1.5 font-medium text-ink group-hover:text-accent transition-colors">
+              {prev.data.title}
+            </p>
+          </a>
+        ) : <div class="hidden sm:block"></div>}
+
+        {next ? (
+          <a
+            href={`/blog/${next.slug}`}
+            class="card card-hover group p-5 text-right"
+          >
+            <span class="text-xs text-ink-muted">下一篇 →</span>
+            <p class="mt-1.5 font-medium text-ink group-hover:text-accent transition-colors">
+              {next.data.title}
+            </p>
+          </a>
+        ) : <div class="hidden sm:block"></div>}
+      </div>
+    </div>
+  </section>
 </Base>
