@@ -23,6 +23,26 @@ const { Content } = await render(post);
 const wordCount = post.body?.length || 0;
 const readingTime = Math.max(1, Math.ceil(wordCount / 500));
 
+// SEO 描述：优先用 frontmatter description，否则截取正文前 120 字
+const seoDescription = post.data.description
+  || post.body?.replace(/[#*`>\-\[\]()!]/g, '').slice(0, 120).trim() + '…'
+  || post.data.title;
+
+// JSON-LD 结构化数据
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: seoDescription,
+  author: { '@type': 'Person', name: '阿呆', url: 'https://ymstar.cn/about' },
+  publisher: { '@type': 'Person', name: '阿呆', url: 'https://ymstar.cn' },
+  datePublished: post.data.pubDate.toISOString(),
+  dateModified: post.data.pubDate.toISOString(),
+  url: new URL(`/blog/${post.slug}`, Astro.site).href,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': new URL(`/blog/${post.slug}`, Astro.site).href },
+  keywords: post.data.tags.join(', '),
+};
+
 // 分类颜色
 const categoryColors: Record<string, string> = {
   '并发': 'bg-blue-100 text-blue-700',
@@ -40,7 +60,14 @@ const categoryColors: Record<string, string> = {
 const catColor = categoryColors[post.data.category] || 'bg-slate-100 text-slate-700';
 ---
 
-<Base title={`${post.data.title} · 阿呆`} description={post.data.title}>
+<Base
+  title={`${post.data.title} · 阿呆`}
+  description={seoDescription}
+  type="article"
+  publishedTime={post.data.pubDate}
+  tags={post.data.tags}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <!-- 文章头部 -->
   <section class="border-b border-surface-border bg-surface-subtle">
     <div class="container-prose py-12 sm:py-16">
