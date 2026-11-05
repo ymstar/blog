@@ -1,18 +1,14 @@
 ---
 ---
 
-<section class="visitor-counter border-y border-surface-border bg-surface-subtle">
-  <div class="container-page py-8 text-center">
-    <p class="text-base text-ink-light sm:text-lg">
-      <span class="mr-1 inline-block animate-pop">🎉</span>
-      您是阿呆的第
-      <span id="uv-count" class="mx-1 inline-block min-w-[2ch] font-bold text-accent tabular-nums">—</span>
-      个小伙伴
-    </p>
-  </div>
-  <!-- 不蒜子 UV 接收（visually hidden），由 busuanzi 脚本异步填充 -->
-  <span id="busuanzi_value_site_uv" aria-hidden="true" class="sr-only"></span>
-</section>
+<div class="visitor-counter inline-flex items-center gap-1.5 text-sm text-ink-muted">
+  <span class="inline-block animate-pop">🎉</span>
+  您是阿呆的第
+  <span id="uv-count" class="inline-block min-w-[2ch] font-bold text-accent tabular-nums">—</span>
+  个小伙伴
+</div>
+<!-- 不蒜子 UV 接收（visually hidden），由 busuanzi 脚本异步填充 -->
+<span id="busuanzi_value_site_uv" aria-hidden="true" class="sr-only"></span>
 
 <script>
   const source = document.getElementById('busuanzi_value_site_uv');
@@ -53,12 +49,5 @@
   .animate-pop {
     animation: pop 1.8s ease-in-out infinite;
     display: inline-block;
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .visitor-counter {
-    animation: fadeUp 0.6s ease-out both;
   }
 </style>
