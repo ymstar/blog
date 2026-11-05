@@ -118,6 +118,15 @@ const catColor = categoryColors[post.data.category] || 'bg-slate-100 text-slate-
     <div class="prose prose-slate max-w-none prose-headings:font-bold prose-headings:text-ink prose-h2:mt-10 prose-h2:mb-4 prose-h3:mt-8 prose-h3:mb-3 prose-p:leading-relaxed prose-a:text-accent prose-a:no-underline hover:prose-a:underline prose-code:rounded prose-code:bg-surface-subtle prose-code:px-1.5 prose-code:py-0.5 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-pre:rounded-card prose-pre:bg-surface-subtle prose-pre:text-ink prose-img:rounded-card prose-blockquote:border-l-accent prose-blockquote:border-l-4 prose-blockquote:text-ink-light prose-li:my-0.5 prose-ul:my-4 prose-ol:my-4">
       <Content />
     </div>
+
+    <!-- 阅读量统计（不蒜子） -->
+    <div class="mt-12 flex items-center justify-center gap-1.5 text-sm text-ink-muted border-t border-surface-border pt-6">
+      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-linecap="round" stroke-linejoin="round" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
+      <span>已被阅读 <span id="busuanzi_value_page_pv" class="font-medium tabular-nums">—</span> 次</span>
+    </div>
   </article>
 
   <!-- 上下篇导航 -->

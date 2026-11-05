@@ -1,0 +1,64 @@
+---
+---
+
+<section class="visitor-counter border-y border-surface-border bg-surface-subtle">
+  <div class="container-page py-8 text-center">
+    <p class="text-base text-ink-light sm:text-lg">
+      <span class="mr-1 inline-block animate-pop">🎉</span>
+      您是阿呆的第
+      <span id="uv-count" class="mx-1 inline-block min-w-[2ch] font-bold text-accent tabular-nums">—</span>
+      个小伙伴
+    </p>
+  </div>
+  <!-- 不蒜子 UV 接收（visually hidden），由 busuanzi 脚本异步填充 -->
+  <span id="busuanzi_value_site_uv" aria-hidden="true" class="sr-only"></span>
+</section>
+
+<script>
+  const source = document.getElementById('busuanzi_value_site_uv');
+  const display = document.getElementById('uv-count');
+  if (source && display) {
+    let started = false;
+    const start = () => {
+      if (started) return;
+      const target = parseInt(source.textContent || '', 10);
+      if (!(target > 0)) return;
+      started = true;
+      const duration = 1500;
+      const t0 = performance.now();
+      const tick = (now: number) => {
+        const t = Math.min((now - t0) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
+        display.textContent = Math.floor(target * eased).toLocaleString('zh-CN');
+        if (t < 1) requestAnimationFrame(tick);
+        else display.textContent = target.toLocaleString('zh-CN');
+      };
+      requestAnimationFrame(tick);
+    };
+    // busuanzi 可能已填充（脚本先于本模块执行），也可能稍后填充
+    start();
+    new MutationObserver(start).observe(source, {
+      childList: true,
+      characterData: true,
+      subtree: true,
+    });
+  }
+</script>
+
+<style>
+  @keyframes pop {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.25) rotate(-8deg); }
+  }
+  .animate-pop {
+    animation: pop 1.8s ease-in-out infinite;
+    display: inline-block;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .visitor-counter {
+    animation: fadeUp 0.6s ease-out both;
+  }
+</style>
