@@ -1,16 +1,105 @@
 ---
 import Base from '../layouts/Base.astro';
 
-const skills = [
-  'Java', 'Spring Boot', 'Temporal', '分布式系统', 'Docker', 'Redis', 'MySQL', 'Nginx',
+// 公司线：DevOps / 后端经历
+const workExperiences = [
+  {
+    period: '2020.07 — 至今',
+    role: 'DevOps 平台开发工程师',
+    highlights: [
+      '从 0 到 1 搭建公司 CI 体系：Jenkins + K8s + 自研 CI 系统，打通代码到部署的全链路',
+      '主导内部 DevOps 系统的任务管理模块与制品管理体系，覆盖团队日常研发流程',
+      '连续两年获得年度 B 绩效',
+    ],
+  },
+  {
+    period: '2020 年初',
+    role: '百度 · 实习生（三个月）',
+    highlights: ['入职前实习，参与日常开发与维护，完成从校园到工业界工程的过渡'],
+  },
 ];
+
+// 副业线 / AI 实践：把技术变成产品
+const productExperiences = [
+  {
+    name: '卡雷达',
+    tagline: '借助 AI 把想法快速变现',
+    url: 'https://kaleida.com.cn',
+    description:
+      '一站式移动上网方案决策平台。从构思到上线全程借助 AI 辅助开发，上线首月即实现一万元收入 —— 一个把技术能力转化为商业回报的里程碑。',
+  },
+  {
+    name: '河北高考志愿助手',
+    tagline: '用 AI 造真实产品',
+    url: 'https://hbzhiyuan.site',
+    description: '为河北考生量身定制的高考志愿辅助系统，AI 辅助从需求到落地的完整闭环。',
+  },
+  {
+    name: 'DyHub',
+    tagline: '开源 · AI 协作产物',
+    url: 'https://github.com/ymstar/dyhub',
+    description: '抖音弹幕中台，将直播间互动事件通过 WebSocket / SSE / Webhook 三通道分发。',
+  },
+];
+
+const techStack = [
+  {
+    category: '后端',
+    items: ['Java', 'Spring Boot', 'Temporal', 'Redis', 'MySQL'],
+  },
+  {
+    category: 'DevOps',
+    items: ['Docker', 'Kubernetes', 'Jenkins', 'Nginx'],
+  },
+  {
+    category: 'AI / Agent',
+    items: ['Claude Code', 'Coze 工作流', '向量数据库', '本地大模型部署'],
+  },
+];
+
+const aiTools = [
+  {
+    name: 'Magpie',
+    icon: '/ai-tools/magpie.png',
+    url: 'https://github.com/yetone/magpie',
+    description: '集中管理各个 Agent 的模型，菜单栏一键切换 Codex/Claude Code 背后的底层模型。',
+  },
+  {
+    name: 'Orca',
+    icon: '/ai-tools/orca.png',
+    url: 'https://github.com/stablyai/orca',
+    description: '为百倍效率创造者打造的 AI IDE，可并行调度 Claude Code、Codex 等 Agent 编队。',
+  },
+  {
+    name: 'LMStudio (Bionic)',
+    icon: '/ai-tools/lmstudio.png',
+    url: 'https://lmstudio.ai/',
+    description: '本地运行开源大模型，无需依赖云端 API，适合离线与隐私敏感场景。',
+  },
+  {
+    name: 'CodeGraph',
+    icon: '/ai-tools/codegraph.svg',
+    url: 'https://github.com/colbymchenry/codegraph',
+    description: '本地代码图谱赋能 Agent 开发，减少 token 消耗与工具调用次数。',
+  },
+];
+
+const contacts = [
+  { label: '邮箱', value: 'ymstar2026@163.com' },
+  { label: '微信', value: 'SYM612ym' },
+  { label: 'GitHub', value: 'github.com/ymstar', href: 'https://github.com/ymstar' },
+  { label: '知乎', value: 'Coder-adai', href: 'https://www.zhihu.com/people/Coder-adai' },
+];
+
 ---
 
-<Base title="关于 · 阿呆" description="阿呆，Java 开发工程师，知乎【阿呆】，公众号【AI搞钱实战录】。一个不务正业的程序员，不愿躺平的年轻人。">
+<Base
+  title="关于 · 阿呆"
+  description="阿呆，软件工程师 & Indie Maker。从 Java / DevOps 走向 AI / Agent 方向。知乎【阿呆】，公众号【AI搞钱实战录】。"
+>
   <div class="container-prose py-16 sm:py-20">
-    <h1 class="text-3xl font-bold text-ink sm:text-4xl">关于我</h1>
-
-    <div class="mt-8 flex flex-col items-center gap-6 sm:flex-row sm:items-start">
+    <!-- ① 开场区 -->
+    <div class="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
       <img
         src="/avatar.jpeg"
         alt="阿呆"
@@ -19,32 +108,165 @@ const skills = [
         class="h-24 w-24 rounded-full border-4 border-surface-subtle object-cover shadow-md sm:h-30 sm:w-30"
       />
       <div class="text-center sm:text-left">
-        <h2 class="text-xl font-bold text-ink">阿呆</h2>
-        <p class="mt-1 text-sm text-ink-light">Java 开发工程师</p>
+        <h1 class="text-3xl font-bold text-ink sm:text-4xl">阿呆</h1>
+        <p class="mt-2 text-base text-ink-light sm:text-lg">
+          软件工程师 &amp; Indie Maker · 从 Java/DevOps 走向 AI/Agent
+        </p>
+        <p class="mt-1 text-sm text-ink-muted">
+          知乎【阿呆】 · 公众号【AI搞钱实战录】
+        </p>
       </div>
     </div>
 
-    <div class="prose prose-slate mt-10 max-w-none prose-headings:text-ink prose-a:text-accent">
+    <!-- ② 自我介绍 -->
+    <div class="prose prose-slate mt-12 max-w-none prose-headings:text-ink prose-a:text-accent">
       <p>
-        知乎【阿呆】，个人公众号【AI搞钱实战录】。一个不务正业的程序员，不愿躺平的年轻人。
-        如果你和我一样不愿待在舒适区，那么欢迎一起交流学习。
+        我是一名软件工程师，过去几年在公司内部做 DevOps 平台，
+        从 0 到 1 搭建过 CI 体系和任务管理、制品管理两套子系统。
+        与此同时，我一直在用 AI 做自己的产品 —— <a
+          href="https://kaleida.com.cn"
+          target="_blank"
+          rel="noopener noreferrer">卡雷达</a
+        > 上线首月就实现了一万元收入。
+      </p>
+      <p>
+        现在，我正在把重心从 Java 后端 / DevOps 转向 <strong>AI 和 Agent 方向</strong>。
+        这个网站是我留给面试官的一张名片，也是我记录成长的地方。
+        如果你也在探索 AI 落地、不愿待在舒适区，欢迎一起交流。
       </p>
 
-      <h2>技能</h2>
-      <div class="not-prose flex flex-wrap gap-2">
-        {skills.map((skill) => (
-          <span class="tag">{skill}</span>
-        ))}
-      </div>
+      <!-- ③ 经历高光：公司线 -->
+      <h2>经历</h2>
+    </div>
 
+    <div class="mt-6 space-y-6">
+      {workExperiences.map((exp) => (
+        <div class="card p-6">
+          <div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+            <h3 class="text-lg font-bold text-ink">{exp.role}</h3>
+            <span class="text-sm text-ink-muted">{exp.period}</span>
+          </div>
+          <ul class="mt-4 space-y-2">
+            {exp.highlights.map((h) => (
+              <li class="flex gap-3 text-sm text-ink-light">
+                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"></span>
+                <span class="leading-relaxed">{h}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <!-- ③ 经历高光：AI / 副业线 -->
+    <div class="prose prose-slate mt-12 max-w-none prose-headings:text-ink prose-a:text-accent">
+      <h2>用 AI 造产品</h2>
+      <p class="text-sm text-ink-muted -mt-2">
+        把想法快速变成能用的、能赚钱的产品 —— 这是 AI 给我最大的杠杆。
+      </p>
+    </div>
+
+    <div class="mt-6 grid gap-6 sm:grid-cols-2">
+      {productExperiences.map((p) => (
+        <a
+          href={p.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="card card-hover group flex flex-col gap-3 p-6"
+        >
+          <div class="flex items-baseline justify-between gap-2">
+            <h3 class="text-lg font-bold text-ink group-hover:text-accent">{p.name}</h3>
+            <span class="shrink-0 text-xs text-ink-muted group-hover:text-accent">↗</span>
+          </div>
+          <p class="text-sm font-medium text-accent">{p.tagline}</p>
+          <p class="text-sm leading-relaxed text-ink-light">{p.description}</p>
+        </a>
+      ))}
+    </div>
+
+    <!-- ④ 教育背景 -->
+    <div class="prose prose-slate mt-12 max-w-none prose-headings:text-ink prose-a:text-accent">
+      <h2>教育背景</h2>
+    </div>
+    <div class="mt-6">
+      <div class="card p-6">
+        <div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+          <h3 class="text-lg font-bold text-ink">西安科技大学 · 本科</h3>
+          <span class="text-sm text-ink-muted">2020 届</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑤ 技术栈 -->
+    <div class="prose prose-slate mt-12 max-w-none prose-headings:text-ink prose-a:text-accent">
+      <h2>技术栈</h2>
+    </div>
+    <div class="mt-6 space-y-5">
+      {techStack.map((group) => (
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+          <span class="w-20 shrink-0 text-sm font-semibold text-ink-light">{group.category}</span>
+          <div class="flex flex-wrap gap-2">
+            {group.items.map((item) => (
+              <span class="tag">{item}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- ⑥ 日常 AI 工具 -->
+    <div class="prose prose-slate mt-12 max-w-none prose-headings:text-ink prose-a:text-accent">
+      <h2>日常 AI 工具</h2>
+      <p class="text-sm text-ink-muted -mt-2">日常开发中高频使用的 AI 利器</p>
+    </div>
+    <div class="mt-6 grid gap-4 sm:grid-cols-2">
+      {aiTools.map((tool) => (
+        <a
+          href={tool.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="card card-hover group flex items-start gap-4 p-5"
+        >
+          <img
+            src={tool.icon}
+            alt={tool.name}
+            width="40"
+            height="40"
+            class="h-10 w-10 shrink-0 rounded-lg object-contain"
+          />
+          <div class="min-w-0 flex-1">
+            <div class="flex items-baseline justify-between gap-2">
+              <h3 class="text-base font-bold text-ink group-hover:text-accent">{tool.name}</h3>
+              <span class="shrink-0 text-xs text-ink-muted group-hover:text-accent">↗</span>
+            </div>
+            <p class="mt-1 text-sm leading-relaxed text-ink-light">{tool.description}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <!-- ⑦ 联系方式 -->
+    <div class="prose prose-slate mt-12 max-w-none prose-headings:text-ink prose-a:text-accent">
       <h2>联系方式</h2>
-      <ul>
-        <li>邮箱：ymstar2026@163.com</li>
-        <li>微信：SYM612ym</li>
-        <li>GitHub：<a href="https://github.com/ymstar" target="_blank" rel="noopener noreferrer">github.com/ymstar</a></li>
-        <li>知乎：<a href="https://www.zhihu.com/people/Coder-adai" target="_blank" rel="noopener noreferrer">Coder-adai</a></li>
-        <li>CSDN：<a href="https://blog.csdn.net/weixin_41657730" target="_blank" rel="noopener noreferrer">博客主页</a></li>
-      </ul>
+    </div>
+    <div class="mt-6 grid gap-3 sm:grid-cols-2">
+      {contacts.map((c) => (
+        <div class="card flex items-center justify-between gap-3 p-4">
+          <span class="text-sm text-ink-muted">{c.label}</span>
+          {c.href ? (
+            <a
+              href={c.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm font-medium text-ink hover:text-accent"
+            >
+              {c.value}
+            </a>
+          ) : (
+            <span class="text-sm font-medium text-ink">{c.value}</span>
+          )}
+        </div>
+      ))}
     </div>
   </div>
 </Base>
