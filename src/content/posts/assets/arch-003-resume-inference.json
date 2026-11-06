@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "mode": "architecture",
+  "template_type": "architecture",
+  "style": 3,
+  "motion_scene": "service-blueprint",
+  "quality_profile": "standard",
+  "width": 1040,
+  "height": 760,
+  "title": "会话恢复 · 断点推断",
+  "subtitle": "本地 session 丢失时，从 GitLab 快照重建并按优先级推断断点",
+  "containers": [
+    { "id": "entry", "x": 40, "y": 120, "width": 960, "height": 120, "label": "恢复入口 · resume_session", "header_prefix": "01" },
+    { "id": "recover", "x": 40, "y": 270, "width": 960, "height": 130, "label": "恢复源 · 三路并行", "header_prefix": "02" },
+    { "id": "infer", "x": 40, "y": 430, "width": 960, "height": 150, "label": "断点推断 · determineResumePoint", "header_prefix": "03" },
+    { "id": "output", "x": 40, "y": 610, "width": 960, "height": 110, "label": "恢复报告", "header_prefix": "04" }
+  ],
+  "nodes": [
+    { "id": "detect", "kind": "hexagon", "x": 360, "y": 156, "width": 320, "height": 56, "label": "检测本地 session.json", "sublabel": "存在 → 直接进入推断", "fill": "#0a4b78", "stroke": "#f59e0b", "flat": true },
+
+    { "id": "git-pull", "kind": "rect", "x": 70, "y": 306, "width": 200, "height": 56, "label": "git pull 远程分支", "sublabel": "拉最新 .ipd/", "fill": "#0b3b5e", "stroke": "#38bdf8", "flat": true },
+    { "id": "snapshot-fetch", "kind": "rect", "x": 310, "y": 306, "width": 220, "height": 56, "label": "拉取 GitLab 快照", "sublabel": "Issue Note 任务看板", "fill": "#0a4b78", "stroke": "#a855f7", "flat": true },
+    { "id": "doc-sync", "kind": "rect", "x": 570, "y": 306, "width": 220, "height": 56, "label": "Wiki 文档同步", "sublabel": "spec/design 双向", "fill": "#0b3b5e", "stroke": "#38bdf8", "flat": true },
+    { "id": "rebuild-session", "kind": "rect", "x": 820, "y": 306, "width": 160, "height": 56, "label": "重建 session", "sublabel": "in_progress→pending", "fill": "#123c5a", "stroke": "#f59e0b", "flat": true },
+
+    { "id": "resolve-graph", "kind": "hexagon", "x": 70, "y": 466, "width": 200, "height": 56, "label": "解析阶段图", "sublabel": "customPhases>内置>文件", "fill": "#0a4b78", "stroke": "#f59e0b", "flat": true },
+    { "id": "completed-set", "kind": "rect", "x": 310, "y": 466, "width": 200, "height": 56, "label": "构建已完成集合", "sublabel": "completedPhases优先", "fill": "#0b3b5e", "stroke": "#38bdf8", "flat": true },
+    { "id": "artifact-infer", "kind": "rect", "x": 550, "y": 466, "width": 200, "height": 56, "label": "产出物推断", "sublabel": "artifacts 全存在→done", "fill": "#0b3b5e", "stroke": "#38bdf8", "flat": true },
+    { "id": "walk-graph", "kind": "hexagon", "x": 790, "y": 466, "width": 190, "height": 56, "label": "遍历找断点", "sublabel": "首个依赖满足的未完成", "fill": "#0a4b78", "stroke": "#10b981", "flat": true },
+
+    { "id": "reset-tasks", "kind": "rect", "x": 740, "y": 640, "width": 200, "height": 52, "label": "重置孤儿任务", "sublabel": "记录中断工时", "fill": "#0b3b5e", "stroke": "#f59e0b", "flat": true },
+    { "id": "report", "kind": "rect", "x": 70, "y": 640, "width": 200, "height": 52, "label": "恢复报告", "sublabel": "断点+动作+环境", "fill": "#0a4b78", "stroke": "#38bdf8", "flat": true },
+    { "id": "env-check", "kind": "rect", "x": 330, "y": 640, "width": 200, "height": 52, "label": "环境校验", "sublabel": "分支/token/MR", "fill": "#0b3b5e", "stroke": "#38bdf8", "flat": true },
+    { "id": "resume-action", "kind": "hexagon", "x": 590, "y": 640, "width": 140, "height": 52, "label": "继续执行", "sublabel": "phase.action", "fill": "#0a4b78", "stroke": "#10b981", "flat": true }
+  ],
+  "arrows": [
+    { "id": "detect-to-recover", "source": "detect", "target": "git-pull", "source_port": "bottom", "target_port": "top", "flow": "control", "motion_role": "fanout", "motion_stage": 1, "motion_order": 0, "label": "无session" },
+    { "id": "pull-to-snapshot", "source": "git-pull", "target": "snapshot-fetch", "source_port": "right", "target_port": "left", "flow": "read", "motion_role": "ingress", "motion_stage": 2, "motion_order": 0 },
+    { "id": "snapshot-to-doc", "source": "snapshot-fetch", "target": "doc-sync", "source_port": "right", "target_port": "left", "flow": "data", "motion_role": "data-write", "motion_stage": 2, "motion_order": 1 },
+    { "id": "doc-to-rebuild", "source": "doc-sync", "target": "rebuild-session", "source_port": "right", "target_port": "left", "flow": "data", "motion_role": "data-write", "motion_stage": 2, "motion_order": 2 },
+
+    { "id": "rebuild-to-graph", "source": "rebuild-session", "target": "resolve-graph", "source_port": "bottom", "target_port": "top", "flow": "control", "motion_role": "policy", "motion_stage": 3, "motion_order": 0 },
+    { "id": "graph-to-completed", "source": "resolve-graph", "target": "completed-set", "source_port": "right", "target_port": "left", "flow": "data", "motion_role": "fanout", "motion_stage": 3, "motion_order": 1 },
+    { "id": "completed-to-artifact", "source": "completed-set", "target": "artifact-infer", "source_port": "right", "target_port": "left", "flow": "data", "motion_role": "fanout", "motion_stage": 3, "motion_order": 2 },
+    { "id": "artifact-to-walk", "source": "artifact-infer", "target": "walk-graph", "source_port": "right", "target_port": "left", "flow": "control", "motion_role": "policy", "motion_stage": 3, "motion_order": 3 },
+
+    { "id": "walk-to-reset", "source": "walk-graph", "target": "reset-tasks", "source_port": "bottom", "target_port": "top", "flow": "feedback", "motion_role": "event", "motion_stage": 4, "motion_order": 0, "label": "断点" },
+    { "id": "reset-to-resume", "source": "reset-tasks", "target": "resume-action", "source_port": "left", "target_port": "right", "flow": "feedback", "motion_role": "telemetry", "motion_stage": 5, "motion_order": 0 },
+    { "id": "resume-to-env", "source": "resume-action", "target": "env-check", "source_port": "left", "target_port": "right", "flow": "data", "motion_role": "event", "motion_stage": 5, "motion_order": 1 },
+    { "id": "env-to-report", "source": "env-check", "target": "report", "source_port": "left", "target_port": "right", "flow": "read", "motion_role": "fanout", "motion_stage": 5, "motion_order": 2 }
+  ],
+  "legend_orientation": "horizontal",
+  "legend_x": 48,
+  "legend_y": 590,
+  "legend_locked": false,
+  "legend": [
+    { "flow": "control", "label": "决策" },
+    { "flow": "read", "label": "拉取" },
+    { "flow": "data", "label": "重建/推断" },
+    { "flow": "feedback", "label": "断点/恢复" }
+  ],
+  "blueprint_title_block": {
+    "title": "SESSION RESUME",
+    "subtitle": "BREAKPOINT INFERENCE",
+    "center_caption": "STYLE 3",
+    "left_caption": "REV: 1.0",
+    "right_caption": "DWG: FLOW-003",
+    "width": 220,
+    "height": 76,
+ "x": 780,
+    "y": 20
+  },
+  "footer": "completedPhases > 快照 > 产出物推断 · 三级回退 · 本地全丢也能从 GitLab 重建",
+  "footer_x": 48,
+  "footer_y": 720
+}

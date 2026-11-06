@@ -7,8 +7,8 @@ const workExperiences = [
     period: '2020.07 — 至今',
     role: 'DevOps 平台开发工程师',
     highlights: [
-      '从 0 到 1 搭建公司 CI 体系：Jenkins + K8s + 自研 CI 系统，打通代码到部署的全链路',
-      '主导内部 DevOps 系统的任务管理模块与制品管理体系，覆盖团队日常研发流程',
+      '从 0 到 1 搭建公司 CI 体系（Jenkins + K8s + 自研 CI 系统），支撑 200+ 开发者日常构建，日均 1500+ 次、单日峰值 5173 次',
+      '主导 DevOps 系统的任务管理与制品管理模块，覆盖 300+ 研发测试人员，上线效率从 8~10 小时提升至 1 小时',
       '连续两年获得年度 B 绩效',
     ],
   },
@@ -19,6 +19,46 @@ const workExperiences = [
   },
 ];
 
+// AI 工程实践：不只是用工具，更是搭体系
+const teamAgent = {
+  title: '公司内部 TeamAgent（团队级项目，主导）',
+  summary:
+    '对接 GitLab，打通 issue 分析 → 方案设计 → 代码开发 → MR 创建 → CodeReview 全流程。项目含 4 个 MCP server、20+ 工具，基于多 Agent 编排实现多角色协作，支持 Claude、Codex、Cursor 等 7 个 AI 编码平台。',
+  postUrl: '/blog/我们团队的teamagent让一群ai协作做需求',
+};
+
+const myContributions = [
+  {
+    title: '任务板：Agent 协作的唯一共享状态',
+    detail:
+      '用 JSON 文件做任务板，所有协作围绕它发生而非靠对话。原子锁认领解决并发冲突，blocked_by 字段自动驱动任务执行顺序。',
+  },
+  {
+    title: '场景编排：阶段依赖图',
+    detail:
+      '把每种工作流抽象成 DAG（Spec→Design→Dev→Test→Review），阶段图是数据不是写死流程，按依赖关系驱动多角色并行与串行。',
+  },
+  {
+    title: '会话恢复：从 GitLab 重建中断进度',
+    detail:
+      '三级回退算法（显式记录 → GitLab 快照 → 产出物），本地文件全丢也能接着跑，in_progress 任务自动重置并记中断工时。',
+  },
+  {
+    title: 'worktree 隔离：多需求并行',
+    detail:
+      '每个 Issue 独立 git worktree + 分支 + MR，三四个需求可同时各跑一支队伍，互不踩代码。',
+  },
+];
+
+// 其他 AI 能力实践（项目内工具性搭建 + 个人实践）
+const personalAiPractices = [
+  '为 TeamAgent 搭建知识库：Dify + 向量数据库，三类知识库检索（产品/IPD/技术）',
+  'CodeGraph 集成：将 codegraph_explore 接入代码探索、调试、CodeReview 等 Skill，带两级降级容错',
+  '单元测试 Agent：unit-test Skill，统一单测规范加载、工具链选择与覆盖率核对',
+  '基于 Dify 搭建 RAG 流水线，跑通文档摄入 → 向量化 → 检索 → 生成完整链路',
+  '本地部署 Qwen3-Coder-Next 80B 大模型，用于辅助修复日常代码 bug',
+];
+
 // 副业线 / AI 实践：把技术变成产品
 const productExperiences = [
   {
@@ -26,7 +66,7 @@ const productExperiences = [
     tagline: '借助 AI 把想法快速变现',
     url: 'https://kaleida.com.cn',
     description:
-      '一站式移动上网方案决策平台。从构思到上线全程借助 AI 辅助开发，上线首月即实现一万元收入 —— 一个把技术能力转化为商业回报的里程碑。',
+      '一站式移动上网方案决策平台。我一个人 + Claude 全栈独立完成，上线首月收入破万；目前 600+ 用户、日活约 100、日均访问 600+，月均订单过百、收入稳定在 2000+。',
   },
   {
     name: '河北高考志愿助手',
@@ -38,7 +78,7 @@ const productExperiences = [
     name: 'DyHub',
     tagline: '开源 · AI 协作产物',
     url: 'https://github.com/ymstar/dyhub',
-    description: '抖音弹幕中台，将直播间互动事件通过 WebSocket / SSE / Webhook 三通道分发。',
+    description: '抖音弹幕中台，将直播间互动事件通过 WebSocket / SSE / Webhook 三通道分发。开源两个月获 44 star。',
   },
 ];
 
@@ -53,7 +93,7 @@ const techStack = [
   },
   {
     category: 'AI / Agent',
-    items: ['Claude Code', 'Coze 工作流', '向量数据库', '本地大模型部署'],
+    items: ['Claude Code', 'Coze 工作流', 'Dify RAG', '向量数据库', '本地大模型部署'],
   },
 ];
 
@@ -127,7 +167,7 @@ const contacts = [
           href="https://kaleida.com.cn"
           target="_blank"
           rel="noopener noreferrer">卡雷达</a
-        > 上线首月就实现了一万元收入。
+        > 一个人独立完成，上线首月收入破万，至今稳定运营。
       </p>
       <p>
         现在，我正在把重心从 Java 后端 / DevOps 转向 <strong>AI 和 Agent 方向</strong>。
@@ -156,6 +196,53 @@ const contacts = [
           </ul>
         </div>
       ))}
+    </div>
+
+    <!-- AI 工程实践 -->
+    <div class="prose prose-slate mt-12 max-w-none prose-headings:text-ink prose-a:text-accent">
+      <h2>AI 工程实践</h2>
+      <p class="text-sm text-ink-muted -mt-2">
+        不只是会用 AI 工具，也在搭 AI 能力 —— MCP、多 Agent 编排、知识库、ToolUse。
+      </p>
+    </div>
+    <div class="mt-6 space-y-3">
+      <div class="card border-accent-light p-5">
+        <h3 class="text-base font-bold text-ink">{teamAgent.title}</h3>
+        <p class="mt-2 text-sm leading-relaxed text-ink-light">{teamAgent.summary}</p>
+        <div class="mt-3 flex flex-wrap gap-2">
+          <span class="tag">MCP</span>
+          <span class="tag">多 Agent 编排</span>
+          <span class="tag">ToolUse</span>
+        </div>
+        <a
+          href={teamAgent.postUrl}
+          class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-accent hover:text-accent-dark"
+        >
+          这套系统怎么落地的，我写了篇文章 →
+        </a>
+      </div>
+
+      <p class="px-1 pt-2 text-xs font-semibold uppercase tracking-wide text-ink-muted">
+        重点模块
+      </p>
+      {myContributions.map((item) => (
+        <div class="card p-5">
+          <h3 class="text-sm font-bold text-ink">{item.title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-ink-light">{item.detail}</p>
+        </div>
+      ))}
+
+      <div class="card bg-surface-subtle p-5">
+        <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-ink-muted">其他 AI 能力实践</p>
+        <ul class="space-y-2">
+          {personalAiPractices.map((p) => (
+            <li class="flex gap-3 text-sm text-ink-light">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-muted"></span>
+              <span class="leading-relaxed">{p}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
 
     <!-- ③ 经历高光：AI / 副业线 -->

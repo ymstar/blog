@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "mode": "architecture",
+  "template_type": "architecture",
+  "style": 3,
+  "motion_scene": "service-blueprint",
+  "quality_profile": "standard",
+  "width": 1040,
+  "height": 720,
+  "title": "任务在 Agent 间的流转",
+  "subtitle": "TeamLeader 发布 → 角色认领 → 阻塞依赖检查 → 完成 → 解锁下游",
+  "containers": [
+    { "id": "leader-zone", "x": 40, "y": 120, "width": 960, "height": 130, "label": "TeamLeader · 编排", "header_prefix": "01" },
+    { "id": "board-zone", "x": 40, "y": 290, "width": 960, "height": 130, "label": "任务板 · tasks.json + GitLab Issue Note", "header_prefix": "02" },
+    { "id": "agents-zone", "x": 40, "y": 460, "width": 960, "height": 150, "label": "角色 Subagent · 并行执行", "header_prefix": "03" }
+  ],
+  "nodes": [
+    { "id": "plan", "kind": "hexagon", "x": 70, "y": 156, "width": 180, "height": 56, "label": "选场景+拆任务", "sublabel": "PhaseNode 依赖图", "fill": "#0a4b78", "stroke": "#f59e0b", "flat": true },
+    { "id": "publish", "kind": "rect", "x": 290, "y": 156, "width": 180, "height": 56, "label": "publish_task", "sublabel": "发布任务 + 版本", "fill": "#0b3b5e", "stroke": "#38bdf8", "flat": true },
+    { "id": "spawn", "kind": "rect", "x": 510, "y": 156, "width": 180, "height": 56, "label": "spawn subagent", "sublabel": "注入 role prompt", "fill": "#0b3b5e", "stroke": "#38bdf8", "flat": true },
+    { "id": "relay", "kind": "rect", "x": 730, "y": 156, "width": 230, "height": 56, "label": "API 状态中继", "sublabel": "D1完成→SendMessage→D2", "fill": "#123c5a", "stroke": "#a855f7", "flat": true },
+
+    { "id": "pending", "kind": "rect", "x": 120, "y": 326, "width": 150, "height": 56, "label": "pending", "sublabel": "待认领", "fill": "#082f49", "stroke": "#94a3b8", "flat": true },
+    { "id": "in-progress", "kind": "rect", "x": 320, "y": 326, "width": 150, "height": 56, "label": "in_progress", "sublabel": "已认领执行中", "fill": "#0a4b78", "stroke": "#38bdf8", "flat": true },
+    { "id": "completed", "kind": "rect", "x": 520, "y": 326, "width": 150, "height": 56, "label": "completed", "sublabel": "已完成", "fill": "#0b3b5e", "stroke": "#10b981", "flat": true },
+    { "id": "snapshot-note", "kind": "cylinder", "x": 720, "y": 326, "width": 200, "height": 56, "label": "GitLab Issue Note", "sublabel": "看板快照+回复", "fill": "#082f49", "stroke": "#a855f7" },
+
+    { "id": "claim", "kind": "hexagon", "x": 120, "y": 496, "width": 170, "height": 56, "label": "claim_task", "sublabel": "原子锁防竞争", "fill": "#0a4b78", "stroke": "#f59e0b", "flat": true },
+    { "id": "blocked-check", "kind": "rect", "x": 330, "y": 496, "width": 170, "height": 56, "label": "blocked_by 检查", "sublabel": "前置未完则拒绝", "fill": "#0b3b5e", "stroke": "#f59e0b", "flat": true },
+    { "id": "work", "kind": "rect", "x": 540, "y": 496, "width": 170, "height": 56, "label": "编码/评审/验证", "sublabel": "worktree 隔离", "fill": "#0a4b78", "stroke": "#38bdf8", "flat": true },
+    { "id": "finish", "kind": "hexagon", "x": 750, "y": 496, "width": 180, "height": 56, "label": "finish_task", "sublabel": "解锁下游+工时", "fill": "#0a4b78", "stroke": "#10b981", "flat": true }
+  ],
+  "arrows": [
+    { "id": "plan-to-publish", "source": "plan", "target": "publish", "source_port": "right", "target_port": "left", "flow": "control", "motion_role": "policy", "motion_stage": 1, "motion_order": 0 },
+    { "id": "publish-to-spawn", "source": "publish", "target": "spawn", "source_port": "right", "target_port": "left", "flow": "control", "motion_role": "fanout", "motion_stage": 1, "motion_order": 1 },
+    { "id": "spawn-to-relay", "source": "spawn", "target": "relay", "source_port": "right", "target_port": "left", "flow": "read", "motion_role": "fanout", "motion_stage": 1, "motion_order": 2 },
+
+    { "id": "publish-to-pending", "source": "publish", "target": "pending", "source_port": "bottom", "target_port": "top", "flow": "data", "motion_role": "data-write", "motion_stage": 2, "motion_order": 0, "label": "写入" },
+    { "id": "pending-to-claim", "source": "pending", "target": "claim", "source_port": "bottom", "target_port": "top", "flow": "read", "motion_role": "ingress", "motion_stage": 2, "motion_order": 1 },
+    { "id": "claim-to-blocked", "source": "claim", "target": "blocked-check", "source_port": "right", "target_port": "left", "flow": "control", "motion_role": "policy", "motion_stage": 3, "motion_order": 0 },
+    { "id": "blocked-to-work", "source": "blocked-check", "target": "work", "source_port": "right", "target_port": "left", "flow": "data", "motion_role": "fanout", "motion_stage": 3, "motion_order": 1 },
+    { "id": "work-to-finish", "source": "work", "target": "finish", "source_port": "right", "target_port": "left", "flow": "data", "motion_role": "data-write", "motion_stage": 3, "motion_order": 2 },
+
+    { "id": "finish-to-completed", "source": "finish", "target": "completed", "source_port": "top", "target_port": "bottom", "flow": "data", "motion_role": "event", "motion_stage": 4, "motion_order": 0, "label": "标记完成" },
+    { "id": "finish-to-snapshot", "source": "finish", "target": "snapshot-note", "source_port": "top", "target_port": "bottom", "flow": "feedback", "motion_role": "telemetry", "motion_stage": 4, "motion_order": 1, "label": "同步看板" },
+    { "id": "relay-to-work", "source": "relay", "target": "work", "source_port": "bottom", "target_port": "top", "flow": "control", "motion_role": "policy", "motion_stage": 5, "motion_order": 0 }
+  ],
+  "legend_orientation": "horizontal",
+  "legend_x": 48,
+  "legend_y": 640,
+  "legend_locked": false,
+  "legend": [
+    { "flow": "control", "label": "编排决策" },
+    { "flow": "read", "label": "认领/读取" },
+    { "flow": "data", "label": "状态流转" },
+    { "flow": "feedback", "label": "解锁/同步" }
+  ],
+  "blueprint_title_block": {
+    "title": "TASK HANDOFF",
+    "subtitle": "AGENT COORDINATION",
+    "center_caption": "STYLE 3",
+    "left_caption": "REV: 1.0",
+    "right_caption": "DWG: FLOW-002",
+    "width": 220,
+    "height": 76,
+    "x": 780,
+    "y": 630
+  },
+  "footer": "任务板是唯一共享状态 · 认领用原子锁 · blocked_by 保证依赖顺序 · 完成自动解锁下游",
+  "footer_x": 48,
+  "footer_y": 680
+}

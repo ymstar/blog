@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "mode": "architecture",
+  "template_type": "architecture",
+  "style": 3,
+  "motion_scene": "service-blueprint",
+  "quality_profile": "standard",
+  "width": 1040,
+  "height": 780,
+  "title": "TeamAgent 四层架构",
+  "subtitle": "Prompt 层驱动工具层，工具层操作存储层，存储层对接平台层",
+  "containers": [
+    { "id": "prompt", "x": 40, "y": 120, "width": 960, "height": 150, "label": "Prompt 层 · 角色 + 场景", "header_prefix": "01" },
+    { "id": "tools", "x": 40, "y": 300, "width": 960, "height": 150, "label": "MCP 工具层 · 11 模块", "header_prefix": "02" },
+    { "id": "store", "x": 40, "y": 480, "width": 960, "height": 130, "label": "存储层 · .ipd/ 文件系统", "header_prefix": "03" },
+    { "id": "platform", "x": 40, "y": 640, "width": 960, "height": 110, "label": "平台层", "header_prefix": "04" }
+  ],
+  "nodes": [
+    { "id": "roles", "kind": "rect", "x": 70, "y": 156, "width": 200, "height": 56, "label": "24 角色 (roles/)", "sublabel": "Role 常量对象", "fill": "#0b3b5e", "stroke": "#38bdf8", "flat": true },
+    { "id": "scenes", "kind": "rect", "x": 300, "y": 156, "width": 200, "height": 56, "label": "16 场景 (scenes/)", "sublabel": "阶段依赖图 PhaseNode", "fill": "#0b3b5e", "stroke": "#38bdf8", "flat": true },
+    { "id": "compose", "kind": "hexagon", "x": 540, "y": 156, "width": 200, "height": 56, "label": "composeRolePrompt", "sublabel": "分层 Prompt 组合引擎", "fill": "#0a4b78", "stroke": "#f59e0b", "flat": true },
+    { "id": "teammate", "kind": "rect", "x": 770, "y": 156, "width": 200, "height": 56, "label": "team-mate 基座", "sublabel": "协作规则 + GitLab 身份", "fill": "#0b3b5e", "stroke": "#38bdf8", "flat": true },
+
+    { "id": "git-tools", "kind": "rect", "x": 70, "y": 340, "width": 170, "height": 56, "label": "git-tools", "sublabel": "Issue/MR/Wiki 35+", "fill": "#0a4b78", "stroke": "#38bdf8", "flat": true },
+    { "id": "task-tools", "kind": "rect", "x": 270, "y": 340, "width": 170, "height": 56, "label": "task-tools", "sublabel": "发布/认领/完成", "fill": "#0a4b78", "stroke": "#38bdf8", "flat": true },
+    { "id": "resume-tools", "kind": "hexagon", "x": 470, "y": 340, "width": 170, "height": 56, "label": "resume-tools", "sublabel": "断点推断恢复", "fill": "#0a4b78", "stroke": "#a855f7", "flat": true },
+    { "id": "worktree-tools", "kind": "rect", "x": 670, "y": 340, "width": 170, "height": 56, "label": "worktree-tools", "sublabel": "隔离环境", "fill": "#0a4b78", "stroke": "#38bdf8", "flat": true },
+    { "id": "other-tools", "kind": "rect", "x": 860, "y": 340, "width": 120, "height": 56, "label": "merge/ipd/...", "sublabel": "其余 7 模块", "fill": "#123c5a", "stroke": "#38bdf8", "flat": true },
+
+    { "id": "session", "kind": "cylinder", "x": 90, "y": 516, "width": 160, "height": 56, "label": "session.json", "sublabel": "会话状态", "fill": "#082f49", "stroke": "#38bdf8" },
+    { "id": "tasks-json", "kind": "cylinder", "x": 300, "y": 516, "width": 160, "height": 56, "label": "tasks.json", "sublabel": "V3 任务列表", "fill": "#082f49", "stroke": "#38bdf8" },
+    { "id": "specs", "kind": "cylinder", "x": 510, "y": 516, "width": 160, "height": 56, "label": "specs/", "sublabel": "spec/design 图谱", "fill": "#082f49", "stroke": "#38bdf8" },
+    { "id": "snapshot", "kind": "cylinder", "x": 720, "y": 516, "width": 160, "height": 56, "label": "snapshot", "sublabel": "看板快照", "fill": "#082f49", "stroke": "#a855f7" },
+
+    { "id": "gitlab", "kind": "rect", "x": 110, "y": 672, "width": 200, "height": 52, "label": "GitLab", "sublabel": "Issue/MR/CI/Wiki", "fill": "#0b3b5e", "stroke": "#f59e0b", "flat": true },
+    { "id": "dify", "kind": "rect", "x": 380, "y": 672, "width": 200, "height": 52, "label": "Dify 知识库", "sublabel": "产品/IPD/技术", "fill": "#0b3b5e", "stroke": "#38bdf8", "flat": true },
+    { "id": "claude-mcp", "kind": "rect", "x": 650, "y": 672, "width": 200, "height": 52, "label": "Claude MCP", "sublabel": "stdio 协议通信", "fill": "#0b3b5e", "stroke": "#38bdf8", "flat": true }
+  ],
+  "arrows": [
+    { "id": "roles-to-compose", "source": "roles", "target": "compose", "source_port": "right", "target_port": "left", "flow": "control", "motion_role": "policy", "motion_stage": 1, "motion_order": 0 },
+    { "id": "scenes-to-compose", "source": "scenes", "target": "compose", "source_port": "right", "target_port": "left", "flow": "control", "motion_role": "policy", "motion_stage": 1, "motion_order": 1 },
+    { "id": "compose-to-teammate", "source": "compose", "target": "teammate", "source_port": "right", "target_port": "left", "flow": "read", "motion_role": "fanout", "motion_stage": 2, "motion_order": 0 },
+    { "id": "teammate-to-tools", "source": "teammate", "target": "task-tools", "source_port": "bottom", "target_port": "top", "flow": "data", "motion_role": "fanout", "motion_stage": 2, "motion_order": 1 },
+    { "id": "tools-to-session", "source": "task-tools", "target": "session", "source_port": "bottom", "target_port": "top", "flow": "data", "motion_role": "data-write", "motion_stage": 3, "motion_order": 0 },
+    { "id": "tools-to-tasks", "source": "task-tools", "target": "tasks-json", "source_port": "bottom", "target_port": "top", "flow": "data", "motion_role": "data-write", "motion_stage": 3, "motion_order": 1 },
+    { "id": "resume-to-snapshot", "source": "resume-tools", "target": "snapshot", "source_port": "bottom", "target_port": "top", "flow": "feedback", "motion_role": "telemetry", "motion_stage": 3, "motion_order": 2 },
+    { "id": "snapshot-to-gitlab", "source": "snapshot", "target": "gitlab", "source_port": "bottom", "target_port": "top", "flow": "feedback", "motion_role": "event", "motion_stage": 4, "motion_order": 0 },
+    { "id": "specs-to-gitlab", "source": "specs", "target": "gitlab", "source_port": "bottom", "target_port": "top", "flow": "feedback", "motion_role": "event", "motion_stage": 4, "motion_order": 1 }
+  ],
+  "legend_orientation": "horizontal",
+  "legend_x": 48,
+  "legend_y": 620,
+  "legend_locked": false,
+  "legend": [
+    { "flow": "control", "label": "注入/编排" },
+    { "flow": "read", "label": "读取" },
+    { "flow": "data", "label": "读写" },
+    { "flow": "feedback", "label": "同步/恢复" }
+  ],
+  "blueprint_title_block": {
+    "title": "ONEOPS TEAMAGENT",
+    "subtitle": "FOUR-LAYER ARCHITECTURE",
+    "center_caption": "STYLE 3",
+    "left_caption": "REV: 1.0",
+    "right_caption": "DWG: ARCH-001",
+    "width": 220,
+    "height": 76,
+    "x": 780,
+    "y": 20
+  },
+  "footer": "Prompt 层 → 工具层 → 存储层 → 平台层 · 自上而下驱动，存储层与平台层双向同步",
+  "footer_x": 48,
+  "footer_y": 740
+}
